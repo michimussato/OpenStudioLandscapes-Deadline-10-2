@@ -895,8 +895,6 @@ def compose_repository(
 
     volumes_dict = {
         "volumes": [
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}",
             f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
@@ -1435,8 +1433,6 @@ def compose_mongodb(
 
     volumes_dict = {
         "volumes": [
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}:ro",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}:ro",
         ]
     }
 
@@ -1635,8 +1631,6 @@ def compose_rcs_runner(
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
             f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}",
         ]
     }
 
@@ -1779,8 +1773,6 @@ def compose_pulse_runner(
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
             f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}",
         ]
     }
 
@@ -1918,8 +1910,6 @@ def compose_worker_runner(
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
             f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}",
         ]
     }
 
@@ -2063,8 +2053,6 @@ def compose_webservice_runner(
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
             f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT')}",
-            f"{env.get('NFS_ENTRY_POINT')}:{env.get('NFS_ENTRY_POINT_LNS')}",
         ]
     }
 
