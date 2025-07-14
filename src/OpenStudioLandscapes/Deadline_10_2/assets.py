@@ -1405,6 +1405,37 @@ def compose_mongodb(
     compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
 
+    # Todo:
+    #  dagster._core.errors.DagsterExecutionStepExecutionError: Error occurred while executing op "Deadline_10_2__compose_mongodb":
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/execute_plan.py", line 245, in dagster_event_sequence_for_step
+    #      yield from check.generator(step_events)
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/execute_step.py", line 501, in core_dagster_event_sequence_for_step
+    #      for user_event in _step_output_error_checked_user_event_sequence(
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/execute_step.py", line 184, in _step_output_error_checked_user_event_sequence
+    #      for user_event in user_event_sequence:
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/execute_step.py", line 88, in _process_asset_results_to_events
+    #      for user_event in user_event_sequence:
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/compute.py", line 190, in execute_core_compute
+    #      for step_output in _yield_compute_results(step_context, inputs, compute_fn, compute_context):
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/compute.py", line 159, in _yield_compute_results
+    #      for event in iterate_with_context(
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_utils/__init__.py", line 478, in iterate_with_context
+    #      with context_fn():
+    #    File "/usr/lib/python3.11/contextlib.py", line 158, in __exit__
+    #      self.gen.throw(typ, value, traceback)
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/utils.py", line 86, in op_execution_error_boundary
+    #      raise error_cls(
+    #  The above exception was caused by the following exception:
+    #  KeyError: 'SUDO_PASS'
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_core/execution/plan/utils.py", line 56, in op_execution_error_boundary
+    #      yield
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.venv/lib/python3.11/site-packages/dagster/_utils/__init__.py", line 480, in iterate_with_context
+    #      next_output = next(iterator)
+    #                    ^^^^^^^^^^^^^^
+    #    File "/home/michael/git/repos/OpenStudioLandscapes/.features/OpenStudioLandscapes-Deadline-10-2/src/OpenStudioLandscapes/Deadline_10_2/assets.py", line 1461, in compose_mongodb
+    #      "SUDO_PASS": env["SUDO_PASS"],
+    #                   ~~~^^^^^^^^^^^^^
+
     network_dict = {}
     ports_dict = {}
 
