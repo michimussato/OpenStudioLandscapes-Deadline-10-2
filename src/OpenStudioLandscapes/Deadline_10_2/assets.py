@@ -9,7 +9,7 @@ import time
 import urllib.parse
 from collections import ChainMap
 from functools import reduce
-from typing import Generator, MutableMapping
+from typing import Generator, MutableMapping, Any
 
 import yaml
 from dagster import (
@@ -2285,7 +2285,7 @@ def compose_maps(
 )
 def cmd_extend(
         context: AssetExecutionContext,
-):
+) -> Generator[Output[list[Any]] | AssetMaterialization | Any, Any, None]:
 
     ret = []
 
@@ -2306,9 +2306,12 @@ def cmd_extend(
 )
 def cmd_append(
         context: AssetExecutionContext,
-):
+) -> Generator[Output[dict[str, list[Any]]] | AssetMaterialization | Any, Any, None]:
 
-    ret = []
+    ret = {
+        "cmd": [],
+        "exclude_from_quote": []
+    }
 
     yield Output(ret)
 
