@@ -20,6 +20,7 @@ from dagster import (
     MetadataValue,
     Output,
     asset,
+    EnvVar,
 )
 
 from OpenStudioLandscapes.engine.constants import *
@@ -1458,7 +1459,7 @@ def compose_mongodb(
                 stderr=subprocess.PIPE,
                 stdin=subprocess.PIPE,
                 env={
-                    "SUDO_PASS": env["SUDO_PASS"],
+                    "SUDO_PASS": EnvVar("SUDO_PASS").get_value(),
                 },
             )
 
