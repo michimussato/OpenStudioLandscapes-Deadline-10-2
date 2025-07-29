@@ -940,7 +940,7 @@ def compose_repository(
                 **copy.deepcopy(ports_dict),
                 "depends_on": list(compose_mongodb_10_2.get("services", {}).keys()),
                 "restart": "no",
-                "image": f"{build['image_prefix_full']}{build['image_name']}:{build['image_tags'][0]}",
+                "image": "${REGISTRY_NAMESPACE_OVERRIDE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
                 "command": ["/ENTRYPOINT/install_repository.sh"],
             },
         },
@@ -1721,7 +1721,7 @@ def compose_rcs_runner(
                 "hostname": host_name,
                 "domainname": env.get("ROOT_DOMAIN"),
                 "restart": "always",
-                "image": f"{build['image_prefix_full']}{build['image_name']}:{build['image_tags'][0]}",
+                "image": "${REGISTRY_NAMESPACE_OVERRIDE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
                 "depends_on": {
                     "repository-installer-10-2": {
                         "condition": "service_completed_successfully",
@@ -1894,7 +1894,7 @@ def compose_pulse_runner(
                     "hostname": host_name,
                     "domainname": env.get("ROOT_DOMAIN"),
                     "restart": "always",
-                    "image": f"{build['image_prefix_full']}{build['image_name']}:{build['image_tags'][0]}",
+                    "image": "${REGISTRY_NAMESPACE_OVERRIDE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -2031,7 +2031,7 @@ def compose_worker_runner(
                     "hostname": host_name,
                     "domainname": env.get("ROOT_DOMAIN"),
                     "restart": "always",
-                    "image": f"{build['image_prefix_full']}{build['image_name']}:{build['image_tags'][0]}",
+                    "image": "${REGISTRY_NAMESPACE_OVERRIDE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -2193,7 +2193,7 @@ def compose_webservice_runner(
                 "hostname": host_name,
                 "domainname": env.get("ROOT_DOMAIN"),
                 "restart": "always",
-                "image": f"{build['image_prefix_full']}{build['image_name']}:{build['image_tags'][0]}",
+                "image": "${REGISTRY_NAMESPACE_OVERRIDE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
                 "depends_on": {
                     "deadline-rcs-runner-10-2": {
                         "condition": "service_started",
