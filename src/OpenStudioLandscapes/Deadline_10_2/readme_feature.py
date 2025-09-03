@@ -1,10 +1,9 @@
 import textwrap
+
 import snakemd
 
 
-def readme_feature(
-        doc: snakemd.Document
-) -> snakemd.Document:
+def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     ## Some Specific information
 
@@ -23,7 +22,7 @@ def readme_feature(
             ),
             image={
                 "Deadline": "https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/_static/Product_Button_Deadline.png",
-                "test": "https://www.snakemd.io/en/latest/_static/icon.png"
+                "test": "https://www.snakemd.io/en/latest/_static/icon.png",
             }["Deadline"],
             link="https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html",
         ).__str__()
@@ -44,7 +43,7 @@ def readme_feature(
     doc.add_paragraph(
         text=textwrap.dedent(
             """
-            Deadline is free, however (legally), an AWS account is required to access the download area. 
+            Deadline is free, however (legally), an AWS account is required to access the download area.
             Also, the account is required to use all Deadline features. Register here:
             """
         )
@@ -73,7 +72,7 @@ def readme_feature(
     doc.add_paragraph(
         text=textwrap.dedent(
             """
-            If you prefer to just download Deadline and use it without any AWS Cloud features, 
+            If you prefer to just download Deadline and use it without any AWS Cloud features,
             here you can get the `tar` archive and the `sha256` directly:
             """
         )
@@ -113,7 +112,7 @@ def readme_feature(
             │   └── DeadlineRepository-10.2.1.1-linux-x64-installer.run.sig
             ├── config
             └── data
-            
+
             4 directories, 6 files
             """
         ),
@@ -173,5 +172,5 @@ def readme_feature(
     return doc
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

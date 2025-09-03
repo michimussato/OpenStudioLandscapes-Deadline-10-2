@@ -9,16 +9,16 @@ __all__ = [
 
 import pathlib
 from pathlib import Path
-from typing import Generator, Any
+from typing import Any, Generator
 
 from dagster import (
-    multi_asset,
-    AssetOut,
-    AssetMaterialization,
     AssetExecutionContext,
-    Output,
+    AssetMaterialization,
+    AssetOut,
     MetadataValue,
+    Output,
     get_dagster_logger,
+    multi_asset,
 )
 
 LOGGER = get_dagster_logger(__name__)
@@ -83,7 +83,6 @@ FEATURE_CONFIGS = {
         )
         .expanduser()
         .as_posix(),
-
         # Env Repository
         # This is where DeadlineRepository10 will get installed to:
         f"REPOSITORY_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}": pathlib.Path(
@@ -134,7 +133,6 @@ FEATURE_CONFIGS = {
         #     "__".join(context.asset_key.path),
         #     "DeadlineDatabase10",
         # ).as_posix(),
-
         # Env Deadline
         "RCS_HTTP_PORT_HOST": "8888",
         "RCS_HTTP_PORT_CONTAINER": "8888",
@@ -167,7 +165,6 @@ FEATURE_CONFIGS = {
         #     "LICENSE_FORWARDER_LISTENING_PORT": "17023",
         #     "APPLICATION_STARTUP_PORT": "17026",
         # },
-
         # Env MongoDB
         "MONGO_DB_HOST": "mongodb-10-2",
         "MONGO_EXPRESS_PORT_HOST": "8181",
@@ -194,7 +191,6 @@ FEATURE_CONFIGS = {
         #     "MONGO_DB_PORT_CONTAINER": "21017",
         #     "DEFAULT_DBPATH_CONTAINER": "/data/db",
         # },
-
         # Env Mongo Express
         # https://hub.docker.com/_/mongo-express/
         "ME_CONFIG_BASICAUTH_USERNAME": "web",
@@ -263,7 +259,15 @@ FEATURE_CONFIGS = {
 )
 def constants_multi_asset(
     context: AssetExecutionContext,
-) -> Generator[Output[dict[OpenStudioLandscapesConfig, dict[str | Any, bool | str | Any]]] | AssetMaterialization | Output[Any] | Output[Path] | Any, None, None]:
+) -> Generator[
+    Output[dict[OpenStudioLandscapesConfig, dict[str | Any, bool | str | Any]]]
+    | AssetMaterialization
+    | Output[Any]
+    | Output[Path]
+    | Any,
+    None,
+    None,
+]:
     """ """
 
     yield Output(

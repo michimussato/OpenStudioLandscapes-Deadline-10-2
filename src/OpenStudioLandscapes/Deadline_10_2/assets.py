@@ -9,7 +9,7 @@ import time
 import urllib.parse
 from collections import ChainMap
 from functools import reduce
-from typing import Generator, MutableMapping, Any
+from typing import Any, Generator, MutableMapping
 
 import yaml
 from dagster import (
@@ -17,30 +17,31 @@ from dagster import (
     AssetIn,
     AssetKey,
     AssetMaterialization,
+    EnvVar,
     MetadataValue,
     Output,
     asset,
-    EnvVar,
 )
-
+from docker_compose_graph.utils import *
+from OpenStudioLandscapes.engine.common_assets.compose import get_compose
+from OpenStudioLandscapes.engine.common_assets.constants import get_constants
+from OpenStudioLandscapes.engine.common_assets.docker_compose_graph import (
+    get_docker_compose_graph,
+)
+from OpenStudioLandscapes.engine.common_assets.docker_config import get_docker_config
+from OpenStudioLandscapes.engine.common_assets.docker_config_json import (
+    get_docker_config_json,
+)
+from OpenStudioLandscapes.engine.common_assets.env import get_env
+from OpenStudioLandscapes.engine.common_assets.feature_out import get_feature_out
+from OpenStudioLandscapes.engine.common_assets.group_in import get_group_in
+from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
-from docker_compose_graph.utils import *
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker import *
 
 from OpenStudioLandscapes.Deadline_10_2.constants import *
-
-from OpenStudioLandscapes.engine.common_assets.constants import get_constants
-from OpenStudioLandscapes.engine.common_assets.docker_config import get_docker_config
-from OpenStudioLandscapes.engine.common_assets.env import get_env
-from OpenStudioLandscapes.engine.common_assets.group_in import get_group_in
-from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
-from OpenStudioLandscapes.engine.common_assets.docker_compose_graph import get_docker_compose_graph
-from OpenStudioLandscapes.engine.common_assets.feature_out import get_feature_out
-from OpenStudioLandscapes.engine.common_assets.compose import get_compose
-from OpenStudioLandscapes.engine.common_assets.docker_config_json import get_docker_config_json
-
 
 constants = get_constants(
     ASSET_HEADER=ASSET_HEADER,
@@ -338,7 +339,9 @@ def apt_packages(
         "docker_config_json": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "docker_config_json"]),
         ),
-        "group_in": AssetIn(AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])),
+        "group_in": AssetIn(
+            AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
+        ),
         "apt_packages": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "apt_packages"]),
         ),
@@ -604,7 +607,9 @@ def deadline_command_install_repository(
             AssetKey([*ASSET_HEADER["key_prefix"], "env"]),
         ),
         "deadline_command_install_repository": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_install_repository"]),
+            AssetKey(
+                [*ASSET_HEADER["key_prefix"], "deadline_command_install_repository"]
+            ),
         ),
     },
 )
@@ -688,12 +693,16 @@ def deadline_script_install_repository(
         "docker_config_json": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "docker_config_json"]),
         ),
-        "group_in": AssetIn(AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])),
+        "group_in": AssetIn(
+            AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
+        ),
         "build_base_image_data": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
         ),
         "deadline_script_install_repository": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_script_install_repository"]),
+            AssetKey(
+                [*ASSET_HEADER["key_prefix"], "deadline_script_install_repository"]
+            ),
         ),
     },
 )
@@ -940,7 +949,8 @@ def compose_repository(
                 **copy.deepcopy(ports_dict),
                 "depends_on": list(compose_mongodb_10_2.get("services", {}).keys()),
                 "restart": "no",
-                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
+                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
+                % (build["image_name"], build["image_tags"][0]),
                 "command": ["/ENTRYPOINT/install_repository.sh"],
             },
         },
@@ -1043,12 +1053,19 @@ def deadline_command_build_docker_image_client(
         "docker_config_json": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "docker_config_json"]),
         ),
-        "group_in": AssetIn(AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])),
+        "group_in": AssetIn(
+            AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
+        ),
         "build_base_image_data": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
         ),
         "deadline_command_build_client_image_10_2": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_build_docker_image_client"]),
+            AssetKey(
+                [
+                    *ASSET_HEADER["key_prefix"],
+                    "deadline_command_build_docker_image_client",
+                ]
+            ),
         ),
     },
 )
@@ -1308,9 +1325,7 @@ def compose_mongo_express(
                     "ME_CONFIG_OPTIONS_EDITORTHEME": env.get(
                         "ME_CONFIG_OPTIONS_EDITORTHEME"
                     ),
-                    "ME_CONFIG_MONGODB_SERVER": env.get(
-                        "ME_CONFIG_MONGODB_SERVER"
-                    ),
+                    "ME_CONFIG_MONGODB_SERVER": env.get("ME_CONFIG_MONGODB_SERVER"),
                     "ME_CONFIG_MONGODB_PORT": str(
                         env.get("ME_CONFIG_MONGODB_PORT")
                     ).format(
@@ -1457,10 +1472,7 @@ def compose_mongodb(
     #     "/bin/bash",
     # ]
 
-    volumes_dict = {
-        "volumes": [
-        ]
-    }
+    volumes_dict = {"volumes": []}
 
     mongo_db_dir_host = pathlib.Path(
         env.get(f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}")
@@ -1516,7 +1528,7 @@ def compose_mongodb(
             0,
             f"{mongo_db_dir_host.as_posix()}:{env.get('DEFAULT_DBPATH_CONTAINER')}",
         )
-        
+
     # For portability, convert absolute volume paths to relative paths
 
     _volume_relative = []
@@ -1642,7 +1654,9 @@ def deadline_command_compose_rcs_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
         ),
         "deadline_command_compose_rcs_runner_10_2": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_compose_rcs_runner"]),
+            AssetKey(
+                [*ASSET_HEADER["key_prefix"], "deadline_command_compose_rcs_runner"]
+            ),
         ),
         "compose_networks_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
@@ -1721,7 +1735,8 @@ def compose_rcs_runner(
                 "hostname": host_name,
                 "domainname": env.get("ROOT_DOMAIN"),
                 "restart": "always",
-                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
+                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
+                % (build["image_name"], build["image_tags"][0]),
                 "depends_on": {
                     "repository-installer-10-2": {
                         "condition": "service_completed_successfully",
@@ -1815,7 +1830,9 @@ def deadline_command_compose_pulse_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_pulse_runner_10_2": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_compose_pulse_runner"]),
+            AssetKey(
+                [*ASSET_HEADER["key_prefix"], "deadline_command_compose_pulse_runner"]
+            ),
         ),
         "compose_networks_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
@@ -1894,7 +1911,8 @@ def compose_pulse_runner(
                     "hostname": host_name,
                     "domainname": env.get("ROOT_DOMAIN"),
                     "restart": "always",
-                    "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
+                    "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
+                    % (build["image_name"], build["image_tags"][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -1977,7 +1995,9 @@ def deadline_command_compose_worker_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_worker_runner_10_2": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_compose_worker_runner"]),
+            AssetKey(
+                [*ASSET_HEADER["key_prefix"], "deadline_command_compose_worker_runner"]
+            ),
         ),
         "compose_networks_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
@@ -2031,7 +2051,8 @@ def compose_worker_runner(
                     "hostname": host_name,
                     "domainname": env.get("ROOT_DOMAIN"),
                     "restart": "always",
-                    "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
+                    "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
+                    % (build["image_name"], build["image_tags"][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -2112,7 +2133,12 @@ def deadline_command_compose_webservice_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_webservice_runner_10_2": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_command_compose_webservice_runner"]),
+            AssetKey(
+                [
+                    *ASSET_HEADER["key_prefix"],
+                    "deadline_command_compose_webservice_runner",
+                ]
+            ),
         ),
         "compose_networks_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
@@ -2193,7 +2219,8 @@ def compose_webservice_runner(
                 "hostname": host_name,
                 "domainname": env.get("ROOT_DOMAIN"),
                 "restart": "always",
-                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s" % (build['image_name'], build['image_tags'][0]),
+                "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
+                % (build["image_name"], build["image_tags"][0]),
                 "depends_on": {
                     "deadline-rcs-runner-10-2": {
                         "condition": "service_started",
@@ -2280,11 +2307,10 @@ def compose_maps(
 
 @asset(
     **ASSET_HEADER,
-    ins={
-    },
+    ins={},
 )
 def cmd_extend(
-        context: AssetExecutionContext,
+    context: AssetExecutionContext,
 ) -> Generator[Output[list[Any]] | AssetMaterialization | Any, Any, None]:
 
     ret = []
@@ -2301,17 +2327,13 @@ def cmd_extend(
 
 @asset(
     **ASSET_HEADER,
-    ins={
-    },
+    ins={},
 )
 def cmd_append(
-        context: AssetExecutionContext,
+    context: AssetExecutionContext,
 ) -> Generator[Output[dict[str, list[Any]]] | AssetMaterialization | Any, Any, None]:
 
-    ret = {
-        "cmd": [],
-        "exclude_from_quote": []
-    }
+    ret = {"cmd": [], "exclude_from_quote": []}
 
     yield Output(ret)
 
