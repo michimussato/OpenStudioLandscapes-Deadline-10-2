@@ -936,14 +936,14 @@ def compose_repository(
 
     service_name = "repository-installer-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_REPOSITORY"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     docker_dict = {
         "services": {
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("ROOT_DOMAIN"),
+                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                 **copy.deepcopy(network_dict),
                 **copy.deepcopy(volumes_dict),
                 **copy.deepcopy(ports_dict),
@@ -1304,7 +1304,7 @@ def compose_mongo_express(
 
     service_name = "mongo-express-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_MONGO_EXPRESS"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     # @formatter:off
     docker_dict = {
@@ -1313,7 +1313,7 @@ def compose_mongo_express(
                 "image": "docker.io/mongo-express",
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("ROOT_DOMAIN"),
+                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                 "restart": "always",
                 "environment": {
                     "ME_CONFIG_BASICAUTH_USERNAME": env.get(
@@ -1556,7 +1556,7 @@ def compose_mongodb(
 
     service_name = "mongodb-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_MONGODB"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     docker_dict = {
         "services": {
@@ -1564,7 +1564,7 @@ def compose_mongodb(
                 "image": "docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004",
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("ROOT_DOMAIN"),
+                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                 "restart": "always",
                 "command": [
                     "--port",
@@ -1726,14 +1726,14 @@ def compose_rcs_runner(
 
     service_name = "deadline-rcs-runner-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_RCS_RUNNER"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     docker_dict = {
         "services": {
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("ROOT_DOMAIN"),
+                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                 "restart": "always",
                 "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 % (build["image_name"], build["image_tags"][0]),
@@ -1896,7 +1896,7 @@ def compose_pulse_runner(
 
     service_name = "deadline-pulse-runner-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_PULSE_RUNNER"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     if DISABLE_LOCAL_PULSE:
 
@@ -1909,7 +1909,7 @@ def compose_pulse_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": env.get("ROOT_DOMAIN"),
+                    "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                     "restart": "always",
                     "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     % (build["image_name"], build["image_tags"][0]),
@@ -2036,7 +2036,7 @@ def compose_worker_runner(
 
     service_name = "deadline-worker-runner-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_WORKER_RUNNER"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     if DISABLE_LOCAL_WORKER:
 
@@ -2049,7 +2049,7 @@ def compose_worker_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": env.get("ROOT_DOMAIN"),
+                    "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                     "restart": "always",
                     "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     % (build["image_name"], build["image_tags"][0]),
@@ -2210,14 +2210,14 @@ def compose_webservice_runner(
 
     service_name = "deadline-webservice-runner-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join([service_name, env["ROOT_DOMAIN"]])
+    host_name = ".".join([env["HOSTNAME_WEBSERVICE_RUNNER"] or service_name, env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"]])
 
     docker_dict = {
         "services": {
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("ROOT_DOMAIN"),
+                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
                 "restart": "always",
                 "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 % (build["image_name"], build["image_tags"][0]),

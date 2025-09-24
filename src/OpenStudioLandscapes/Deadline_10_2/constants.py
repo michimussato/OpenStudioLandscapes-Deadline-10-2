@@ -47,6 +47,15 @@ ASSET_HEADER = {
 FEATURE_CONFIGS = {
     OpenStudioLandscapesConfig.DEFAULT: {
         "DOCKER_USE_CACHE": DOCKER_USE_CACHE,
+        "HOSTNAME_PULSE_RUNNER": "deadline-pulse-runner-10-2",
+        "HOSTNAME_MONGO_EXPRESS": "mongo-express-10-2",
+        "HOSTNAME_MONGODB": "mongodb-10-2",
+        "HOSTNAME_RCS_RUNNER": "deadline-rcs-runner-10-2",
+        "HOSTNAME_REPOSITORY": "repository-installer-10-2",
+        "HOSTNAME_WEBSERVICE_RUNNER": "deadline-webservice-runner-10-2",
+        "HOSTNAME_WORKER_RUNNER": "deadline-worker-runner-10-2",
+        "TELEPORT_ENTRY_POINT_HOST": "{{HOSTNAME_RCS_RUNNER}}",  # Either a hardcoded str or a ref to a Variable (with double {{ }}!)
+        "TELEPORT_ENTRY_POINT_PORT": "{{RCS_HTTP_PORT_HOST}}",  # Either a hardcoded str or a ref to a Variable (with double {{ }}!)
         "DEADLINE_VERSION": "10.2.1.1",
         "CONFIGS_ROOT": pathlib.Path(
             "{DOT_FEATURES}",
