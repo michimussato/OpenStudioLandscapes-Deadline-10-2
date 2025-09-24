@@ -198,6 +198,15 @@ The following variables are being declared in `OpenStudioLandscapes.Deadline_10_
 | Variable                                       | Type   | Value                                                                                                                |
 | :--------------------------------------------- | :----- | :------------------------------------------------------------------------------------------------------------------- |
 | `DOCKER_USE_CACHE`                             | `bool` | `False`                                                                                                              |
+| `HOSTNAME_PULSE_RUNNER`                        | `str`  | `deadline-pulse-runner-10-2`                                                                                         |
+| `HOSTNAME_MONGO_EXPRESS`                       | `str`  | `mongo-express-10-2`                                                                                                 |
+| `HOSTNAME_MONGODB`                             | `str`  | `mongodb-10-2`                                                                                                       |
+| `HOSTNAME_RCS_RUNNER`                          | `str`  | `deadline-rcs-runner-10-2`                                                                                           |
+| `HOSTNAME_REPOSITORY`                          | `str`  | `repository-installer-10-2`                                                                                          |
+| `HOSTNAME_WEBSERVICE_RUNNER`                   | `str`  | `deadline-webservice-runner-10-2`                                                                                    |
+| `HOSTNAME_WORKER_RUNNER`                       | `str`  | `deadline-worker-runner-10-2`                                                                                        |
+| `TELEPORT_ENTRY_POINT_HOST`                    | `str`  | `{{HOSTNAME_RCS_RUNNER}}`                                                                                            |
+| `TELEPORT_ENTRY_POINT_PORT`                    | `str`  | `{{RCS_HTTP_PORT_HOST}}`                                                                                             |
 | `DEADLINE_VERSION`                             | `str`  | `10.2.1.1`                                                                                                           |
 | `CONFIGS_ROOT`                                 | `str`  | `{DOT_FEATURES}/OpenStudioLandscapes-Deadline-10-2/.payload/config`                                                  |
 | `INSTALLER_AWSPortalLink`                      | `str`  | `{DOT_FEATURES}/OpenStudioLandscapes-Deadline-10-2/.payload/bin/AWSPortalLink-1.2.1.0-linux-x64-installer.run`       |
@@ -232,11 +241,12 @@ The following variables are being declared in `OpenStudioLandscapes.Deadline_10_
 
 | Feature                             | GitHub                                                                                                                                     | Discord                                                                |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
-| OpenStudioLandscapes                | [https://github.com/michimussato/OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes)                               | [# openstudiolandscapes-general](https://discord.com/invite/aYnJnaqE)  |
-| OpenStudioLandscapes-Ayon           | [https://github.com/michimussato/OpenStudioLandscapes-Ayon](https://github.com/michimussato/OpenStudioLandscapes-Ayon)                     | [# openstudiolandscapes-ayon](https://discord.gg/D4XrG99G)             |
-| OpenStudioLandscapes-Dagster        | [https://github.com/michimussato/OpenStudioLandscapes-Dagster](https://github.com/michimussato/OpenStudioLandscapes-Dagster)               | [# openstudiolandscapes-dagster](https://discord.gg/qFGWTWu4)          |
-| OpenStudioLandscapes-Kitsu          | [https://github.com/michimussato/OpenStudioLandscapes-Kitsu](https://github.com/michimussato/OpenStudioLandscapes-Kitsu)                   | [# openstudiolandscapes-kitsu](https://discord.gg/4UqHdsan)            |
+| OpenStudioLandscapes                | [https://github.com/michimussato/OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes)                               | [# openstudiolandscapes-general](https://discord.gg/F6bDRWsHac)        |
+| OpenStudioLandscapes-Ayon           | [https://github.com/michimussato/OpenStudioLandscapes-Ayon](https://github.com/michimussato/OpenStudioLandscapes-Ayon)                     | [# openstudiolandscapes-ayon](https://discord.gg/gd6etWAF3v)           |
+| OpenStudioLandscapes-Dagster        | [https://github.com/michimussato/OpenStudioLandscapes-Dagster](https://github.com/michimussato/OpenStudioLandscapes-Dagster)               | [# openstudiolandscapes-dagster](https://discord.gg/jwB3DwmKvs)        |
+| OpenStudioLandscapes-Kitsu          | [https://github.com/michimussato/OpenStudioLandscapes-Kitsu](https://github.com/michimussato/OpenStudioLandscapes-Kitsu)                   | [# openstudiolandscapes-kitsu](https://discord.gg/6cc6mkReJ7)          |
 | OpenStudioLandscapes-RustDeskServer | [https://github.com/michimussato/OpenStudioLandscapes-RustDeskServer](https://github.com/michimussato/OpenStudioLandscapes-RustDeskServer) | [# openstudiolandscapes-rustdeskserver](https://discord.gg/nJ8Ffd2xY3) |
+| OpenStudioLandscapes-Teleport       | [https://github.com/michimussato/OpenStudioLandscapes-Teleport](https://github.com/michimussato/OpenStudioLandscapes-Teleport)             | [# openstudiolandscapes-teleport](https://discord.gg/SNMCw5aDfm)       |
 | OpenStudioLandscapes-Template       | [https://github.com/michimussato/OpenStudioLandscapes-Template](https://github.com/michimussato/OpenStudioLandscapes-Template)             | [# openstudiolandscapes-template](https://discord.gg/J59GYp3Wpy)       |
 | OpenStudioLandscapes-Twingate       | [https://github.com/michimussato/OpenStudioLandscapes-Twingate](https://github.com/michimussato/OpenStudioLandscapes-Twingate)             | [# openstudiolandscapes-twingate](https://discord.gg/tREYa6UNJf)       |
 
