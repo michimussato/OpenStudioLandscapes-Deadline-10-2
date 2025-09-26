@@ -14,10 +14,11 @@
    6. [Variables](#variables)
       1. [Feature Configs](#feature-configs)
 2. [Community](#community)
-3. [Get Deadline](#get-deadline)
-   1. [Get Deadline 10.2](#get-deadline-102)
-   2. [Instructions](#instructions)
-   1. [Documentation](#documentation)
+3. [Official Resources](#official-resources)
+   1. [Get Deadline](#get-deadline)
+      1. [Get Deadline 10.2](#get-deadline-102)
+      2. [Instructions](#instructions)
+   2. [Documentation](#documentation)
       1. [User Manual](#user-manual)
       2. [Scripting Reference](#scripting-reference)
       3. [Python Reference](#python-reference)
@@ -49,31 +50,25 @@ You feel like writing your own Feature? Go and check out the [OpenStudioLandscap
 Clone this repository into `OpenStudioLandscapes/.features`:
 
 ```shell
-
 # cd .features
 git clone https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
-
 ```
 
 Create `venv`:
 
 ```shell
-
 # cd .features/OpenStudioLandscapes-Deadline-10-2
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip setuptools
-
 ```
 
 Configure `venv`:
 
 ```shell
-
 # cd .features/OpenStudioLandscapes-Deadline-10-2
 pip install -e "../../[dev]"
 pip install -e ".[dev]"
-
 ```
 
 For more info see [VCS Support of pip](https://pip.pypa.io/en/stable/topics/vcs-support/).
@@ -83,7 +78,6 @@ For more info see [VCS Support of pip](https://pip.pypa.io/en/stable/topics/vcs-
 Add the following code to `OpenStudioLandscapes.engine.features.FEATURES`:
 
 ```python
-
 FEATURES.update(
     "OpenStudioLandscapes-Deadline-10-2": {
         "enabled": True|False,
@@ -98,7 +92,6 @@ FEATURES.update(
         "feature_config": OpenStudioLandscapesConfig.DEFAULT,
     }
 )
-
 ```
 
 ## Testing
@@ -109,9 +102,7 @@ FEATURES.update(
 - https://pre-commit.com/hooks.html
 
 ```shell
-
 pre-commit install
-
 ```
 
 ### nox
@@ -119,33 +110,25 @@ pre-commit install
 #### Generate Report
 
 ```shell
-
 nox --no-error-on-missing-interpreters --report .nox/nox-report.json
-
 ```
 
 #### Re-Generate this README
 
 ```shell
-
 nox -v --add-timestamp --session readme
-
 ```
 
 #### Generate Sphinx Documentation
 
 ```shell
-
 nox -v --add-timestamp --session docs
-
 ```
 
 #### pylint
 
 ```shell
-
 nox -v --add-timestamp --session lint
-
 ```
 
 ##### pylint: disable=redefined-outer-name
@@ -157,9 +140,7 @@ nox -v --add-timestamp --session lint
 Acronym for Software Bill of Materials
 
 ```shell
-
 nox -v --add-timestamp --session sbom
-
 ```
 
 We create the following SBOMs:
@@ -257,9 +238,11 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-# Get Deadline
+# Official Resources
 
 [![ The Deadline Installers are not part of the `OpenStudioLandscapes-Deadline` Feature. You will have to download the installers manually before you can use this Feature. ](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/_static/Product_Button_Deadline.png)](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html)
+
+## Get Deadline
 
 - https://aws.amazon.com/thinkbox-deadline
 - https://aws.amazon.com/media-services/thinkbox/
