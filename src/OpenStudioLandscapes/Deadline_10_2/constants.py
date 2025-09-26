@@ -24,7 +24,7 @@ from dagster import (
 LOGGER = get_dagster_logger(__name__)
 
 from OpenStudioLandscapes.engine.constants import DOCKER_USE_CACHE_GLOBAL
-from OpenStudioLandscapes.engine.enums import OpenStudioLandscapesConfig
+from OpenStudioLandscapes.engine.enums import OpenStudioLandscapesConfig, FeatureVolumeType
 
 DOCKER_USE_CACHE = DOCKER_USE_CACHE_GLOBAL or False
 MONGODB_INSIDE_CONTAINER = False
@@ -94,15 +94,30 @@ FEATURE_CONFIGS = {
         .as_posix(),
         # Env Repository
         # This is where DeadlineRepository10 will get installed to:
-        f"REPOSITORY_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}": pathlib.Path(
-            "{DOT_LANDSCAPES}",
-            "{LANDSCAPE}",
-            f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
-            "data",
-            "opt",
-            "Thinkbox",
-            "DeadlineRepository10",
-        ).as_posix(),
+        f"REPOSITORY_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}": {
+            FeatureVolumeType.CONTAINED: pathlib.Path(
+                "{DOT_LANDSCAPES}",
+                "{LANDSCAPE}",
+                f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
+                "data",
+                "opt",
+                "Thinkbox",
+                "DeadlineRepository10",
+            )
+            .expanduser()
+            .as_posix(),
+            FeatureVolumeType.SHARED: pathlib.Path(
+                "{DOT_LANDSCAPES}",
+                "{DOT_SHARED_VOLUMES}",
+                f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
+                "data",
+                "opt",
+                "Thinkbox",
+                "DeadlineRepository10",
+            )
+            .expanduser()
+            .as_posix(),
+        }[FeatureVolumeType.CONTAINED],
         # This is where DeadlineDatabase10 will get installed to:
         # (provided MONGODB_INSIDE_CONTAINER is set to False)
         #
@@ -121,18 +136,30 @@ FEATURE_CONFIGS = {
         #         "Thinkbox",
         #         "DeadlineDatabase10",
         #     ).as_posix(),
-        f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}":
-        #################################################################
-        # Inside Landscape:
-        pathlib.Path(
-            "{DOT_LANDSCAPES}",
-            "{LANDSCAPE}",
-            f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
-            "data",
-            "opt",
-            "Thinkbox",
-            "DeadlineDatabase10",
-        ).as_posix(),
+        f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}": {
+            FeatureVolumeType.CONTAINED: pathlib.Path(
+                "{DOT_LANDSCAPES}",
+                "{LANDSCAPE}",
+                f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
+                "data",
+                "opt",
+                "Thinkbox",
+                "DeadlineDatabase10",
+            )
+            .expanduser()
+            .as_posix(),
+            FeatureVolumeType.SHARED: pathlib.Path(
+                "{DOT_LANDSCAPES}",
+                "{DOT_SHARED_VOLUMES}",
+                f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
+                "data",
+                "opt",
+                "Thinkbox",
+                "DeadlineDatabase10",
+            )
+            .expanduser()
+            .as_posix(),
+        }[FeatureVolumeType.CONTAINED],
         # #################################################################
         # # Test DB:
         # "test_db_10_2": pathlib.Path(
