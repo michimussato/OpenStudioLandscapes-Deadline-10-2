@@ -8,7 +8,7 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
     ## Some Specific information
 
     doc.add_heading(
-        text="Get Deadline",
+        text="Official Resources",
         level=1,
     )
 
@@ -26,6 +26,11 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
             }["Deadline"],
             link="https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html",
         ).__str__()
+    )
+
+    doc.add_heading(
+        text="Get Deadline",
+        level=2,
     )
 
     doc.add_unordered_list(
