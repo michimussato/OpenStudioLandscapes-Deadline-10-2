@@ -193,8 +193,8 @@ def deadline_ini(
         [Deadline]
         # # For Remote
         # ConnectionType=Remote
-        # ProxyRoot=deadline-rcs-runner-10-2.farm.evil:8888
-        # ProxyRoot0=deadline-rcs-runner-10-2.farm.evil:8888
+        # ProxyRoot=deadline-rcs-runner-10-2.{OPENSTUDIOLANDSCAPES__DOMAIN_LAN}:8888
+        # ProxyRoot0=deadline-rcs-runner-10-2.{OPENSTUDIOLANDSCAPES__DOMAIN_LAN}:8888
         # ###
         # #################################
         # For Repository
@@ -375,7 +375,7 @@ def build_docker_image(
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
-        env.get("LANDSCAPE"),
+        env.get("LANDSCAPE", "default"),
         f"{ASSET_HEADER['group_name']}__{'__'.join(ASSET_HEADER['key_prefix'])}",
         "__".join(context.asset_key.path),
         "Dockerfiles",
@@ -396,9 +396,9 @@ def build_docker_image(
 
     # @formatter:off
     files_10_2 = {
-        "AWSPortalLink.run": env.get(f"INSTALLER_AWSPortalLink"),
-        "DeadlineClient.run": env.get(f"INSTALLER_DeadlineClient"),
-        "DeadlineRepository.run": env.get(f"INSTALLER_DeadlineRepository"),
+        "AWSPortalLink.run": env["INSTALLER_AWSPortalLink"],
+        "DeadlineClient.run": env["INSTALLER_DeadlineClient"],
+        "DeadlineRepository.run": env["INSTALLER_DeadlineRepository"],
     }
     # @formatter:on
 
@@ -571,11 +571,11 @@ def deadline_command_install_repository(
         "--installmongodb",
         "false",
         "--dbhost",
-        env.get("MONGO_DB_HOST"),
+        env["MONGO_DB_HOST"],
         "--dbport",
-        env.get("MONGO_DB_PORT_HOST"),
+        env["MONGO_DB_PORT_HOST"],
         "--dbname",
-        env.get("MONGO_DB_NAME"),
+        env["MONGO_DB_NAME"],
         "--dbauth",
         "false",
         "--dbssl",
@@ -901,11 +901,11 @@ def compose_repository(
         }
         ports_dict = {"ports": []}
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     volumes_dict = {
         "volumes": [
-            f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
+            f"{env['REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix'])]}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -948,7 +948,7 @@ def compose_repository(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 **copy.deepcopy(network_dict),
                 **copy.deepcopy(volumes_dict),
                 **copy.deepcopy(ports_dict),
@@ -1017,7 +1017,7 @@ def deadline_command_build_docker_image_client(
         "--launcherdaemon",
         "false",
         "--httpport",
-        env.get("RCS_HTTP_PORT_CONTAINER"),
+        env["RCS_HTTP_PORT_CONTAINER"],
         "--enabletls",
         "false",
         "--proxyalwaysrunning",
@@ -1027,7 +1027,7 @@ def deadline_command_build_docker_image_client(
         "--webserviceuser",
         "root",
         "--webservice_httpport",
-        env.get("WEBSERVICE_HTTP_PORT_CONTAINER"),
+        env["WEBSERVICE_HTTP_PORT_CONTAINER"],
         "--webservice_enabletls",
         "false",
         # This is new for 10.4:
@@ -1301,11 +1301,11 @@ def compose_mongo_express(
         }
         ports_dict = {
             "ports": [
-                f"{env.get('MONGO_EXPRESS_PORT_HOST')}:{env.get('MONGO_EXPRESS_PORT_CONTAINER')}",
+                f"{env['MONGO_EXPRESS_PORT_HOST']}:{env['MONGO_EXPRESS_PORT_CONTAINER']}",
             ]
         }
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     service_name = "mongo-express-10-2"
     container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
@@ -1323,28 +1323,28 @@ def compose_mongo_express(
                 "image": "docker.io/mongo-express",
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 "restart": "always",
                 "environment": {
-                    "ME_CONFIG_BASICAUTH_USERNAME": env.get(
+                    "ME_CONFIG_BASICAUTH_USERNAME": env[
                         "ME_CONFIG_BASICAUTH_USERNAME"
-                    ),
-                    "ME_CONFIG_BASICAUTH_PASSWORD": env.get(
+                    ],
+                    "ME_CONFIG_BASICAUTH_PASSWORD": env[
                         "ME_CONFIG_BASICAUTH_PASSWORD"
-                    ),
-                    "ME_CONFIG_OPTIONS_EDITORTHEME": env.get(
+                    ],
+                    "ME_CONFIG_OPTIONS_EDITORTHEME": env[
                         "ME_CONFIG_OPTIONS_EDITORTHEME"
-                    ),
-                    "ME_CONFIG_MONGODB_SERVER": env.get("ME_CONFIG_MONGODB_SERVER"),
+                    ],
+                    "ME_CONFIG_MONGODB_SERVER": env["ME_CONFIG_MONGODB_SERVER"],
                     "ME_CONFIG_MONGODB_PORT": str(
-                        env.get("ME_CONFIG_MONGODB_PORT")
+                        env["ME_CONFIG_MONGODB_PORT"]
                     ).format(
-                        MONGO_DB_PORT_CONTAINER=env.get("MONGO_DB_PORT_CONTAINER")
+                        MONGO_DB_PORT_CONTAINER=env["MONGO_DB_PORT_CONTAINER"]
                     ),
                     "ME_CONFIG_MONGODB_URL": str(
-                        env.get("ME_CONFIG_MONGODB_URL")
+                        env["ME_CONFIG_MONGODB_URL"]
                     ).format(
-                        MONGO_DB_PORT_CONTAINER=env.get("MONGO_DB_PORT_CONTAINER")
+                        MONGO_DB_PORT_CONTAINER=env["MONGO_DB_PORT_CONTAINER"]
                     ),
                 },
                 "depends_on": [
@@ -1400,7 +1400,7 @@ def script_chown_mongodb(
     ret["script"] = str()
 
     mongo_db_dir_host = pathlib.Path(
-        env.get(f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}")
+        env[f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}"]
     )
 
     # sudo chown 101:65534 DeadlineDatabase10
@@ -1464,11 +1464,11 @@ def compose_mongodb(
         }
         ports_dict = {
             "ports": [
-                f"{env.get('MONGO_DB_PORT_HOST')}:{env.get('MONGO_DB_PORT_CONTAINER')}",
+                f"{env['MONGO_DB_PORT_HOST']}:{env['MONGO_DB_PORT_CONTAINER']}",
             ]
         }
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     # image = "docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004"
 
@@ -1485,7 +1485,7 @@ def compose_mongodb(
     volumes_dict = {"volumes": []}
 
     mongo_db_dir_host = pathlib.Path(
-        env.get(f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}")
+        env[f"DATABASE_INSTALL_DESTINATION_{'__'.join(ASSET_HEADER['key_prefix'])}"]
     )
     mongo_db_dir_host.mkdir(parents=True, exist_ok=True)
 
@@ -1536,7 +1536,7 @@ def compose_mongodb(
 
         volumes_dict["volumes"].insert(
             0,
-            f"{mongo_db_dir_host.as_posix()}:{env.get('DEFAULT_DBPATH_CONTAINER')}",
+            f"{mongo_db_dir_host.as_posix()}:{env['DEFAULT_DBPATH_CONTAINER']}",
         )
 
     # For portability, convert absolute volume paths to relative paths
@@ -1579,13 +1579,13 @@ def compose_mongodb(
                 "image": "docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004",
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 "restart": "always",
                 "command": [
                     "--port",
-                    env.get("MONGO_DB_PORT_CONTAINER"),
+                    env["MONGO_DB_PORT_CONTAINER"],
                     "--dbpath",
-                    f"{env.get('DEFAULT_DBPATH_CONTAINER')}",
+                    f"{env['DEFAULT_DBPATH_CONTAINER']}",
                     "--bind_ip_all",
                     "--noauth",
                     "--storageEngine",
@@ -1698,19 +1698,19 @@ def compose_rcs_runner(
         }
         ports_dict = {
             "ports": [
-                f"{env.get('RCS_HTTP_PORT_HOST')}:{env.get('RCS_HTTP_PORT_CONTAINER')}",
+                f"{env['RCS_HTTP_PORT_HOST']}:{env['RCS_HTTP_PORT_CONTAINER']}",
                 # Todo:
                 #  - [ ] Expose OpenStudioLandscapes standard Ports (https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/considerations.html#firewall-anti-virus-security-considerations)
             ]
         }
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     volumes_dict = {
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
+            f"{env['REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix'])]}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -1753,7 +1753,7 @@ def compose_rcs_runner(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 "restart": "always",
                 "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 % (build["image_name"], build["image_tags"][0]),
@@ -1768,7 +1768,7 @@ def compose_rcs_runner(
                         "CMD",
                         "curl",
                         "-f",
-                        f"http://localhost:{env.get('RCS_HTTP_PORT_CONTAINER')}",
+                        f"http://localhost:{env['RCS_HTTP_PORT_CONTAINER']}",
                     ],
                     "interval": "10s",
                     "timeout": "2s",
@@ -1879,13 +1879,13 @@ def compose_pulse_runner(
         }
         ports_dict = {"ports": []}
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     volumes_dict = {
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
+            f"{env['REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix'])]}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -1934,7 +1934,7 @@ def compose_pulse_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                    "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                     "restart": "always",
                     "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     % (build["image_name"], build["image_tags"][0]),
@@ -2049,13 +2049,13 @@ def compose_worker_runner(
         }
         ports_dict = {"ports": []}
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     volumes_dict = {
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
+            f"{env['REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix'])]}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -2079,7 +2079,7 @@ def compose_worker_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                    "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                     "restart": "always",
                     "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     % (build["image_name"], build["image_tags"][0]),
@@ -2195,11 +2195,11 @@ def compose_webservice_runner(
         }
         ports_dict = {
             "ports": [
-                f"{env.get('WEBSERVICE_HTTP_PORT_HOST')}:{env.get('WEBSERVICE_HTTP_PORT_CONTAINER')}",
+                f"{env['WEBSERVICE_HTTP_PORT_HOST']}:{env['WEBSERVICE_HTTP_PORT_CONTAINER']}",
             ]
         }
     elif "network_mode" in compose_networks_10_2:
-        network_dict = {"network_mode": compose_networks_10_2.get("network_mode")}
+        network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
         ports_dict = {}
     else:
         network_dict = {}
@@ -2209,7 +2209,7 @@ def compose_webservice_runner(
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{env.get('REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix']))}:/opt/Thinkbox/DeadlineRepository10",
+            f"{env['REPOSITORY_INSTALL_DESTINATION_%s' % '__'.join(ASSET_HEADER['key_prefix'])]}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -2252,7 +2252,7 @@ def compose_webservice_runner(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
+                "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 "restart": "always",
                 "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 % (build["image_name"], build["image_tags"][0]),
@@ -2266,7 +2266,7 @@ def compose_webservice_runner(
                         "CMD",
                         "curl",
                         "-f",
-                        f"http://localhost:{env.get('WEBSERVICE_HTTP_PORT_CONTAINER')}",
+                        f"http://localhost:{env['WEBSERVICE_HTTP_PORT_CONTAINER']}",
                     ],
                     "interval": "10s",
                     "timeout": "2s",
