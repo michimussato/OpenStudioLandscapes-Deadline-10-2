@@ -43,6 +43,7 @@ from OpenStudioLandscapes.engine.utils.docker import *
 
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
+
 constants = get_constants(
     ASSET_HEADER=ASSET_HEADER,
 )
@@ -518,13 +519,10 @@ def build_docker_image(
 
     context.log.info(f"{cmds = }")
 
-    logs = []
-
-    for logs_ in docker_process_cmds(
+    logs = docker_do(
         context=context,
         cmds=cmds,
-    ):
-        logs.append(logs_)
+    )
 
     yield Output(image_data)
 
@@ -843,13 +841,10 @@ def build_docker_image_repository(
 
     context.log.info(f"{cmds = }")
 
-    logs = []
-
-    for logs_ in docker_process_cmds(
+    logs = docker_do(
         context=context,
         cmds=cmds,
-    ):
-        logs.append(logs_)
+    )
 
     yield Output(image_data)
 
@@ -1207,13 +1202,10 @@ def build_docker_image_client(
 
     context.log.info(f"{cmds = }")
 
-    logs = []
-
-    for logs_ in docker_process_cmds(
+    logs = docker_do(
         context=context,
         cmds=cmds,
-    ):
-        logs.append(logs_)
+    )
 
     yield Output(image_data)
 
