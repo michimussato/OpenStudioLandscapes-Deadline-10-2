@@ -239,7 +239,7 @@ To follow up on the previous LinkedIn publications, visit:
 
 # Official Resources
 
-[![ The Deadline Installers are not part of the `OpenStudioLandscapes-Deadline` Feature. You will have to download the installers manually before you can use this Feature. ](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/_static/Product_Button_Deadline.png)](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html)
+[![The Deadline Installers are not part of the `OpenStudioLandscapes-Deadline` Feature. You will have to download the installers manually before you can use this Feature. ](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/_static/Product_Button_Deadline.png)](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html)
 
 ## Get Deadline
 
@@ -266,7 +266,6 @@ If you prefer to just download Deadline and use it without any AWS Cloud feature
 Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.
 
 ```shell
-
 $ tree .payload
 .payload
 ├── bin
@@ -280,7 +279,6 @@ $ tree .payload
 └── data
 
 4 directories, 6 files
-
 ```
 
 ## Documentation

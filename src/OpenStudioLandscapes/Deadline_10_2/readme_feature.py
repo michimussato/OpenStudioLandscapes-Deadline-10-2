@@ -15,9 +15,9 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
     doc.add_paragraph(
         snakemd.Inline(
             text=textwrap.dedent(
-                """
+                """\
                 The Deadline Installers are not part of the `OpenStudioLandscapes-Deadline` Feature.
-                You will have to download the installers manually before you can use this Feature.
+                You will have to download the installers manually before you can use this Feature.\
                 """
             ),
             image={
@@ -47,9 +47,9 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     doc.add_paragraph(
         text=textwrap.dedent(
-            """
+            """\
             Deadline is free, however (legally), an AWS account is required to access the download area.
-            Also, the account is required to use all Deadline features. Register here:
+            Also, the account is required to use all Deadline features. Register here:\
             """
         )
     )
@@ -62,8 +62,8 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     doc.add_paragraph(
         text=textwrap.dedent(
-            """
-            Once logged in, you can download the Deadline tar archive from this website:
+            """\
+            Once logged in, you can download the Deadline tar archive from this website:\
             """
         )
     )
@@ -76,9 +76,9 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     doc.add_paragraph(
         text=textwrap.dedent(
-            """
+            """\
             If you prefer to just download Deadline and use it without any AWS Cloud features,
-            here you can get the `tar` archive and the `sha256` directly:
+            here you can get the `tar` archive and the `sha256` directly:\
             """
         )
     )
@@ -97,15 +97,15 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     doc.add_paragraph(
         text=textwrap.dedent(
-            """
-            Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.
+            """\
+            Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.\
             """
         )
     )
 
     doc.add_code(
         textwrap.dedent(
-            """
+            """\
             $ tree .payload
             .payload
             ├── bin
@@ -118,8 +118,8 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
             ├── config
             └── data
 
-            4 directories, 6 files
-            """
+            4 directories, 6 files\
+"""
         ),
         lang="shell",
     )
