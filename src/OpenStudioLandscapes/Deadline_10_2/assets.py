@@ -43,7 +43,6 @@ from OpenStudioLandscapes.engine.utils.docker import *
 
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
-
 constants = get_constants(
     ASSET_HEADER=ASSET_HEADER,
 )
@@ -1318,24 +1317,16 @@ def compose_mongo_express(
                 "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
                 "restart": "always",
                 "environment": {
-                    "ME_CONFIG_BASICAUTH_USERNAME": env[
-                        "ME_CONFIG_BASICAUTH_USERNAME"
-                    ],
-                    "ME_CONFIG_BASICAUTH_PASSWORD": env[
-                        "ME_CONFIG_BASICAUTH_PASSWORD"
-                    ],
+                    "ME_CONFIG_BASICAUTH_USERNAME": env["ME_CONFIG_BASICAUTH_USERNAME"],
+                    "ME_CONFIG_BASICAUTH_PASSWORD": env["ME_CONFIG_BASICAUTH_PASSWORD"],
                     "ME_CONFIG_OPTIONS_EDITORTHEME": env[
                         "ME_CONFIG_OPTIONS_EDITORTHEME"
                     ],
                     "ME_CONFIG_MONGODB_SERVER": env["ME_CONFIG_MONGODB_SERVER"],
-                    "ME_CONFIG_MONGODB_PORT": str(
-                        env["ME_CONFIG_MONGODB_PORT"]
-                    ).format(
+                    "ME_CONFIG_MONGODB_PORT": str(env["ME_CONFIG_MONGODB_PORT"]).format(
                         MONGO_DB_PORT_CONTAINER=env["MONGO_DB_PORT_CONTAINER"]
                     ),
-                    "ME_CONFIG_MONGODB_URL": str(
-                        env["ME_CONFIG_MONGODB_URL"]
-                    ).format(
+                    "ME_CONFIG_MONGODB_URL": str(env["ME_CONFIG_MONGODB_URL"]).format(
                         MONGO_DB_PORT_CONTAINER=env["MONGO_DB_PORT_CONTAINER"]
                     ),
                 },
