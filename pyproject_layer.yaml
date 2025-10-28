@@ -1,0 +1,24 @@
+project:
+  description: Deadline 10.2 Feature for OpenStudioLandscapes
+  name: OpenStudioLandscapes-Deadline-10-2
+  optional-dependencies:
+    dev:
+    - OpenStudioLandscapes-Deadline-10-2[testing]
+    - OpenStudioLandscapes-Deadline-10-2[lint]
+    - OpenStudioLandscapes-Deadline-10-2[nox]
+    - OpenStudioLandscapes-Deadline-10-2[sbom]
+    - OpenStudioLandscapes-Deadline-10-2[coverage]
+    - OpenStudioLandscapes-Deadline-10-2[readme]
+    nox:
+    - OpenStudioLandscapes-Deadline-10-2[testing]
+    sbom:
+    - OpenStudioLandscapes-Deadline-10-2[graphviz]
+  urls:
+    Homepage: https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2
+tool:
+  dagster:
+    code_location_name: OpenStudioLandscapes-Deadline-10-2
+    module_name: OpenStudioLandscapes.Deadline_10_2.definitions
+  setuptools:
+    packages:
+    - OpenStudioLandscapes.Deadline_10_2
