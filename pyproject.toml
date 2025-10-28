@@ -94,16 +94,9 @@ code_location_name = "OpenStudioLandscapes-Deadline-10-2"
 module_name = "OpenStudioLandscapes.Deadline_10_2.definitions"
 
 [tool.setuptools]
-include-package-data = true
+packages = [
+    "OpenStudioLandscapes.Deadline_10_2",
+]
 platforms = [
     "Linux",
-]
-
-[tool.setuptools.packages.find]
-exclude = [
-    "tests",
-]
-namespaces = true
-where = [
-    "src",
 ]
