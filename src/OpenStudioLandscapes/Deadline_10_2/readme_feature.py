@@ -121,7 +121,7 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
             4 directories, 6 files\
 """
         ),
-        lang="shell",
+        lang="generic",
     )
 
     doc.add_heading(
@@ -173,6 +173,51 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
             "[https://awsthinkbox.zendesk.com/hc/en-us/articles/22883209044759-AWS-Deadline-Cloud-UBL-for-Deadline-10-on-AWS](https://awsthinkbox.zendesk.com/hc/en-us/articles/22883209044759-AWS-Deadline-Cloud-UBL-for-Deadline-10-on-AWS)",
         ]
     )
+
+    doc.add_heading(
+        text="Known Issues",
+        level=2,
+    )
+
+    doc.add_heading(
+        text='Could not find the Qt platform plugin "wayland"',
+        level=3,
+    )
+
+    doc.add_heading(
+        text='Error Message',
+        level=4,
+    )
+
+    doc.add_code(
+        textwrap.dedent(
+            """\
+            # $ /opt/Thinkbox/Deadline10/bin/deadlinemonitor
+            qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
+            This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+            
+            Available platform plugins are: linuxfb, minimal, offscreen, vnc, webgl, xcb.
+            
+            Aborted                    (core dumped) /opt/Thinkbox/Deadline10/bin/deadlinemonitor\
+"""
+        ),
+        lang="generic",
+    )
+
+    doc.add_heading(
+        text="Solution",
+        level=4,
+    )
+
+    doc.add_code(
+        textwrap.dedent(
+            """\
+            export QT_QPA_PLATFORM=xcb\
+"""
+        ),
+        lang="shell",
+    )
+
 
     return doc
 
