@@ -383,7 +383,7 @@ def build_docker_image(
         tags,
         build_base_parent_image_prefix,
         build_base_parent_image_name,
-        build_base_parent_image_tags
+        build_base_parent_image_tags,
     ) = get_image_metadata(
         context=context,
         docker_image=docker_image,
@@ -706,7 +706,7 @@ def build_docker_image_repository(
         tags,
         build_base_parent_image_prefix,
         build_base_parent_image_name,
-        build_base_parent_image_tags
+        build_base_parent_image_tags,
     ) = get_image_metadata(
         context=context,
         docker_image=build_docker_image_stem,
@@ -1032,7 +1032,7 @@ def build_docker_image_client(
         tags,
         build_base_parent_image_prefix,
         build_base_parent_image_name,
-        build_base_parent_image_tags
+        build_base_parent_image_tags,
     ) = get_image_metadata(
         context=context,
         docker_image=build_docker_image_stem,

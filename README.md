@@ -23,6 +23,8 @@
       2. [Scripting Reference](#scripting-reference)
       3. [Python Reference](#python-reference)
       4. [Information on Usage Based Licensing (UBL)](#information-on-usage-based-licensing-ubl)
+   3. [Known Issues](#known-issues)
+      1. [Could not find the Qt platform plugin "wayland"](#could-not-find-the-qt-platform-plugin-wayland)
 
 ***
 
@@ -267,7 +269,7 @@ If you prefer to just download Deadline and use it without any AWS Cloud feature
 
 Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.
 
-```shell
+```generic
 $ tree .payload
 .payload
 ├── bin
@@ -301,3 +303,25 @@ $ tree .payload
 
 - [https://marketplace.thinkboxsoftware.com](https://marketplace.thinkboxsoftware.com)
 - [https://awsthinkbox.zendesk.com/hc/en-us/articles/22883209044759-AWS-Deadline-Cloud-UBL-for-Deadline-10-on-AWS](https://awsthinkbox.zendesk.com/hc/en-us/articles/22883209044759-AWS-Deadline-Cloud-UBL-for-Deadline-10-on-AWS)
+
+## Known Issues
+
+### Could not find the Qt platform plugin "wayland"
+
+#### Error Message
+
+```generic
+# $ /opt/Thinkbox/Deadline10/bin/deadlinemonitor
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: linuxfb, minimal, offscreen, vnc, webgl, xcb.
+
+Aborted                    (core dumped) /opt/Thinkbox/Deadline10/bin/deadlinemonitor
+```
+
+#### Solution
+
+```shell
+export QT_QPA_PLATFORM=xcb
+```

@@ -185,7 +185,7 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
     )
 
     doc.add_heading(
-        text='Error Message',
+        text="Error Message",
         level=4,
     )
 
@@ -217,7 +217,6 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         ),
         lang="shell",
     )
-
 
     return doc
 
