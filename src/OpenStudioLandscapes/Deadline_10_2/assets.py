@@ -5,7 +5,6 @@ import shlex
 import shutil
 import subprocess
 import textwrap
-import time
 import urllib.parse
 from collections import ChainMap
 from functools import reduce
@@ -39,7 +38,6 @@ from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
 from OpenStudioLandscapes.engine.utils import *
-from OpenStudioLandscapes.engine.utils.docker import *
 
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
@@ -342,9 +340,9 @@ def apt_packages(
         "group_in": AssetIn(
             AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
         ),
-        # "docker_image": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "docker_image"])
-        # ),
+        "docker_config": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "docker_config"])
+        ),
         "apt_packages": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "apt_packages"]),
         ),
@@ -358,6 +356,7 @@ def build_docker_image(
     env: dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
     group_in: dict,  # pylint: disable=redefined-outer-name
+    docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
     apt_packages: dict[str, list[str]],  # pylint: disable=redefined-outer-name
     pip_packages: list,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[dict] | AssetMaterialization, None, None]:
@@ -659,15 +658,15 @@ def deadline_script_install_repository(
         "docker_config_json": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "docker_config_json"]),
         ),
-        # "docker_image": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "docker_image"])
-        # ),
-        "group_in": AssetIn(
-            AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
+        "docker_config": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "docker_config"])
         ),
-        # "build_base_image_data": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
+        # "group_in": AssetIn(
+        #     AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
         # ),
+        "build_docker_image_stem": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
+        ),
         "deadline_script_install_repository": AssetIn(
             AssetKey(
                 [*ASSET_HEADER["key_prefix"], "deadline_script_install_repository"]
@@ -679,13 +678,14 @@ def build_docker_image_repository(
     context: AssetExecutionContext,
     env: dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
-    group_in: dict,  # pylint: disable=redefined-outer-name
-    # build_base_image_data: dict,  # pylint: disable=redefined-outer-name
+    docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
+    # group_in: dict,  # pylint: disable=redefined-outer-name
+    build_docker_image_stem: dict,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[dict] | AssetMaterialization, None, None]:
     """ """
 
-    docker_image: dict = group_in["docker_image"]
+    # docker_image: dict = build_docker_image_stem
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
@@ -709,7 +709,7 @@ def build_docker_image_repository(
         build_base_parent_image_tags
     ) = get_image_metadata(
         context=context,
-        docker_image=docker_image,
+        docker_image=build_docker_image_stem,
         docker_config=docker_config,
         env=env,
     )
@@ -767,7 +767,7 @@ def build_docker_image_repository(
         image_name=image_name,
         image_prefixes=image_prefixes,
         tags=tags,
-        docker_image=docker_image,
+        docker_image=build_docker_image_stem,
         docker_config=docker_config,
         docker_config_json=docker_config_json,
         docker_file=docker_file,
@@ -980,15 +980,15 @@ def deadline_command_build_docker_image_client(
         "docker_config_json": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "docker_config_json"]),
         ),
-        # "docker_image": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "docker_image"])
-        # ),
-        "group_in": AssetIn(
-            AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
+        "docker_config": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "docker_config"])
         ),
-        # "build_base_image_data": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
+        # "group_in": AssetIn(
+        #     AssetKey([*ASSET_HEADER_BASE["key_prefix"], str(GroupIn.BASE_IN)])
         # ),
+        "build_docker_image_stem": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
+        ),
         "deadline_command_build_client_image_10_2": AssetIn(
             AssetKey(
                 [
@@ -1003,13 +1003,14 @@ def build_docker_image_client(
     context: AssetExecutionContext,
     env: dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
-    group_in: dict,  # pylint: disable=redefined-outer-name
-    # build_base_image_data: dict,  # pylint: disable=redefined-outer-name
+    docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
+    # group_in: dict,  # pylint: disable=redefined-outer-name
+    build_docker_image_stem: dict,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: list,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[dict] | AssetMaterialization, None, None]:
     """ """
 
-    docker_image: dict = group_in["docker_image"]
+    # docker_image: dict = group_in["docker_image"]
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
@@ -1033,7 +1034,7 @@ def build_docker_image_client(
         build_base_parent_image_tags
     ) = get_image_metadata(
         context=context,
-        docker_image=docker_image,
+        docker_image=build_docker_image_stem,
         docker_config=docker_config,
         env=env,
     )
@@ -1087,7 +1088,7 @@ def build_docker_image_client(
         image_name=image_name,
         image_prefixes=image_prefixes,
         tags=tags,
-        docker_image=docker_image,
+        docker_image=build_docker_image_stem,
         docker_config=docker_config,
         docker_config_json=docker_config_json,
         docker_file=docker_file,
