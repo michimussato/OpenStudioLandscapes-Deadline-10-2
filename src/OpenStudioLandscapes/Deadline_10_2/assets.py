@@ -878,7 +878,7 @@ def compose_repository(
                 "restart": "no",
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s:%s" % (build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
                 "command": ["/ENTRYPOINT/install_repository.sh"],
             },
         },
@@ -1629,7 +1629,7 @@ def compose_rcs_runner(
                 "restart": "always",
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s:%s" % (build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
                 "depends_on": {
                     "repository-installer-10-2": {
                         "condition": "service_completed_successfully",
@@ -1811,7 +1811,7 @@ def compose_pulse_runner(
                     "restart": "always",
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
-                    "image": "%s:%s" % (build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -1957,7 +1957,7 @@ def compose_worker_runner(
                     "restart": "always",
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
-                    "image": "%s:%s" % (build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -2131,7 +2131,7 @@ def compose_webservice_runner(
                 "restart": "always",
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s:%s" % (build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
                 "depends_on": {
                     "deadline-rcs-runner-10-2": {
                         "condition": "service_started",
