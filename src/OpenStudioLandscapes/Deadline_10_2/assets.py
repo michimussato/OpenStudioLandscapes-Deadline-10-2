@@ -875,10 +875,15 @@ def compose_repository(
                 **copy.deepcopy(volumes_dict),
                 **copy.deepcopy(ports_dict),
                 "depends_on": list(compose_mongodb_10_2.get("services", {}).keys()),
-                "restart": "no",
+                "restart": DockerComposePolicies.RESTART_POLICY.NO.value,
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s"
+                % (
+                    build["image_prefixes"],
+                    build["image_name"],
+                    build["image_tags"][0],
+                ),
                 "command": ["/ENTRYPOINT/install_repository.sh"],
             },
         },
@@ -1117,9 +1122,9 @@ def compose_networks(
     Output[dict[str, dict[str, dict[str, str]]]] | AssetMaterialization, None, None
 ]:
 
-    compose_network_mode = ComposeNetworkMode.DEFAULT
+    compose_network_mode = DockerComposePolicies.NETWORK_MODE.DEFAULT
 
-    if compose_network_mode == ComposeNetworkMode.DEFAULT:
+    if compose_network_mode is DockerComposePolicies.NETWORK_MODE.DEFAULT:
         docker_dict = {
             "networks": {
                 "mongodb": {
@@ -1204,7 +1209,7 @@ def compose_mongo_express(
                 "container_name": container_name,
                 "hostname": host_name,
                 "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                "restart": "always",
+                "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 "environment": {
                     "ME_CONFIG_BASICAUTH_USERNAME": env["ME_CONFIG_BASICAUTH_USERNAME"],
                     "ME_CONFIG_BASICAUTH_PASSWORD": env["ME_CONFIG_BASICAUTH_PASSWORD"],
@@ -1452,7 +1457,7 @@ def compose_mongodb(
                 "container_name": container_name,
                 "hostname": host_name,
                 "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                "restart": "always",
+                "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 "command": [
                     "--port",
                     env["MONGO_DB_PORT_CONTAINER"],
@@ -1626,10 +1631,15 @@ def compose_rcs_runner(
                 "container_name": container_name,
                 "hostname": host_name,
                 "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                "restart": "always",
+                "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s"
+                % (
+                    build["image_prefixes"],
+                    build["image_name"],
+                    build["image_tags"][0],
+                ),
                 "depends_on": {
                     "repository-installer-10-2": {
                         "condition": "service_completed_successfully",
@@ -1808,10 +1818,15 @@ def compose_pulse_runner(
                     "container_name": container_name,
                     "hostname": host_name,
                     "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                    "restart": "always",
+                    "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
+                    "image": "%s%s:%s"
+                    % (
+                        build["image_prefixes"],
+                        build["image_name"],
+                        build["image_tags"][0],
+                    ),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -1954,10 +1969,15 @@ def compose_worker_runner(
                     "container_name": container_name,
                     "hostname": host_name,
                     "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                    "restart": "always",
+                    "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
+                    "image": "%s%s:%s"
+                    % (
+                        build["image_prefixes"],
+                        build["image_name"],
+                        build["image_tags"][0],
+                    ),
                     "depends_on": {
                         "deadline-rcs-runner-10-2": {
                             "condition": "service_started",
@@ -2128,10 +2148,15 @@ def compose_webservice_runner(
                 "container_name": container_name,
                 "hostname": host_name,
                 "domainname": env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-                "restart": "always",
+                "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
-                "image": "%s%s:%s" % (build["image_prefixes"], build["image_name"], build["image_tags"][0]),
+                "image": "%s%s:%s"
+                % (
+                    build["image_prefixes"],
+                    build["image_name"],
+                    build["image_tags"][0],
+                ),
                 "depends_on": {
                     "deadline-rcs-runner-10-2": {
                         "condition": "service_started",

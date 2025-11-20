@@ -871,6 +871,19 @@
         "message-id": "C0209"
     },
     {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_repository",
+        "line": 878,
+        "column": 27,
+        "endLine": 878,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
         "type": "convention",
         "module": "OpenStudioLandscapes.Deadline_10_2.assets",
         "obj": "compose_repository",
@@ -1014,6 +1027,32 @@
         "message-id": "C0116"
     },
     {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_networks",
+        "line": 1125,
+        "column": 27,
+        "endLine": 1125,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_networks",
+        "line": 1127,
+        "column": 31,
+        "endLine": 1127,
+        "endColumn": 52,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
         "type": "convention",
         "module": "OpenStudioLandscapes.Deadline_10_2.assets",
         "obj": "compose_mongo_express",
@@ -1025,6 +1064,19 @@
         "symbol": "missing-function-docstring",
         "message": "Missing function or method docstring",
         "message-id": "C0116"
+    },
+    {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_mongo_express",
+        "line": 1212,
+        "column": 27,
+        "endLine": 1212,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
     },
     {
         "type": "convention",
@@ -1103,6 +1155,19 @@
         "symbol": "f-string-without-interpolation",
         "message": "Using an f-string that does not have any interpolated variables",
         "message-id": "W1309"
+    },
+    {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_mongodb",
+        "line": 1460,
+        "column": 27,
+        "endLine": 1460,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
     },
     {
         "type": "refactor",
@@ -1196,6 +1261,19 @@
         "message-id": "C0209"
     },
     {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_rcs_runner",
+        "line": 1634,
+        "column": 27,
+        "endLine": 1634,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
         "type": "convention",
         "module": "OpenStudioLandscapes.Deadline_10_2.assets",
         "obj": "compose_rcs_runner",
@@ -1287,6 +1365,19 @@
         "message-id": "C0209"
     },
     {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_pulse_runner",
+        "line": 1821,
+        "column": 31,
+        "endLine": 1821,
+        "endColumn": 52,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
         "type": "convention",
         "module": "OpenStudioLandscapes.Deadline_10_2.assets",
         "obj": "compose_pulse_runner",
@@ -1363,6 +1454,19 @@
         "symbol": "consider-using-f-string",
         "message": "Formatting a regular string which could be an f-string",
         "message-id": "C0209"
+    },
+    {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_worker_runner",
+        "line": 1972,
+        "column": 31,
+        "endLine": 1972,
+        "endColumn": 52,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
     },
     {
         "type": "convention",
@@ -1456,6 +1560,19 @@
         "message-id": "C0209"
     },
     {
+        "type": "error",
+        "module": "OpenStudioLandscapes.Deadline_10_2.assets",
+        "obj": "compose_webservice_runner",
+        "line": 2151,
+        "column": 27,
+        "endLine": 2151,
+        "endColumn": 48,
+        "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
+        "symbol": "undefined-variable",
+        "message": "Undefined variable 'DockerComposePolicies'",
+        "message-id": "E0602"
+    },
+    {
         "type": "convention",
         "module": "OpenStudioLandscapes.Deadline_10_2.assets",
         "obj": "compose_webservice_runner",
@@ -1530,7 +1647,7 @@
         "endColumn": 51,
         "path": "src/OpenStudioLandscapes/Deadline_10_2/assets.py",
         "symbol": "unused-wildcard-import",
-        "message": "Unused import(s) docker_config, DOCKER_PROGRESS, DOCKER_CONFIG, DOCKER_USE_CACHE_GLOBAL, DOCKER_USE_CACHE_BASE, PREFIX_COMPOSE_SCOPE, GROUP_COMPOSE, KEY_COMPOSE, ASSET_HEADER_COMPOSE, ENVIRONMENT_COMPOSE, GROUP_COMPOSE_LICENSE_SERVER, KEY_COMPOSE_LICENSE_SERVER, ASSET_HEADER_COMPOSE_LICENSE_SERVER, ENVIRONMENT_COMPOSE_LICENSE_SERVER, GROUP_COMPOSE_WORKER, KEY_COMPOSE_WORKER, ASSET_HEADER_COMPOSE_WORKER, ENVIRONMENT_COMPOSE_WORKER, GROUP_BASE_ENV, KEY_BASE_ENV, ASSET_HEADER_BASE_ENV, GROUP_BASE, KEY_BASE, GROUP_LANDSCAPE_MAP, KEY_LANDSCAPE_MAP, ASSET_HEADER_LANDSCAPE_MAP, GROUP_TELEPORT, KEY_TELEPORT, ASSET_HEADER_TELEPORT, GROUP_TRAEFIK, KEY_TRAEFIK, ASSET_HEADER_TRAEFIK, GROUP_DISTRIBUTABLE, KEY_DISTRIBUTABLE, ASSET_HEADER_DISTRIBUTABLE, constants_base, features, enum, OpenStudioLandscapesConfig, FeatureVolumeType, ComposeScope, ComposeCmdExclusion, DockerRegistry, DockerRepositoryType, FEATURES, constants_compose, constants_compose_license_server and constants_compose_worker from wildcard import of OpenStudioLandscapes.engine.constants",
+        "message": "Unused import(s) docker_config, DOCKER_PROGRESS, DOCKER_CONFIG, DOCKER_USE_CACHE_GLOBAL, DOCKER_USE_CACHE_BASE, PREFIX_COMPOSE_SCOPE, GROUP_COMPOSE, KEY_COMPOSE, ASSET_HEADER_COMPOSE, ENVIRONMENT_COMPOSE, GROUP_COMPOSE_LICENSE_SERVER, KEY_COMPOSE_LICENSE_SERVER, ASSET_HEADER_COMPOSE_LICENSE_SERVER, ENVIRONMENT_COMPOSE_LICENSE_SERVER, GROUP_COMPOSE_WORKER, KEY_COMPOSE_WORKER, ASSET_HEADER_COMPOSE_WORKER, ENVIRONMENT_COMPOSE_WORKER, GROUP_BASE_ENV, KEY_BASE_ENV, ASSET_HEADER_BASE_ENV, GROUP_BASE, KEY_BASE, GROUP_LANDSCAPE_MAP, KEY_LANDSCAPE_MAP, ASSET_HEADER_LANDSCAPE_MAP, GROUP_TELEPORT, KEY_TELEPORT, ASSET_HEADER_TELEPORT, GROUP_TRAEFIK, KEY_TRAEFIK, ASSET_HEADER_TRAEFIK, GROUP_DISTRIBUTABLE, KEY_DISTRIBUTABLE, ASSET_HEADER_DISTRIBUTABLE, constants_base, features, enum, OpenStudioLandscapesConfig, FeatureVolumeType, ComposeScope, ComposeCmdExclusion, ComposeNetworkMode, DockerRegistry, DockerRepositoryType, FEATURES, constants_compose, constants_compose_license_server and constants_compose_worker from wildcard import of OpenStudioLandscapes.engine.constants",
         "message-id": "W0614"
     },
     {
