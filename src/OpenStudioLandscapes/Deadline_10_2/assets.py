@@ -857,13 +857,19 @@ def compose_repository(
     }
 
     service_name = "repository-installer-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_REPOSITORY"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     docker_dict = {
         "services": {
@@ -1193,13 +1199,19 @@ def compose_mongo_express(
         network_dict = {"network_mode": compose_networks_10_2["network_mode"]}
 
     service_name = "mongo-express-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_MONGO_EXPRESS"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     # @formatter:off
     docker_dict = {
@@ -1442,13 +1454,19 @@ def compose_mongodb(
     }
 
     service_name = "mongodb-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_MONGODB"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     docker_dict = {
         "services": {
@@ -1617,13 +1635,19 @@ def compose_rcs_runner(
     }
 
     service_name = "deadline-rcs-runner-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_RCS_RUNNER"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     docker_dict = {
         "services": {
@@ -1798,13 +1822,19 @@ def compose_pulse_runner(
     }
 
     service_name = "deadline-pulse-runner-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_PULSE_RUNNER"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     if DISABLE_LOCAL_PULSE:
 
@@ -1949,13 +1979,19 @@ def compose_worker_runner(
     }
 
     service_name = "deadline-worker-runner-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_WORKER_RUNNER"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     if DISABLE_LOCAL_WORKER:
 
@@ -2134,13 +2170,19 @@ def compose_webservice_runner(
     }
 
     service_name = "deadline-webservice-runner-10-2"
-    container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
-    host_name = ".".join(
-        [
-            env["HOSTNAME_WEBSERVICE_RUNNER"] or service_name,
-            env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
-        ]
+    container_name, host_name = get_docker_compose_names(
+        context=context,
+        service_name=service_name,
+        landscape_id=env.get("LANDSCAPE", "default"),
+        domain_lan=env.get("OPENSTUDIOLANDSCAPES__DOMAIN_LAN"),
     )
+    # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
+    # host_name = ".".join(
+    #     [
+    #         service_name,
+    #         env["OPENSTUDIOLANDSCAPES__DOMAIN_LAN"],
+    #     ]
+    # )
 
     docker_dict = {
         "services": {
