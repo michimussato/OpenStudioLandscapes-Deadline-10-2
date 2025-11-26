@@ -181,15 +181,6 @@ The following variables are being declared in `OpenStudioLandscapes.Deadline_10_
 | Variable                                       | Type   | Value                                                                                                                |
 | :--------------------------------------------- | :----- | :------------------------------------------------------------------------------------------------------------------- |
 | `DOCKER_USE_CACHE`                             | `bool` | `False`                                                                                                              |
-| `HOSTNAME_PULSE_RUNNER`                        | `str`  | `deadline-pulse-runner-10-2`                                                                                         |
-| `HOSTNAME_MONGO_EXPRESS`                       | `str`  | `mongo-express-10-2`                                                                                                 |
-| `HOSTNAME_MONGODB`                             | `str`  | `mongodb-10-2`                                                                                                       |
-| `HOSTNAME_RCS_RUNNER`                          | `str`  | `deadline-rcs-runner-10-2`                                                                                           |
-| `HOSTNAME_REPOSITORY`                          | `str`  | `repository-installer-10-2`                                                                                          |
-| `HOSTNAME_WEBSERVICE_RUNNER`                   | `str`  | `deadline-webservice-runner-10-2`                                                                                    |
-| `HOSTNAME_WORKER_RUNNER`                       | `str`  | `deadline-worker-runner-10-2`                                                                                        |
-| `TELEPORT_ENTRY_POINT_HOST`                    | `str`  | `{{HOSTNAME_RCS_RUNNER}}`                                                                                            |
-| `TELEPORT_ENTRY_POINT_PORT`                    | `str`  | `{{RCS_HTTP_PORT_HOST}}`                                                                                             |
 | `DEADLINE_VERSION`                             | `str`  | `10.2.1.1`                                                                                                           |
 | `CONFIGS_ROOT`                                 | `str`  | `{DOT_FEATURES}/OpenStudioLandscapes-Deadline-10-2/.payload/config`                                                  |
 | `INSTALLER_AWSPortalLink`                      | `str`  | `{DOT_FEATURES}/OpenStudioLandscapes-Deadline-10-2/.payload/bin/AWSPortalLink-1.2.1.0-linux-x64-installer.run`       |
