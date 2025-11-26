@@ -38,6 +38,7 @@ from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
 from OpenStudioLandscapes.engine.utils import *
+from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_policy
 
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
@@ -350,6 +351,7 @@ def apt_packages(
             AssetKey([*ASSET_HEADER["key_prefix"], "pip_packages"]),
         ),
     },
+    retry_policy=build_docker_image_retry_policy,
 )
 def build_docker_image(
     context: AssetExecutionContext,
@@ -673,6 +675,7 @@ def deadline_script_install_repository(
             ),
         ),
     },
+    retry_policy=build_docker_image_retry_policy,
 )
 def build_docker_image_repository(
     context: AssetExecutionContext,
@@ -1010,6 +1013,7 @@ def deadline_command_build_docker_image_client(
             ),
         ),
     },
+    retry_policy=build_docker_image_retry_policy,
 )
 def build_docker_image_client(
     context: AssetExecutionContext,
