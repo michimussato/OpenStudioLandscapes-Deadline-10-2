@@ -49,7 +49,6 @@ dev = [
     "OpenStudioLandscapes-Deadline-10-2[readme]",
     "OpenStudioLandscapes-Deadline-10-2[sbom]",
     "OpenStudioLandscapes-Deadline-10-2[testing]",
-    "dagster-webserver==1.9.11",
 ]
 graphviz = [
     "graphviz",
