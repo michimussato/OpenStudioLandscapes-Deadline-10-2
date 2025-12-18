@@ -8,7 +8,7 @@ import textwrap
 import urllib.parse
 from collections import ChainMap
 from functools import reduce
-from typing import Any, Generator, MutableMapping
+from typing import Any, Generator, Dict, List
 
 import yaml
 from dagster import (
@@ -83,12 +83,12 @@ compose = get_compose(
 feature_out = get_feature_out(
     ASSET_HEADER=ASSET_HEADER,
     feature_out_ins={
-        "env": dict,
-        "compose": dict,
-        "group_in": dict,
-        "deadline_command_compose_worker_runner": list,
-        "deadline_command_compose_pulse_runner": list,
-        "compose_rcs_runner": dict,
+        "env": Dict,
+        "compose": Dict,
+        "group_in": Dict,
+        "deadline_command_compose_worker_runner": List,
+        "deadline_command_compose_pulse_runner": List,
+        "compose_rcs_runner": Dict,
     },
 )
 
@@ -108,7 +108,7 @@ docker_config_json = get_docker_config_json(
 )
 def connection_ini(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     # @formatter:off
     connection_ini = textwrap.dedent(
@@ -181,7 +181,7 @@ def connection_ini(
 )
 def deadline_ini(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     # @formatter:off
     deadline_ini = textwrap.dedent(
@@ -283,10 +283,10 @@ def deadline_ini(
 )
 def pip_packages(
     context: AssetExecutionContext,
-) -> Generator[Output[list] | AssetMaterialization, None, None]:
+) -> Generator[Output[List] | AssetMaterialization, None, None]:
     """ """
 
-    _pip_packages: list = [
+    _pip_packages: List = [
         # Todo:
         #  - [ ] (LOW) OpenStudioLandscapes SSL authentication
         # "git+https://github.com/michimussato/SSLGeneration.git@packaging",
@@ -307,7 +307,7 @@ def pip_packages(
 )
 def apt_packages(
     context: AssetExecutionContext,
-) -> Generator[Output[dict] | AssetMaterialization, None, None]:
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
     _apt_packages = {}
@@ -356,16 +356,16 @@ def apt_packages(
 )
 def build_docker_image(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
-    group_in: dict,  # pylint: disable=redefined-outer-name
+    group_in: Dict,  # pylint: disable=redefined-outer-name
     docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
-    apt_packages: dict[str, list[str]],  # pylint: disable=redefined-outer-name
-    pip_packages: list,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict] | AssetMaterialization, None, None]:
+    apt_packages: Dict[str, List[str]],  # pylint: disable=redefined-outer-name
+    pip_packages: List,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
-    docker_image: dict = group_in["docker_image"]
+    docker_image: Dict = group_in["docker_image"]
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
@@ -519,8 +519,8 @@ def build_docker_image(
 )
 def deadline_command_install_repository(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List] | AssetMaterialization, None, None]:
     """ """
 
     # Todo
@@ -583,8 +583,8 @@ def deadline_command_install_repository(
 )
 def deadline_script_install_repository(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    deadline_command_install_repository: list,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
+    deadline_command_install_repository: List,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
 
@@ -680,16 +680,16 @@ def deadline_script_install_repository(
 )
 def build_docker_image_repository(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
     docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
-    # group_in: dict,  # pylint: disable=redefined-outer-name
-    build_docker_image_stem: dict,  # pylint: disable=redefined-outer-name
+    # group_in: Dict,  # pylint: disable=redefined-outer-name
+    build_docker_image_stem: Dict,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict] | AssetMaterialization, None, None]:
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
-    # docker_image: dict = build_docker_image_stem
+    # docker_image: Dict = build_docker_image_stem
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
@@ -811,11 +811,11 @@ def build_docker_image_repository(
 )
 def compose_repository(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-    build: dict,  # pylint: disable=redefined-outer-name
-    compose_mongodb_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[MutableMapping] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
+    compose_mongodb_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
     network_dict = {}
@@ -936,8 +936,8 @@ def compose_repository(
 )
 def deadline_command_build_docker_image_client(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List] | AssetMaterialization, None, None]:
     """ """
 
     # @formatter:off
@@ -1018,16 +1018,16 @@ def deadline_command_build_docker_image_client(
 )
 def build_docker_image_client(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
     docker_config_json: pathlib.Path,  # pylint: disable=redefined-outer-name
     docker_config: DockerConfig,  # pylint: disable=redefined-outer-name
-    # group_in: dict,  # pylint: disable=redefined-outer-name
-    build_docker_image_stem: dict,  # pylint: disable=redefined-outer-name
-    deadline_command_build_client_image_10_2: list,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict] | AssetMaterialization, None, None]:
+    # group_in: Dict,  # pylint: disable=redefined-outer-name
+    build_docker_image_stem: Dict,  # pylint: disable=redefined-outer-name
+    deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
-    # docker_image: dict = group_in["docker_image"]
+    # docker_image: Dict = group_in["docker_image"]
 
     docker_file = pathlib.Path(
         env["DOT_LANDSCAPES"],
@@ -1134,9 +1134,9 @@ def build_docker_image_client(
 )
 def compose_networks(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[
-    Output[dict[str, dict[str, dict[str, str]]]] | AssetMaterialization, None, None
+    Output[Dict[str, Dict[str, Dict[str, str]]]] | AssetMaterialization, None, None
 ]:
 
     compose_network_mode = DockerComposePolicies.NETWORK_MODE.BRIDGE
@@ -1176,9 +1176,9 @@ def compose_networks(
 )
 def compose_mongo_express(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
 
     network_dict = {}
     ports_dict = {}
@@ -1277,8 +1277,8 @@ def compose_mongo_express(
 )
 def script_chown_mongodb(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, str]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, str]] | AssetMaterialization, None, None]:
 
     ret = dict()
 
@@ -1336,10 +1336,10 @@ def script_chown_mongodb(
 )
 def compose_mongodb(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    script_chown_mongodb_10_2: dict[str, str],  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+    script_chown_mongodb_10_2: Dict[str, str],  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
 
     network_dict = {}
     ports_dict = {}
@@ -1523,8 +1523,8 @@ def compose_mongodb(
 )
 def deadline_command_compose_rcs_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list[str]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
     """ """
 
     deadline_command = [
@@ -1572,13 +1572,13 @@ def deadline_command_compose_rcs_runner(
 )
 def compose_rcs_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    build: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
-    deadline_command_compose_rcs_runner_10_2: list,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    deadline_command_compose_rcs_runner_10_2: List,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
     """ """
 
     network_dict = {}
@@ -1714,8 +1714,8 @@ def compose_rcs_runner(
 )
 def deadline_command_compose_pulse_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list[str]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
     """ """
 
     deadline_command = [
@@ -1765,13 +1765,13 @@ def deadline_command_compose_pulse_runner(
 )
 def compose_pulse_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    build: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
-    deadline_command_compose_pulse_runner_10_2: list,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    deadline_command_compose_pulse_runner_10_2: List,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
     """ """
 
     network_dict = {}
@@ -1896,8 +1896,8 @@ def compose_pulse_runner(
 )
 def deadline_command_compose_worker_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list[str]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
     """ """
 
     deadline_command = [
@@ -1947,13 +1947,13 @@ def deadline_command_compose_worker_runner(
 )
 def compose_worker_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    build: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
-    deadline_command_compose_worker_runner_10_2: list,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    deadline_command_compose_worker_runner_10_2: List,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
     """ """
 
     network_dict = {}
@@ -2053,8 +2053,8 @@ def compose_worker_runner(
 )
 def deadline_command_compose_webservice_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list[str]] | AssetMaterialization, None, None]:
+    env: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
     """ """
 
     deadline_command = [
@@ -2105,13 +2105,13 @@ def deadline_command_compose_webservice_runner(
 )
 def compose_webservice_runner(
     context: AssetExecutionContext,
-    env: dict,  # pylint: disable=redefined-outer-name
-    build: dict,  # pylint: disable=redefined-outer-name
+    env: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
-    deadline_command_compose_webservice_runner_10_2: list,  # pylint: disable=redefined-outer-name
-    compose_networks_10_2: dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[dict[str, dict[str, dict]]] | AssetMaterialization, None, None]:
+    deadline_command_compose_webservice_runner_10_2: List,  # pylint: disable=redefined-outer-name
+    compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
     """ """
 
     network_dict = {}
@@ -2266,7 +2266,7 @@ def compose_webservice_runner(
 def compose_maps(
     context: AssetExecutionContext,
     **kwargs,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[list[dict]] | AssetMaterialization, None, None]:
+) -> Generator[Output[List[Dict]] | AssetMaterialization, None, None]:
 
     ret = list(kwargs.values())
 
@@ -2286,7 +2286,7 @@ def compose_maps(
 )
 def cmd_extend(
     context: AssetExecutionContext,
-) -> Generator[Output[list[Any]] | AssetMaterialization | Any, Any, None]:
+) -> Generator[Output[List[Any]] | AssetMaterialization | Any, Any, None]:
 
     ret = []
 
@@ -2306,7 +2306,7 @@ def cmd_extend(
 )
 def cmd_append(
     context: AssetExecutionContext,
-) -> Generator[Output[dict[str, list[Any]]] | AssetMaterialization | Any, Any, None]:
+) -> Generator[Output[Dict[str, List[Any]]] | AssetMaterialization | Any, Any, None]:
 
     ret = {"cmd": [], "exclude_from_quote": []}
 
