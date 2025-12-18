@@ -1,0 +1,269 @@
+import pathlib
+
+from dagster import get_dagster_logger
+from pydantic import (
+    Field,
+    PositiveInt,
+)
+
+LOGGER = get_dagster_logger(__name__)
+
+from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
+
+from OpenStudioLandscapes.Deadline_10_2 import dist
+
+config_default = pathlib.Path(__file__).parent.joinpath("config_default.yml")
+CONFIG_STR = config_default.read_text()
+
+
+class Config(FeatureBaseModel):
+    feature_name: str = dist.name
+
+    definitions: str = "OpenStudioLandscapes.Deadline_10_2.definitions"
+
+    enabled: bool = False
+
+    deadline_10_2_installer_aws_portal_link: pathlib.Path = Field(
+        description="The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` "
+                    "file."
+    )
+
+    deadline_10_2_installer_deadline_client: pathlib.Path = Field(
+        description="The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` "
+                    "file."
+    )
+
+    deadline_10_2_installer_deadline_repository: pathlib.Path = Field(
+        description="The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` "
+                    "file."
+    )
+
+    deadline_10_2_repository_install_destination: pathlib.Path = Field(
+        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"),
+    )
+
+    deadline_10_2_database_install_destination: pathlib.Path = Field(
+        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10"),
+    )
+
+    deadline_10_2_RCS_HTTP_PORT_HOST: PositiveInt = Field(
+        default=8888,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_RCS_HTTP_PORT_CONTAINER: PositiveInt = Field(
+        default=8888,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_WEBSERVICE_HTTP_PORT_HOST: PositiveInt = Field(
+        default=8899,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER: PositiveInt = Field(
+        default=8899,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_LAUNCHER_LISTENING_PORT: PositiveInt = Field(
+        default=17000,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_AUTO_CONFIGURATION_PORT: PositiveInt = Field(
+        default=17001,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_SLAVE_STARTUP_PORT: PositiveInt = Field(
+        default=17003,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT: PositiveInt = Field(
+        # Todo:
+        #  - [ ] Check if this port setting is correct (clash with
+        #        deadline_10_2_SLAVE_STARTUP_PORT?
+        default=17003,
+        # description="The Kitsu container port.",
+        frozen=True,
+    )
+
+    deadline_10_2_APPLICATION_STARTUP_PORT: PositiveInt = Field(
+        default=17006,
+        frozen=True,
+    )
+
+    # MongoDB
+
+    deadline_10_2_MONGO_DB_HOST: str = Field(
+        default="mongodb-10-2",
+        frozen=True,
+    )
+
+    deadline_10_2_MONGO_DB_NAME: str = Field(
+        default="deadline10db",
+        frozen=True,
+    )
+
+    deadline_10_2_DEFAULT_DBPATH_CONTAINER: pathlib.Path = Field(
+        default=pathlib.Path("/data/db"),
+        frozen=True,
+    )
+
+    deadline_10_2_MONGO_EXPRESS_PORT_HOST: PositiveInt = Field(
+        default=8181,
+        frozen=True,
+    )
+
+    deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER: PositiveInt = Field(
+        default=8081,
+        frozen=True,
+    )
+
+    deadline_10_2_MONGO_DB_PORT_HOST: PositiveInt = Field(
+        default=21017,
+        frozen=True,
+    )
+
+    deadline_10_2_MONGO_DB_PORT_CONTAINER: PositiveInt = Field(
+        default=21017,
+        frozen=True,
+    )
+
+    # Mongo Express
+    # https://hub.docker.com/_/mongo-express/
+
+    deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME: str = Field(
+        default="web",
+    )
+
+    deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD: str = Field(
+        default="web",
+    )
+
+    deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME: str = Field(
+        default="darcula",
+    )
+
+    deadline_10_2_ME_CONFIG_MONGODB_SERVER: str = Field(
+        default="mongodb-10-2",
+    )
+
+    # Todo:
+    #  - [ ] Verify whether MONGO_DB_PORT_CONTAINER or MONGO_DB_PORT_HOST
+    #        is actually correct
+    deadline_10_2_ME_CONFIG_MONGODB_URL: str = Field(
+        default="mongodb://admin:pass@localhost:21017/db?ssl=false",
+        # default="mongodb://admin:pass@localhost:{MONGO_DB_PORT_CONTAINER}/db?ssl=false",
+        # default="mongodb://admin:pass@localhost:{MONGO_DB_PORT_HOST}/db?ssl=false",
+    )
+
+    deadline_10_2_ME_CONFIG_MONGODB_PORT: PositiveInt = Field(
+        default=21017,
+        frozen=True,
+    )
+
+    # EXPANDABLE PATHS
+    @property
+    def deadline_10_2_installer_aws_portal_link_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(f"Expanding {self.deadline_10_2_installer_aws_portal_link}...")
+        ret = pathlib.Path(
+            self.deadline_10_2_installer_aws_portal_link.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
+
+    @property
+    def deadline_10_2_installer_deadline_client_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(f"Expanding {self.deadline_10_2_installer_deadline_client}...")
+        ret = pathlib.Path(
+            self.deadline_10_2_installer_deadline_client.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
+
+    @property
+    def deadline_10_2_installer_deadline_repository_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(f"Expanding {self.deadline_10_2_installer_deadline_repository}...")
+        ret = pathlib.Path(
+            self.deadline_10_2_installer_deadline_repository.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
+
+    @property
+    def deadline_10_2_repository_install_destination_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(f"Expanding {self.deadline_10_2_repository_install_destination}...")
+        ret = pathlib.Path(
+            self.deadline_10_2_repository_install_destination.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
+
+    @property
+    def deadline_10_2_database_install_destination_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(f"Expanding {self.deadline_10_2_database_install_destination}...")
+        ret = pathlib.Path(
+            self.deadline_10_2_database_install_destination.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
