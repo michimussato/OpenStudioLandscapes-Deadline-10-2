@@ -102,7 +102,25 @@ class Config(FeatureBaseModel):
         frozen=True,
     )
 
+    deadline_10_2_DISABLE_LOCAL_PULSE: bool = Field(
+        default=False,
+    )
+
+    deadline_10_2_DISABLE_LOCAL_WORKER: bool = Field(
+        default=True,
+    )
+
     # MongoDB
+
+    deadline_10_2_mongodb_docker_image: str = Field(
+        default="docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004",
+        frozen=True,
+    )
+
+    deadline_10_2_MONGODB_INSIDE_CONTAINER: bool = Field(
+        default=False,
+        frozen=True,
+    )
 
     deadline_10_2_MONGO_DB_HOST: str = Field(
         default="mongodb-10-2",
@@ -114,6 +132,8 @@ class Config(FeatureBaseModel):
         frozen=True,
     )
 
+    # Todo
+    #  - [ ] is there's really a need to expose this?
     deadline_10_2_DEFAULT_DBPATH_CONTAINER: pathlib.Path = Field(
         default=pathlib.Path("/data/db"),
         frozen=True,

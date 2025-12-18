@@ -17,6 +17,8 @@ deadline_10_2_installer_deadline_repository: "/home/michael/git/repos/OpenStudio
 #deadline_10_2_repository_install_destination: "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"
 #deadline_10_2_database_install_destination: "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10"
 
+# Most of these do not have an effect yet
+# Check deadline_ini Asset.
 #deadline_10_2_RCS_HTTP_PORT_HOST: 8888
 #deadline_10_2_RCS_HTTP_PORT_CONTAINER: 8888
 #
@@ -33,7 +35,17 @@ deadline_10_2_installer_deadline_repository: "/home/michael/git/repos/OpenStudio
 #
 #deadline_10_2_APPLICATION_STARTUP_PORT: 17006
 
+#deadline_10_2_DISABLE_LOCAL_PULSE: false
+#deadline_10_2_DISABLE_LOCAL_WORKER: true
+
 # MongoDB
+
+# NEEDS SUDO_PASS
+# Todo: find a better way:
+
+#deadline_10_2_mongodb_docker_image: "docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004"
+
+#deadline_10_2_MONGODB_INSIDE_CONTAINER: false
 
 #deadline_10_2_MONGO_DB_HOST: "mongodb-10-2"
 #deadline_10_2_MONGO_DB_NAME: "deadline10db"
@@ -49,5 +61,5 @@ deadline_10_2_installer_deadline_repository: "/home/michael/git/repos/OpenStudio
 #deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD: "web"
 #deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
 #deadline_10_2_ME_CONFIG_MONGODB_SERVER: "mongodb-10-2"
-#deadline_10_2_ME_CONFIG_MONGODB_URL: "mongodb://admin:pass@localhost:21017/db?ssl=false"
-#deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017
+#deadline_10_2_ME_CONFIG_MONGODB_URL: "mongodb://admin:pass@localhost:{MAKE DYNAMIC}/db?ssl=false"  # "mongodb://admin:pass@localhost:21017/db?ssl=false"
+#deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017  # {MONGO_DB_PORT_CONTAINER} or {MONGO_DB_PORT_HOST}?
