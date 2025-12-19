@@ -3,12 +3,15 @@ import textwrap
 import snakemd
 
 
-def readme_feature(doc: snakemd.Document) -> snakemd.Document:
+def readme_feature(
+        doc: snakemd.Document,
+        main_header: str,
+) -> snakemd.Document:
 
-    ## Some Specific information
+    # Some Specific information
 
     doc.add_heading(
-        text="Official Resources",
+        text=main_header,
         level=1,
     )
 
@@ -195,9 +198,9 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
             # $ /opt/Thinkbox/Deadline10/bin/deadlinemonitor
             qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
             This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
-            
+
             Available platform plugins are: linuxfb, minimal, offscreen, vnc, webgl, xcb.
-            
+
             Aborted                    (core dumped) /opt/Thinkbox/Deadline10/bin/deadlinemonitor\
 """
         ),

@@ -5,7 +5,7 @@
 1. [Feature: OpenStudioLandscapes-Deadline-10-2](#feature-openstudiolandscapes-deadline-10-2)
    1. [Brief](#brief)
    2. [Configuration](#configuration)
-2. [Official Resources](#official-resources)
+2. [External Resources](#external-resources)
    1. [Get Deadline](#get-deadline)
       1. [Get Deadline 10.2](#get-deadline-102)
       2. [Instructions](#instructions)
@@ -136,7 +136,7 @@ deadline_10_2_installer_deadline_repository: "/home/michael/git/repos/OpenStudio
 
 ***
 
-# Official Resources
+# External Resources
 
 [![The Deadline Installers are not part of the `OpenStudioLandscapes-Deadline` Feature. You will have to download the installers manually before you can use this Feature. ](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/_static/Product_Button_Deadline.png)](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/index.html)
 
@@ -342,4 +342,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-19 16:47:50 UTC**
+Last changed: **2025-12-19 21:11:30 UTC**
