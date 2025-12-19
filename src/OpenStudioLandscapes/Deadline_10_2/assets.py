@@ -8,7 +8,7 @@ import textwrap
 import urllib.parse
 from collections import ChainMap
 from functools import reduce
-from typing import Any, Generator, Dict, List, Union, MutableMapping
+from typing import Any, Dict, Generator, List, MutableMapping, Union
 
 import yaml
 from dagster import (
@@ -16,26 +16,31 @@ from dagster import (
     AssetIn,
     AssetKey,
     AssetMaterialization,
+    AssetsDefinition,
     EnvVar,
     MetadataValue,
     Output,
-    asset, AssetsDefinition,
+    asset,
 )
-
-from OpenStudioLandscapes.engine.common_assets.compose_scope import get_compose_scope_group__cmd
-from OpenStudioLandscapes.engine.common_assets.feature import get_feature__CONFIG
-from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel
-from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
 from docker_compose_graph.utils import *
 from OpenStudioLandscapes.engine.common_assets.compose import get_compose
+from OpenStudioLandscapes.engine.common_assets.compose_scope import (
+    get_compose_scope_group__cmd,
+)
 from OpenStudioLandscapes.engine.common_assets.docker_compose_graph import (
     get_docker_compose_graph,
 )
+from OpenStudioLandscapes.engine.common_assets.feature import get_feature__CONFIG
 from OpenStudioLandscapes.engine.common_assets.feature_out import get_feature_out_v2
-from OpenStudioLandscapes.engine.common_assets.group_in import get_feature_in, get_feature_in_parent
+from OpenStudioLandscapes.engine.common_assets.group_in import (
+    get_feature_in,
+    get_feature_in_parent,
+)
 from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
+from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
+from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
 from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_policy
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
@@ -43,7 +48,6 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 from OpenStudioLandscapes.Deadline_10_2 import dist
 from OpenStudioLandscapes.Deadline_10_2.config.models import CONFIG_STR, Config
 from OpenStudioLandscapes.Deadline_10_2.constants import *
-
 
 # Todo:
 #  - [ ] consolidate build_docker_image* assets into 1
@@ -372,7 +376,9 @@ def build_docker_image(
 
     env: Dict = CONFIG.env
 
-    docker_config_json: pathlib.Path = feature_in.openstudiolandscapes_base.docker_config_json
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
@@ -696,7 +702,9 @@ def build_docker_image_repository(
 
     env: Dict = CONFIG.env
 
-    docker_config_json: pathlib.Path = feature_in.openstudiolandscapes_base.docker_config_json
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
@@ -825,7 +833,9 @@ def compose_repository(
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     compose_mongodb_10_2: Dict,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[MutableMapping[Any, Any]] | AssetMaterialization | Any, None, None]:
+) -> Generator[
+    Output[MutableMapping[Any, Any]] | AssetMaterialization | Any, None, None
+]:
     """ """
 
     env: Dict = CONFIG.env
@@ -1034,7 +1044,9 @@ def build_docker_image_client(
 
     env: Dict = CONFIG.env
 
-    docker_config_json: pathlib.Path = feature_in.openstudiolandscapes_base.docker_config_json
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
@@ -1239,10 +1251,14 @@ def compose_mongo_express(
                     "ME_CONFIG_MONGODB_SERVER": CONFIG.deadline_10_2_ME_CONFIG_MONGODB_SERVER,
                     # Todo
                     #  - [ ] no expansion currently happening here
-                    "ME_CONFIG_MONGODB_PORT": str(CONFIG.deadline_10_2_ME_CONFIG_MONGODB_PORT).format(
+                    "ME_CONFIG_MONGODB_PORT": str(
+                        CONFIG.deadline_10_2_ME_CONFIG_MONGODB_PORT
+                    ).format(
                         MONGO_DB_PORT_CONTAINER=CONFIG.deadline_10_2_MONGO_DB_PORT_CONTAINER
                     ),
-                    "ME_CONFIG_MONGODB_URL": str(CONFIG.deadline_10_2_ME_CONFIG_MONGODB_URL).format(
+                    "ME_CONFIG_MONGODB_URL": str(
+                        CONFIG.deadline_10_2_ME_CONFIG_MONGODB_URL
+                    ).format(
                         MONGO_DB_PORT_CONTAINER=CONFIG.deadline_10_2_MONGO_DB_PORT_CONTAINER
                     ),
                 },

@@ -25,25 +25,29 @@ class Config(FeatureBaseModel):
 
     deadline_10_2_installer_aws_portal_link: pathlib.Path = Field(
         description="The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` "
-                    "file."
+        "file."
     )
 
     deadline_10_2_installer_deadline_client: pathlib.Path = Field(
         description="The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` "
-                    "file."
+        "file."
     )
 
     deadline_10_2_installer_deadline_repository: pathlib.Path = Field(
         description="The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` "
-                    "file."
+        "file."
     )
 
     deadline_10_2_repository_install_destination: pathlib.Path = Field(
-        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"),
+        default=pathlib.Path(
+            "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"
+        ),
     )
 
     deadline_10_2_database_install_destination: pathlib.Path = Field(
-        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10"),
+        default=pathlib.Path(
+            "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10"
+        ),
     )
 
     deadline_10_2_RCS_HTTP_PORT_HOST: PositiveInt = Field(
@@ -256,7 +260,9 @@ class Config(FeatureBaseModel):
         if self.env is None:
             raise KeyError("`env` is `None`.")
 
-        LOGGER.debug(f"Expanding {self.deadline_10_2_repository_install_destination}...")
+        LOGGER.debug(
+            f"Expanding {self.deadline_10_2_repository_install_destination}..."
+        )
         ret = pathlib.Path(
             self.deadline_10_2_repository_install_destination.expanduser()
             .as_posix()
