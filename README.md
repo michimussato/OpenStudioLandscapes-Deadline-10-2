@@ -5,7 +5,6 @@
 1. [Feature: OpenStudioLandscapes-Deadline-10-2](#feature-openstudiolandscapes-deadline-10-2)
    1. [Brief](#brief)
    2. [Configuration](#configuration)
-   3. [Official Resources](#official-resources)
 2. [Official Resources](#official-resources)
    1. [Get Deadline](#get-deadline)
       1. [Get Deadline 10.2](#get-deadline-102)
@@ -136,8 +135,6 @@ deadline_10_2_installer_deadline_repository: "/home/michael/git/repos/OpenStudio
 ```
 
 ***
-
-## Official Resources
 
 # Official Resources
 
@@ -345,4 +342,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-19 15:51:30 UTC**.
+Last changed: **2025-12-19 16:41:25 UTC**
