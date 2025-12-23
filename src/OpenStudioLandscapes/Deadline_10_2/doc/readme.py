@@ -221,6 +221,8 @@ def readme_feature(
         lang="shell",
     )
 
+    doc.add_horizontal_rule()
+
     return doc
 
 
