@@ -64,7 +64,7 @@ A local config store location will be created if it doesn't exist, together with
 > OPENSTUDIOLANDSCAPES__CONFIGSTORE_ROOT="~/.config/OpenStudioLandscapes/my-custom-config-store"
 > ```
 
-The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and are accessible throughout the [`OpenStudioLandscapes-Deadline-10-2`](https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py) package.
+The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and are based on [`OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py`](https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py).
 
 ```yaml
 # ===
@@ -914,4 +914,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 12:53:57 UTC**
+Last changed: **2025-12-23 13:04:15 UTC**
