@@ -72,16 +72,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # ---
 #
 # Type: typing.Dict
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -91,16 +92,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # -------------
 #
 # Type: <class 'OpenStudioLandscapes.engine.config.models.ConfigEngine'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -110,16 +112,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # -------------
 #
 # Type: <class 'OpenStudioLandscapes.engine.config.models.FeatureBaseModel'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -129,16 +132,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # ------------
 #
 # Type: <class 'importlib.metadata.Distribution'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -148,16 +152,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # ----------
 #
 # Type: <class 'str'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -167,16 +172,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # ------------
 #
 # Type: typing.List[str]
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         None
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -186,16 +192,17 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # -------
 #
 # Type: <class 'bool'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         Whether the Feature is enabled or not.
 #     Default value:
 #         True
 # Description:
 #     Not enabled by default because this Feature has some basic requirements, such as the installers.
-# Required: False
-#     Not enabled by default because this Feature has some basic requirements, such as the installers.
+# Required:
+#     False
 # Examples:
 #     None
 enabled: false
@@ -206,16 +213,17 @@ enabled: false
 # -------------
 #
 # Type: <class 'str'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         None
 #     Default value:
 #         default
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     ['default', 'license_server', 'worker']
 
@@ -225,16 +233,17 @@ enabled: false
 # ------------
 #
 # Type: <class 'str'>
-# Base Class:
-#     Required: True
+# Base Class Info:
+#     Required:
+#         True
 #     Description:
 #         The name of the feature. It is derived from the `OpenStudioLandscapes.<Feature>.dist` attribute.
 #     Default value:
 #         PydanticUndefined
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 feature_name: OpenStudioLandscapes-Deadline-10-2
@@ -245,16 +254,17 @@ feature_name: OpenStudioLandscapes-Deadline-10-2
 # --------------
 #
 # Type: <class 'pathlib.Path'>
-# Base Class:
-#     Required: False
+# Base Class Info:
+#     Required:
+#         False
 #     Description:
 #         The path to the `docker-compose.yml` file.
 #     Default value:
 #         {DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml
 # Description:
 #     The path to the `docker-compose.yml` file.
-# Required: False
-#     The path to the `docker-compose.yml` file.
+# Required:
+#     False
 # Examples:
 #     None
 
@@ -266,8 +276,8 @@ feature_name: OpenStudioLandscapes-Deadline-10-2
 # Type: <class 'pathlib.Path'>
 # Description:
 #     The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file.
-# Required: True
-#     The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file.
+# Required:
+#     True
 # Examples:
 #     None
 deadline_10_2_installer_aws_portal_link: PydanticUndefined
@@ -280,8 +290,8 @@ deadline_10_2_installer_aws_portal_link: PydanticUndefined
 # Type: <class 'pathlib.Path'>
 # Description:
 #     The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` file.
-# Required: True
-#     The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` file.
+# Required:
+#     True
 # Examples:
 #     None
 deadline_10_2_installer_deadline_client: PydanticUndefined
@@ -294,8 +304,8 @@ deadline_10_2_installer_deadline_client: PydanticUndefined
 # Type: <class 'pathlib.Path'>
 # Description:
 #     The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file.
-# Required: True
-#     The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file.
+# Required:
+#     True
 # Examples:
 #     None
 deadline_10_2_installer_deadline_repository: PydanticUndefined
@@ -308,8 +318,8 @@ deadline_10_2_installer_deadline_repository: PydanticUndefined
 # Type: <class 'pathlib.Path'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_repository_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
@@ -322,8 +332,8 @@ deadline_10_2_repository_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEA
 # Type: <class 'pathlib.Path'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_database_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10'
@@ -336,8 +346,8 @@ deadline_10_2_database_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATU
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_RCS_HTTP_PORT_HOST: 8888
@@ -350,8 +360,8 @@ deadline_10_2_RCS_HTTP_PORT_HOST: 8888
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_RCS_HTTP_PORT_CONTAINER: 8888
@@ -364,8 +374,8 @@ deadline_10_2_RCS_HTTP_PORT_CONTAINER: 8888
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_WEBSERVICE_HTTP_PORT_HOST: 8899
@@ -378,8 +388,8 @@ deadline_10_2_WEBSERVICE_HTTP_PORT_HOST: 8899
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER: 8899
@@ -392,8 +402,8 @@ deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER: 8899
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_LAUNCHER_LISTENING_PORT: 17000
@@ -406,8 +416,8 @@ deadline_10_2_LAUNCHER_LISTENING_PORT: 17000
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_AUTO_CONFIGURATION_PORT: 17001
@@ -420,8 +430,8 @@ deadline_10_2_AUTO_CONFIGURATION_PORT: 17001
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_SLAVE_STARTUP_PORT: 17003
@@ -434,8 +444,8 @@ deadline_10_2_SLAVE_STARTUP_PORT: 17003
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT: 17003
@@ -448,8 +458,8 @@ deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT: 17003
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_APPLICATION_STARTUP_PORT: 17006
@@ -462,8 +472,8 @@ deadline_10_2_APPLICATION_STARTUP_PORT: 17006
 # Type: <class 'bool'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_DISABLE_LOCAL_PULSE: false
@@ -476,8 +486,8 @@ deadline_10_2_DISABLE_LOCAL_PULSE: false
 # Type: <class 'bool'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_DISABLE_LOCAL_WORKER: true
@@ -490,8 +500,8 @@ deadline_10_2_DISABLE_LOCAL_WORKER: true
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_mongodb_docker_image: docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004
@@ -504,8 +514,8 @@ deadline_10_2_mongodb_docker_image: docker.io/mongodb/mongodb-community-server:4
 # Type: <class 'bool'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGODB_INSIDE_CONTAINER: false
@@ -518,8 +528,8 @@ deadline_10_2_MONGODB_INSIDE_CONTAINER: false
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_DB_HOST: mongodb-10-2
@@ -532,8 +542,8 @@ deadline_10_2_MONGO_DB_HOST: mongodb-10-2
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_DB_NAME: deadline10db
@@ -546,8 +556,8 @@ deadline_10_2_MONGO_DB_NAME: deadline10db
 # Type: <class 'pathlib.Path'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_DEFAULT_DBPATH_CONTAINER: /data/db
@@ -560,8 +570,8 @@ deadline_10_2_DEFAULT_DBPATH_CONTAINER: /data/db
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_EXPRESS_PORT_HOST: 8181
@@ -574,8 +584,8 @@ deadline_10_2_MONGO_EXPRESS_PORT_HOST: 8181
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER: 8081
@@ -588,8 +598,8 @@ deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER: 8081
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_DB_PORT_HOST: 21017
@@ -602,8 +612,8 @@ deadline_10_2_MONGO_DB_PORT_HOST: 21017
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_MONGO_DB_PORT_CONTAINER: 21017
@@ -616,8 +626,8 @@ deadline_10_2_MONGO_DB_PORT_CONTAINER: 21017
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME: web
@@ -630,8 +640,8 @@ deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME: web
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD: web
@@ -644,8 +654,8 @@ deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD: web
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME: darcula
@@ -658,8 +668,8 @@ deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME: darcula
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_MONGODB_SERVER: mongodb-10-2
@@ -672,8 +682,8 @@ deadline_10_2_ME_CONFIG_MONGODB_SERVER: mongodb-10-2
 # Type: <class 'str'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_MONGODB_URL: mongodb://admin:pass@localhost:21017/db?ssl=false
@@ -686,8 +696,8 @@ deadline_10_2_ME_CONFIG_MONGODB_URL: mongodb://admin:pass@localhost:21017/db?ssl
 # Type: <class 'int'>
 # Description:
 #     None
-# Required: False
-#     None
+# Required:
+#     False
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017
@@ -904,4 +914,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 12:51:22 UTC**
+Last changed: **2025-12-23 12:53:57 UTC**
