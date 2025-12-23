@@ -13,7 +13,9 @@ from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
 from OpenStudioLandscapes.Deadline_10_2 import dist
 
-config_default = pathlib.Path(__file__).parent.joinpath("config_default.yml")
+
+# Todo
+#  - [ ] Needs SUDO_PASS; find a better way
 
 
 class Config(FeatureBaseModel):
@@ -27,7 +29,7 @@ class Config(FeatureBaseModel):
 
     deadline_10_2_installer_aws_portal_link: pathlib.Path = Field(
         description="The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` "
-        "file."
+        "file.",
     )
 
     deadline_10_2_installer_deadline_client: pathlib.Path = Field(
