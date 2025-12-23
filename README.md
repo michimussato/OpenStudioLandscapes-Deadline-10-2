@@ -280,7 +280,7 @@ feature_name: OpenStudioLandscapes-Deadline-10-2
 #     True
 # Examples:
 #     None
-deadline_10_2_installer_aws_portal_link: PydanticUndefined
+deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
 
 
 # =======================================
@@ -294,7 +294,7 @@ deadline_10_2_installer_aws_portal_link: PydanticUndefined
 #     True
 # Examples:
 #     None
-deadline_10_2_installer_deadline_client: PydanticUndefined
+deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
 
 
 # ===========================================
@@ -308,7 +308,7 @@ deadline_10_2_installer_deadline_client: PydanticUndefined
 #     True
 # Examples:
 #     None
-deadline_10_2_installer_deadline_repository: PydanticUndefined
+deadline_10_2_installer_deadline_repository: REQUIRED (CHANGE_ME)
 
 
 # ============================================
@@ -914,4 +914,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 13:04:15 UTC**
+Last changed: **2025-12-23 13:34:57 UTC**
