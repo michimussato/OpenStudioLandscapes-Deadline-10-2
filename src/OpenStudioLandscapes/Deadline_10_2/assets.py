@@ -1325,11 +1325,17 @@ def script_chown_mongodb(
     # ret["script"] += f"{shutil.which('sshpass')} -eSSH_PASS ssh {env_10_2['SSH_USER']}@{env_10_2['SSH_HOST']} \"echo $SSH_PASS | sudo -S chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()}\"\n"
 
     match CONFIG.sudo_method:
+        # Todo:
+        #  - [ ] implement `su` command variance
+        # case SudoMethod.SU:
+        #     ret[
+        #         "script"
+        #     ] += f"echo $SUDO_PASS | {CONFIG.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
         case SudoMethod.SUDO:
             ret[
                 "script"
             ] += f"echo $SUDO_PASS | {CONFIG.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
-        case SudoMethod.pkexec:
+        case SudoMethod.PKEXEC:
             ret[
                 "script"
             ] += f"{CONFIG.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"

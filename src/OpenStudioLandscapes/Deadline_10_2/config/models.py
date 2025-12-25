@@ -21,7 +21,7 @@ class SudoMethod(enum.StrEnum):
     #  - [ ] implement `su`
     # SU = "su"
     SUDO = "sudo"
-    pkexec = "pkexec"
+    PKEXEC = "pkexec"
 
 
 # Todo
@@ -42,7 +42,7 @@ class Config(FeatureBaseModel):
     )
 
     sudo_method: SudoMethod = Field(
-        default=SudoMethod.SUDO,
+        default=SudoMethod.PKEXEC,
         description=f"Setting up the MongoDB for {dist.name} requires you to "
                     f"some commands to be executed as a privileged user. Usually, "
                     f"`sudo` is fine and does not human interaction, however, "
