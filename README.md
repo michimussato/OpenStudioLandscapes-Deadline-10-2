@@ -733,7 +733,7 @@ deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017
 
 ### Get Deadline 10.2
 
-Deadline is free, however (legally), an AWS account is required to access the download area. Also, the account is required to use all Deadline features. Register here:
+Deadline is free, however, an AWS account is required to access the download area as well as to use all Deadline Cloud features. Register here:
 
 - [https://portal.aws.amazon.com/billing/signup](https://portal.aws.amazon.com/billing/signup)
 
@@ -930,4 +930,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-25 14:28:30 UTC**
+Last changed: **2025-12-25 14:34:58 UTC**

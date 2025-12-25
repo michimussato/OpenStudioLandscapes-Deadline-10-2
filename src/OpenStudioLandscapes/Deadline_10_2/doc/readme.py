@@ -51,8 +51,8 @@ def readme_feature(
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Deadline is free, however (legally), an AWS account is required to access the download area.
-            Also, the account is required to use all Deadline features. Register here:\
+            Deadline is free, however, an AWS account is required to access the download area as well
+            as to use all Deadline Cloud features. Register here:\
             """
         )
     )
