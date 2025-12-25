@@ -856,6 +856,8 @@ Clone this repository into `OpenStudioLandscapes/.features` (assuming the curren
 
 ```shell
 git -C ./.features clone https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
+# git -C ./.features/OpenStudioLandscapes-Deadline-10-2 branch -a
+# git -C ./.features/OpenStudioLandscapes-Deadline-10-2 checkout <branch>
 ```
 
 Install into OpenStudioLandscapes `venv` (`./OpenStudioLandscapes/.venv`):
@@ -932,4 +934,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-25 16:28:17 UTC**
+Last changed: **2025-12-25 19:45:14 UTC**
