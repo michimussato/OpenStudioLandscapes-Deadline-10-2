@@ -1,4 +1,6 @@
+import enum
 import pathlib
+from typing import List
 
 from dagster import get_dagster_logger
 from pydantic import (
@@ -11,7 +13,15 @@ LOGGER = get_dagster_logger(__name__)
 from OpenStudioLandscapes.engine.config.str_gen import get_config_str
 from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
-from OpenStudioLandscapes.Deadline_10_2 import dist
+from OpenStudioLandscapes.Deadline_10_2 import dist, constants
+
+
+class SudoMethod(enum.StrEnum):
+    # Todo
+    #  - [ ] implement `su`
+    # SU = "su"
+    SUDO = "sudo"
+    pkexec = "pkexec"
 
 
 # Todo
@@ -21,10 +31,30 @@ from OpenStudioLandscapes.Deadline_10_2 import dist
 class Config(FeatureBaseModel):
     feature_name: str = dist.name
 
+    group_name: str = constants.ASSET_HEADER["group_name"]
+
+    key_prefixes: List[str] = constants.ASSET_HEADER["key_prefix"]
+
     enabled: bool = Field(
-        False,
+        default=False,
         description="Not enabled by default because this Feature "
                     "has some basic requirements, such as the installers.",
+    )
+
+    sudo_method: SudoMethod = Field(
+        default=SudoMethod.SUDO,
+        description=f"Setting up the MongoDB for {dist.name} requires you to "
+                    f"some commands to be executed as a privileged user. Usually, "
+                    f"`sudo` is fine and does not human interaction, however, "
+                    f"it requires the `sudo` password to exist in the `SUDO_PASS` "
+                    f"environment variable (`.env`). Same applies to `su`, while `su` "
+                    f"is available in Linux distros by default. "
+                    f"`pkexec` is *mostly* available on Linux systems with GUI's (Gnome, "
+                    f"KDE etc.) and is the cleanest way to grant `root` privileges. "
+                    f"It is does not require you to share your secrets in a "
+                    f"`.env` file as you will be prompted interactively to enter the "
+                    f"password before the commands are executed.",
+        examples=[i.name for i in SudoMethod],
     )
 
     deadline_10_2_installer_aws_portal_link: pathlib.Path = Field(

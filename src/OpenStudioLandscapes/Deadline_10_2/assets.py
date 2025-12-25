@@ -46,7 +46,7 @@ from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
 from OpenStudioLandscapes.Deadline_10_2 import dist
-from OpenStudioLandscapes.Deadline_10_2.config.models import CONFIG_STR, Config
+from OpenStudioLandscapes.Deadline_10_2.config.models import CONFIG_STR, Config, SudoMethod
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
 # Todo:
@@ -1323,9 +1323,17 @@ def script_chown_mongodb(
     ret["script"] += "#!/bin/bash\n"
     ret["script"] += "\n"
     # ret["script"] += f"{shutil.which('sshpass')} -eSSH_PASS ssh {env_10_2['SSH_USER']}@{env_10_2['SSH_HOST']} \"echo $SSH_PASS | sudo -S chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()}\"\n"
-    ret[
-        "script"
-    ] += f"echo $SUDO_PASS | sudo -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+
+    match CONFIG.sudo_method:
+        case SudoMethod.SUDO:
+            ret[
+                "script"
+            ] += f"echo $SUDO_PASS | {CONFIG.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+        case SudoMethod.pkexec:
+            ret[
+                "script"
+            ] += f"{CONFIG.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+
     ret["script"] += "\n"
     ret["script"] += "echo Success;\n"
     ret["script"] += "exit 0;\n"
@@ -1417,7 +1425,7 @@ def compose_mongodb(
                 stdin=subprocess.PIPE,
                 env={
                     "SUDO_PASS": EnvVar("SUDO_PASS").get_value(),
-                },
+                } if CONFIG.sudo_method == SudoMethod.SUDO else {},
             )
 
             stdout, stderr = proc.communicate(
