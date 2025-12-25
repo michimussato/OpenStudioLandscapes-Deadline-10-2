@@ -154,17 +154,18 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # Type: <class 'str'>
 # Base Class Info:
 #     Required:
-#         False
+#         True
 #     Description:
-#         None
+#         Dagster Group name. This will represent the group node name. See https://docs.dagster.io/api/dagster/assets for more information
 #     Default value:
-#         None
+#         PydanticUndefined
 # Description:
 #     None
 # Required:
 #     False
 # Examples:
 #     None
+group_name: OpenStudioLandscapes_Deadline_10_2
 
 
 # ============
@@ -174,17 +175,19 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 # Type: typing.List[str]
 # Base Class Info:
 #     Required:
-#         False
+#         True
 #     Description:
-#         None
+#         Dagster Asset key prefixes. This will be reflected in the nesting (directory structure) of the Asset. See https://docs.dagster.io/api/dagster/assets for more information
 #     Default value:
-#         None
+#         PydanticUndefined
 # Description:
 #     None
 # Required:
 #     False
 # Examples:
 #     None
+key_prefixes:
+- OpenStudioLandscapes_Deadline_10_2
 
 
 # =======
@@ -269,13 +272,27 @@ feature_name: OpenStudioLandscapes-Deadline-10-2
 #     None
 
 
+# ===========
+# sudo_method
+# -----------
+#
+# Type: <enum 'SudoMethod'>
+# Description:
+#     Setting up the MongoDB for OpenStudioLandscapes-Deadline-10-2 requires you to some commands to be executed as a privileged user. Usually, `sudo` is fine and does not human interaction, however, it requires the `sudo` password to exist in the `SUDO_PASS` environment variable (`.env`). Same applies to `su`, while `su` is available in Linux distros by default. `pkexec` is *mostly* available on Linux systems with GUI's (Gnome, KDE etc.) and is the cleanest way to grant `root` privileges. It is does not require you to share your secrets in a `.env` file as you will be prompted interactively to enter the password before the commands are executed.
+# Required:
+#     False
+# Examples:
+#     ['SUDO', 'PKEXEC']
+sudo_method: pkexec
+
+
 # =======================================
 # deadline_10_2_installer_aws_portal_link
 # ---------------------------------------
 #
 # Type: <class 'pathlib.Path'>
 # Description:
-#     The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file.
+#     The full path to the downloaded `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
 #     True
 # Examples:
@@ -289,7 +306,7 @@ deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
 #
 # Type: <class 'pathlib.Path'>
 # Description:
-#     The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` file.
+#     The full path to the downloaded `DeadlineClient-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
 #     True
 # Examples:
@@ -303,7 +320,7 @@ deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
 #
 # Type: <class 'pathlib.Path'>
 # Description:
-#     The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file.
+#     The full path to the downloaded `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
 #     True
 # Examples:
@@ -731,22 +748,33 @@ If you prefer to just download Deadline and use it without any AWS Cloud feature
 
 ### Instructions
 
-Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.
+Extract all contents for the `tar` archive to your local drive - for example to `~/Downloads/Deadline_10_2_Installers`.
 
 ```generic
-$ tree .payload
-.payload
-├── bin
-│   ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run
-│   ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run.sig
-│   ├── DeadlineClient-10.2.1.1-linux-x64-installer.run
-│   ├── DeadlineClient-10.2.1.1-linux-x64-installer.run.sig
-│   ├── DeadlineRepository-10.2.1.1-linux-x64-installer.run
-│   └── DeadlineRepository-10.2.1.1-linux-x64-installer.run.sig
-├── config
-└── data
+$ tree ~/Downloads/Deadline_10_2_Installers
+├── AWSPortalLink-1.2.1.0-linux-x64-installer.run
+├── AWSPortalLink-1.2.1.0-linux-x64-installer.run.sig
+├── DeadlineClient-10.2.1.1-linux-x64-installer.run
+├── DeadlineClient-10.2.1.1-linux-x64-installer.run.sig
+├── DeadlineRepository-10.2.1.1-linux-x64-installer.run
+└── DeadlineRepository-10.2.1.1-linux-x64-installer.run.sig
+```
 
-4 directories, 6 files
+Then, specify the full paths of the `*.run` files in the `config.yml` file (usually `~/.config/OpenStudioLandscapes/config-store/OpenStudioLandscapes-Deadline-10-2/config.yml` if not specified otherwise):
+
+```yaml
+# deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_aws_portal_link: "~/Downloads/Deadline_10_2_Installers/AWSPortalLink-1.2.1.0-linux-x64-installer.run"
+# deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_deadline_client: "~/Downloads/Deadline_10_2_Installers/DeadlineClient-10.2.1.1-linux-x64-installer.run"
+# deadline_10_2_installer_deadline_repository: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_deadline_repository: "~/Downloads/Deadline_10_2_Installers/DeadlineRepository-10.2.1.1-linux-x64-installer.run"
+```
+
+After doing so, you can enable the **OpenStudioLandscapes-Deadline-10-2** and **OpenStudioLandscapes-Deadline-10-2-Worker** Features in their `config.yml` files:
+
+```yaml
+enabled: true
 ```
 
 ## Documentation
@@ -902,4 +930,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 22:40:03 UTC**
+Last changed: **2025-12-25 14:28:30 UTC**

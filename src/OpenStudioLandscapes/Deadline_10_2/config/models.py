@@ -58,18 +58,21 @@ class Config(FeatureBaseModel):
     )
 
     deadline_10_2_installer_aws_portal_link: pathlib.Path = Field(
-        description="The full path to the `AWSPortalLink-1.2.x.x-linux-x64-installer.run` "
-        "file.",
+        description="The full path to the downloaded `AWSPortalLink-1.2.x.x-linux-x64-installer.run` "
+                    "file. The installer itself is not part of this Feature. For more information, "
+                    "see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline",
     )
 
     deadline_10_2_installer_deadline_client: pathlib.Path = Field(
-        description="The full path to the `DeadlineClient-10.2.x.x-linux-x64-installer.run` "
-        "file."
+        description="The full path to the downloaded `DeadlineClient-10.2.x.x-linux-x64-installer.run` "
+                    "file. The installer itself is not part of this Feature. For more information, "
+                    "see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline",
     )
 
     deadline_10_2_installer_deadline_repository: pathlib.Path = Field(
-        description="The full path to the `DeadlineRepository-10.2.x.x-linux-x64-installer.run` "
-        "file."
+        description="The full path to the downloaded `DeadlineRepository-10.2.x.x-linux-x64-installer.run` "
+                    "file. The installer itself is not part of this Feature. For more information, "
+                    "see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline",
     )
 
     deadline_10_2_repository_install_destination: pathlib.Path = Field(

@@ -101,7 +101,8 @@ def readme_feature(
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Extract all contents for the `tar` archive to `OpenStudioLandscapes-Deadline-10-2/.payload/bin`.\
+            Extract all contents for the `tar` archive to your local drive - 
+            for example to `~/Downloads/Deadline_10_2_Installers`.\
             """
         )
     )
@@ -109,22 +110,58 @@ def readme_feature(
     doc.add_code(
         textwrap.dedent(
             """\
-            $ tree .payload
-            .payload
-            ├── bin
-            │   ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run
-            │   ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run.sig
-            │   ├── DeadlineClient-10.2.1.1-linux-x64-installer.run
-            │   ├── DeadlineClient-10.2.1.1-linux-x64-installer.run.sig
-            │   ├── DeadlineRepository-10.2.1.1-linux-x64-installer.run
-            │   └── DeadlineRepository-10.2.1.1-linux-x64-installer.run.sig
-            ├── config
-            └── data
-
-            4 directories, 6 files\
+            $ tree ~/Downloads/Deadline_10_2_Installers
+            ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run
+            ├── AWSPortalLink-1.2.1.0-linux-x64-installer.run.sig
+            ├── DeadlineClient-10.2.1.1-linux-x64-installer.run
+            ├── DeadlineClient-10.2.1.1-linux-x64-installer.run.sig
+            ├── DeadlineRepository-10.2.1.1-linux-x64-installer.run
+            └── DeadlineRepository-10.2.1.1-linux-x64-installer.run.sig\
 """
         ),
         lang="generic",
+    )
+
+    doc.add_paragraph(
+        text=textwrap.dedent(
+            """\
+            Then, specify the full paths of the `*.run` files in the `config.yml` file
+            (usually `~/.config/OpenStudioLandscapes/config-store/OpenStudioLandscapes-Deadline-10-2/config.yml`
+            if not specified otherwise):\
+            """
+        )
+    )
+
+    doc.add_code(
+        textwrap.dedent(
+            """\
+            # deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
+            deadline_10_2_installer_aws_portal_link: "~/Downloads/Deadline_10_2_Installers/AWSPortalLink-1.2.1.0-linux-x64-installer.run"
+            # deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
+            deadline_10_2_installer_deadline_client: "~/Downloads/Deadline_10_2_Installers/DeadlineClient-10.2.1.1-linux-x64-installer.run"
+            # deadline_10_2_installer_deadline_repository: REQUIRED (CHANGE_ME)
+            deadline_10_2_installer_deadline_repository: "~/Downloads/Deadline_10_2_Installers/DeadlineRepository-10.2.1.1-linux-x64-installer.run"\
+"""
+        ),
+        lang="yaml",
+    )
+
+    doc.add_paragraph(
+        text=textwrap.dedent(
+            """\
+            After doing so, you can enable the **OpenStudioLandscapes-Deadline-10-2** and 
+            **OpenStudioLandscapes-Deadline-10-2-Worker** Features in their `config.yml` files:\
+            """
+        )
+    )
+
+    doc.add_code(
+        textwrap.dedent(
+            """\
+            enabled: true\
+"""
+        ),
+        lang="yaml",
     )
 
     doc.add_heading(
