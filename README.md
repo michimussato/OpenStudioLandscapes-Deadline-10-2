@@ -89,7 +89,7 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 
 
 <details>
-<summary><code>config.yml</code> (click to expand)</summary>
+<summary><code>config.yml</code></summary>
 
 
 ```yaml
@@ -871,4 +871,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2025-12-26 10:56:47 UTC**
+Last changed: **2025-12-26 10:59:41 UTC**
