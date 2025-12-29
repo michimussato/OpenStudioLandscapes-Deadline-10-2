@@ -46,7 +46,11 @@ from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
 from OpenStudioLandscapes.Deadline_10_2 import dist
-from OpenStudioLandscapes.Deadline_10_2.config.models import CONFIG_STR, Config, SudoMethod
+from OpenStudioLandscapes.Deadline_10_2.config.models import (
+    CONFIG_STR,
+    Config,
+    SudoMethod,
+)
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
 # Todo:
@@ -1429,9 +1433,13 @@ def compose_mongodb(
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 stdin=subprocess.PIPE,
-                env={
-                    "SUDO_PASS": EnvVar("SUDO_PASS").get_value(),
-                } if CONFIG.sudo_method == SudoMethod.SUDO else {},
+                env=(
+                    {
+                        "SUDO_PASS": EnvVar("SUDO_PASS").get_value(),
+                    }
+                    if CONFIG.sudo_method == SudoMethod.SUDO
+                    else {}
+                ),
             )
 
             stdout, stderr = proc.communicate(
