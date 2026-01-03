@@ -19,6 +19,7 @@ from OpenStudioLandscapes.Deadline_10_2 import constants, dist
 class SudoMethod(enum.StrEnum):
     # Todo
     #  - [ ] implement `su`
+    #  - [ ] Also see OpenStudioLandscapes ConfigEngine model
     # SU = "su"
     SUDO = "sudo"
     PKEXEC = "pkexec"
