@@ -301,70 +301,12 @@ def deadline_ini(
 
 @asset(
     **ASSET_HEADER,
-)
-def pip_packages(
-    context: AssetExecutionContext,
-) -> Generator[Output[List] | AssetMaterialization, None, None]:
-    """ """
-
-    _pip_packages: List = [
-        # Todo:
-        #  - [ ] (LOW) OpenStudioLandscapes SSL authentication
-        # "git+https://github.com/michimussato/SSLGeneration.git@packaging",
-    ]
-
-    yield Output(_pip_packages)
-
-    yield AssetMaterialization(
-        asset_key=context.asset_key,
-        metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(_pip_packages),
-        },
-    )
-
-
-@asset(
-    **ASSET_HEADER,
-)
-def apt_packages(
-    context: AssetExecutionContext,
-) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
-    """ """
-
-    _apt_packages = {}
-
-    _apt_packages["deadline_10_2"] = [
-        "bzip2",  # https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/system-requirements.html#system-requirements-linux-ref-label
-        # this was an attempt to set the hostname with hostnamectl dynamically
-        # however, systemd should not run inside a container (which makes sense):
-        # https://stackoverflow.com/questions/59466250/docker-system-has-not-been-booted-with-systemd-as-init-system
-        # "systemd",
-    ]
-
-    yield Output(_apt_packages)
-
-    yield AssetMaterialization(
-        asset_key=context.asset_key,
-        metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(_apt_packages),
-        },
-    )
-
-
-@asset(
-    **ASSET_HEADER,
     ins={
         "feature_in": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
         ),
         "CONFIG": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
-        ),
-        "apt_packages": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "apt_packages"]),
-        ),
-        "pip_packages": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "pip_packages"]),
         ),
     },
     retry_policy=build_docker_image_retry_policy,
@@ -373,8 +315,6 @@ def build_docker_image(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: Config,  # pylint: disable=redefined-outer-name
-    apt_packages: Dict[str, List[str]],  # pylint: disable=redefined-outer-name
-    pip_packages: List,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
@@ -428,10 +368,10 @@ def build_docker_image(
     # @formatter:on
 
     apt_install_str_deadline_10_2: str = get_apt_install_str(
-        apt_install_packages=apt_packages["deadline_10_2"],
+        apt_install_packages=CONFIG.apt_packages,
     )
 
-    pip_install_str: str = get_pip_install_str(pip_install_packages=pip_packages)
+    pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
 
     docker_payload = ".payload"
     tmpdir = docker_file.parent / docker_payload

@@ -234,6 +234,22 @@ class Config(FeatureBaseModel):
         frozen=True,
     )
 
+    apt_packages: List = Field(
+        default=[
+            "bzip2",
+        ],
+        frozen=True,
+    )
+
+    pip_packages: List = Field(
+        default=[
+            # Todo:
+            #  - [ ] (LOW) OpenStudioLandscapes SSL authentication
+            # "git+https://github.com/michimussato/SSLGeneration.git@packaging",
+        ],
+        frozen=True,
+    )
+
     # EXPANDABLE PATHS
     @property
     def deadline_10_2_installer_aws_portal_link_expanded(self) -> pathlib.Path:
