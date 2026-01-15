@@ -1,5 +1,6 @@
 import copy
 import enum
+import os
 import pathlib
 import shlex
 import shutil
@@ -1296,18 +1297,23 @@ def compose_mongodb(
 
             context.log.info(f"Setting ownership of {mongo_db_dir_host.as_posix()}...")
 
+            if CONFIG.sudo_method == SudoMethod.SUDO:
+                sudo_pass = EnvVar("SUDO_PASS").get_value() or os.environ.get("SUDO_PASS", None)
+                if sudo_pass is None:
+                    raise ValueError("Environment variable `SUDO_PASS` is not set but required "
+                                     f"with `sudo_method` = {CONFIG.sudo_method}")
+                env = {
+                    "SUDO_PASS": sudo_pass,
+                }
+            else:
+                env = {}
+
             proc = subprocess.Popen(
                 script_chown_mongodb_10_2["exe"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 stdin=subprocess.PIPE,
-                env=(
-                    {
-                        "SUDO_PASS": EnvVar("SUDO_PASS").get_value(),
-                    }
-                    if CONFIG.sudo_method == SudoMethod.SUDO
-                    else {}
-                ),
+                env=env,
             )
 
             stdout, stderr = proc.communicate(
