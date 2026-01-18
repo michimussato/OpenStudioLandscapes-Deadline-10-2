@@ -23,6 +23,7 @@ from dagster import (
     Output,
     asset,
 )
+
 from docker_compose_graph.utils import *
 from OpenStudioLandscapes.engine.common_assets.compose import get_compose
 from OpenStudioLandscapes.engine.common_assets.compose_scope import (
@@ -38,7 +39,7 @@ from OpenStudioLandscapes.engine.common_assets.group_in import (
     get_feature_in_parent,
 )
 from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
-from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel
+from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel, SudoMethod
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
 from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
@@ -50,7 +51,6 @@ from OpenStudioLandscapes.Deadline_10_2 import dist
 from OpenStudioLandscapes.Deadline_10_2.config.models import (
     CONFIG_STR,
     Config,
-    SudoMethod,
 )
 from OpenStudioLandscapes.Deadline_10_2.constants import *
 
@@ -1178,6 +1178,8 @@ def script_chown_mongodb(
     CONFIG: Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, str]] | AssetMaterialization, None, None]:
 
+    config_engine: ConfigEngine = CONFIG.config_engine
+
     ret = dict()
 
     ret["exe"] = shutil.which("bash")
@@ -1197,7 +1199,7 @@ def script_chown_mongodb(
     ret["script"] += "\n"
     # ret["script"] += f"{shutil.which('sshpass')} -eSSH_PASS ssh {env_10_2['SSH_USER']}@{env_10_2['SSH_HOST']} \"echo $SSH_PASS | sudo -S chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()}\"\n"
 
-    match CONFIG.sudo_method:
+    match config_engine.sudo_method:
         # Todo:
         #  - [ ] implement `su` command variance
         # case SudoMethod.SU:
@@ -1207,11 +1209,11 @@ def script_chown_mongodb(
         case SudoMethod.SUDO:
             ret[
                 "script"
-            ] += f"echo $SUDO_PASS | {CONFIG.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+            ] += f"echo ${{SUDO_PASS}} | {config_engine.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
         case SudoMethod.PKEXEC:
             ret[
                 "script"
-            ] += f"{CONFIG.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+            ] += f"{config_engine.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
 
     ret["script"] += "\n"
     ret["script"] += "echo Success;\n"
@@ -1297,23 +1299,25 @@ def compose_mongodb(
 
             context.log.info(f"Setting ownership of {mongo_db_dir_host.as_posix()}...")
 
-            if CONFIG.sudo_method == SudoMethod.SUDO:
+            if config_engine.sudo_method == SudoMethod.SUDO:
+                # Todo
+                #  - [ ] Choose EnvVar or os.environ for SUDO_PASS
                 sudo_pass = EnvVar("SUDO_PASS").get_value() or os.environ.get("SUDO_PASS", None)
                 if sudo_pass is None:
                     raise ValueError("Environment variable `SUDO_PASS` is not set but required "
-                                     f"with `sudo_method` = {CONFIG.sudo_method}")
-                env = {
+                                     f"with `sudo_method` = {config_engine.sudo_method}")
+                env_proc = {
                     "SUDO_PASS": sudo_pass,
                 }
             else:
-                env = {}
+                env_proc = {}
 
             proc = subprocess.Popen(
                 script_chown_mongodb_10_2["exe"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 stdin=subprocess.PIPE,
-                env=env,
+                env=env_proc,
             )
 
             stdout, stderr = proc.communicate(
