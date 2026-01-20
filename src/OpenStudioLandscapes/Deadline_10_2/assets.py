@@ -1203,6 +1203,7 @@ def script_chown_mongodb(
     match config_engine.sudo_method:
         # Todo:
         #  - [ ] implement `su` command variance
+        #  - [ ] askpass: alternative to "echo SUDO_PASS | sudo -S"
         # case SudoMethod.SU:
         #     ret[
         #         "script"
