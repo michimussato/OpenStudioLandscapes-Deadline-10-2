@@ -1203,7 +1203,7 @@ def script_chown_mongodb(
     match config_engine.sudo_method:
         # Todo:
         #  - [ ] implement `su` command variance
-        #  - [ ] askpass: alternative to "echo SUDO_PASS | sudo -S"
+        #  - [ ] askpass: alternative to "echo SUDO_PASS | sudo --stdin"
         # case SudoMethod.SU:
         #     ret[
         #         "script"
@@ -1211,7 +1211,7 @@ def script_chown_mongodb(
         case SudoMethod.SUDO:
             ret[
                 "script"
-            ] += f"echo ${{SUDO_PASS}} | {config_engine.sudo_method.value} -S -k /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+            ] += f"echo ${{SUDO_PASS}} | {config_engine.sudo_method.value} --stdin --reset-timestamp /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
         case SudoMethod.PKEXEC:
             ret[
                 "script"
