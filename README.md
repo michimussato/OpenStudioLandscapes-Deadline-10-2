@@ -78,7 +78,7 @@ A local config store location will be created if it doesn't exist, together with
 > [!TIP]
 > 
 > To specify a config store location different than
-> the default, you can do so be setting the environment variable
+> the default, you can do so by setting the environment variable
 > `OPENSTUDIOLANDSCAPES__CONFIGSTORE_ROOT`:
 > 
 > ```shell
@@ -300,20 +300,6 @@ feature_name: OpenStudioLandscapes-Deadline-10-2
 #     None
 
 
-# ===========
-# sudo_method
-# -----------
-#
-# Type: <enum 'SudoMethod'>
-# Description:
-#     Setting up the MongoDB for OpenStudioLandscapes-Deadline-10-2 requires you to some commands to be executed as a privileged user. Usually, `sudo` is fine and does not human interaction, however, it requires the `sudo` password to exist in the `SUDO_PASS` environment variable (`.env`). Same applies to `su`, while `su` is available in Linux distros by default. `pkexec` is *mostly* available on Linux systems with GUI's (Gnome, KDE etc.) and is the cleanest way to grant `root` privileges. It is does not require you to share your secrets in a `.env` file as you will be prompted interactively to enter the password before the commands are executed.
-# Required:
-#     False
-# Examples:
-#     ['SUDO', 'PKEXEC']
-sudo_method: pkexec
-
-
 # =======================================
 # deadline_10_2_installer_aws_portal_link
 # ---------------------------------------
@@ -322,10 +308,10 @@ sudo_method: pkexec
 # Description:
 #     The full path to the downloaded `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
-#     True
+#     False
 # Examples:
 #     None
-deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_aws_portal_link: <NOT_SET__CHANGE_ME>
 
 
 # =======================================
@@ -336,10 +322,10 @@ deadline_10_2_installer_aws_portal_link: REQUIRED (CHANGE_ME)
 # Description:
 #     The full path to the downloaded `DeadlineClient-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
-#     True
+#     False
 # Examples:
 #     None
-deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_deadline_client: <NOT_SET__CHANGE_ME>
 
 
 # ===========================================
@@ -350,10 +336,10 @@ deadline_10_2_installer_deadline_client: REQUIRED (CHANGE_ME)
 # Description:
 #     The full path to the downloaded `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
 # Required:
-#     True
+#     False
 # Examples:
 #     None
-deadline_10_2_installer_deadline_repository: REQUIRED (CHANGE_ME)
+deadline_10_2_installer_deadline_repository: <NOT_SET__CHANGE_ME>
 
 
 # ============================================
@@ -746,6 +732,35 @@ deadline_10_2_ME_CONFIG_MONGODB_URL: mongodb://admin:pass@localhost:21017/db?ssl
 # Examples:
 #     None
 deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017
+
+
+# ============
+# apt_packages
+# ------------
+#
+# Type: typing.List
+# Description:
+#     None
+# Required:
+#     False
+# Examples:
+#     None
+apt_packages:
+- bzip2
+
+
+# ============
+# pip_packages
+# ------------
+#
+# Type: typing.List
+# Description:
+#     None
+# Required:
+#     False
+# Examples:
+#     None
+pip_packages: []
 ```
 
 
@@ -882,4 +897,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2025-12-31 12:38:17 UTC**
+Last changed: **2026-01-22 09:27:12 UTC**
