@@ -42,23 +42,11 @@ This is an extension to the OpenStudioLandscapes ecosystem. The full documentati
 Clone this repository into `OpenStudioLandscapes/.features` (assuming the current working directory to be the Git repository root `./OpenStudioLandscapes`):
 
 ```shell
-git -C ./.features clone https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
-# Check out a specific branch with:
-# List branches: 
-# git -C ./.features/OpenStudioLandscapes-Deadline-10-2 branch -a
-# Checkout branch: 
-# git -C ./.features/OpenStudioLandscapes-Deadline-10-2 checkout <branch>
-```
-
-Install into OpenStudioLandscapes `venv` (`./OpenStudioLandscapes/.venv`):
-
-```shell
+# cd OpenStudioLandscapes
 source .venv/bin/activate
-# python -m pip install --upgrade pip setuptools
-# the following removes the `openstudiolandscapes` executable for now (will be fixed soon)
-pip install -e "./.features/OpenStudioLandscapes-Deadline-10-2"
-# so, re-install `OpenStudioLandscapes` engine:
-pip install -e "."
+openstudiolandscapes install-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
+# Check the resulting console output for installation instructions
+
 ```
 
 For more info on `pip` see [VCS Support of `pip`](https://pip.pypa.io/en/stable/topics/vcs-support/).
@@ -67,6 +55,13 @@ For more info on `pip` see [VCS Support of `pip`](https://pip.pypa.io/en/stable/
 
 OpenStudioLandscapes will search for a local config store. The default location is `~/.config/OpenStudioLandscapes/config-store/` but you can specify a different location if you need to.
 
+> [!TIP]
+> 
+> To specify a config store location different from
+> the default location, check out the OpenStudioLandscapes 
+> [CLI Section](https://github.com/michimussato/OpenStudioLandscapes#cli)
+> to find out how to do that.
+
 A local config store location will be created if it doesn't exist, together with the `config.yml` files for each individual Feature.
 
 > [!TIP]
@@ -74,16 +69,6 @@ A local config store location will be created if it doesn't exist, together with
 > The config store root will be initialized as a local Git
 > controlled repository. This makes it easy to track changes
 > you made to the `config.yml`.
-
-> [!TIP]
-> 
-> To specify a config store location different than
-> the default, you can do so by setting the environment variable
-> `OPENSTUDIOLANDSCAPES__CONFIGSTORE_ROOT`:
-> 
-> ```shell
-> OPENSTUDIOLANDSCAPES__CONFIGSTORE_ROOT="~/.config/OpenStudioLandscapes/my-custom-config-store"
-> ```
 
 The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and are based on [`OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py`](https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py).
 
@@ -897,4 +882,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-01-22 09:27:12 UTC**
+Last changed: **2026-01-23 10:41:02 UTC**
