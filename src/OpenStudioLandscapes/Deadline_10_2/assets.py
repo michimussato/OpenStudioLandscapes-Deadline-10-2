@@ -26,10 +26,6 @@ from dagster import (
 from docker_compose_graph.utils import *
 from OpenStudioLandscapes.engine.common_assets.cmd import get_feature__cmd
 from OpenStudioLandscapes.engine.common_assets.compose import get_compose
-
-# from OpenStudioLandscapes.engine.common_assets.compose_scope import (
-#     get_compose_scope_group__cmd,
-# )
 from OpenStudioLandscapes.engine.common_assets.docker_compose_graph import (
     get_docker_compose_graph,
 )
@@ -131,8 +127,6 @@ def connection_ini(
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     # @formatter:off
     connection_ini = textwrap.dedent("""\
