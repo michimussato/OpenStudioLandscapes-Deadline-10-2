@@ -152,15 +152,10 @@ src/OpenStudioLandscapes/Deadline_10_2/config/models.py:14:0: C0413: Import "fro
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:16:0: C0413: Import "from OpenStudioLandscapes.Deadline_10_2 import constants, dist" should be placed at the top of the module (wrong-import-position)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:19:0: C0115: Missing class docstring (missing-class-docstring)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:233:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/Deadline_10_2/config/models.py:240:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:252:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/Deadline_10_2/config/models.py:259:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:271:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/Deadline_10_2/config/models.py:278:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:290:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/Deadline_10_2/config/models.py:299:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:311:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/Deadline_10_2/config/models.py:318:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/Deadline_10_2/config/models.py:1:0: W0611: Unused import enum (unused-import)
 ************* Module OpenStudioLandscapes.Deadline_10_2.doc.readme
 src/OpenStudioLandscapes/Deadline_10_2/doc/readme.py:25:0: C0301: Line too long (139/100) (line-too-long)
@@ -178,5 +173,5 @@ src/OpenStudioLandscapes/Deadline_10_2/doc/readme.py:6:0: C0116: Missing functio
 src/OpenStudioLandscapes/Deadline_10_2/doc/readme.py:19:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 6.35/10 (previous run: 4.61/10, +1.74)
+Your code has been rated at 6.83/10 (previous run: 6.58/10, +0.25)
 
