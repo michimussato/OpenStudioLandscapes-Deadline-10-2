@@ -237,7 +237,7 @@ class Config(FeatureBaseModel):
 
         LOGGER.debug(f"Expanding {self.deadline_10_2_installer_aws_portal_link}...")
         ret = pathlib.Path(
-            self.deadline_10_2_installer_aws_portal_link.expanduser()
+            self.deadline_10_2_installer_aws_portal_link.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
@@ -256,7 +256,7 @@ class Config(FeatureBaseModel):
 
         LOGGER.debug(f"Expanding {self.deadline_10_2_installer_deadline_client}...")
         ret = pathlib.Path(
-            self.deadline_10_2_installer_deadline_client.expanduser()
+            self.deadline_10_2_installer_deadline_client.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
@@ -275,7 +275,7 @@ class Config(FeatureBaseModel):
 
         LOGGER.debug(f"Expanding {self.deadline_10_2_installer_deadline_repository}...")
         ret = pathlib.Path(
-            self.deadline_10_2_installer_deadline_repository.expanduser()
+            self.deadline_10_2_installer_deadline_repository.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
@@ -296,7 +296,7 @@ class Config(FeatureBaseModel):
             f"Expanding {self.deadline_10_2_repository_install_destination}..."
         )
         ret = pathlib.Path(
-            self.deadline_10_2_repository_install_destination.expanduser()
+            self.deadline_10_2_repository_install_destination.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
@@ -315,7 +315,7 @@ class Config(FeatureBaseModel):
 
         LOGGER.debug(f"Expanding {self.deadline_10_2_database_install_destination}...")
         ret = pathlib.Path(
-            self.deadline_10_2_database_install_destination.expanduser()
+            self.deadline_10_2_database_install_destination.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
