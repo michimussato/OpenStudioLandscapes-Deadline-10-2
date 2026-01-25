@@ -693,6 +693,7 @@ def compose_repository(
             {
                 *_volume_relative,
                 *config_engine.global_bind_volumes,
+                *CONFIG.local_bind_volumes,
             }
         )
     }
@@ -733,6 +734,7 @@ def compose_repository(
                 ),
                 "environment": {
                     **config_engine.global_environment_variables,
+                    **CONFIG.local_environment_variables,
                 },
                 "command": ["/ENTRYPOINT/install_repository.sh"],
             },
@@ -1132,6 +1134,7 @@ def compose_mongo_express(
                         MONGO_DB_PORT_CONTAINER=CONFIG.deadline_10_2_MONGO_DB_PORT_CONTAINER
                     ),
                     **config_engine.global_environment_variables,
+                    **CONFIG.local_environment_variables,
                 },
                 "depends_on": [
                     "mongodb-10-2",
@@ -1376,6 +1379,7 @@ def compose_mongodb(
             {
                 *_volume_relative,
                 *config_engine.global_bind_volumes,
+                *CONFIG.local_bind_volumes,
             }
         )
     }
@@ -1417,6 +1421,7 @@ def compose_mongodb(
                 ],
                 "environment": {
                     **config_engine.global_environment_variables,
+                    **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
                 **copy.deepcopy(ports_dict),
@@ -1556,6 +1561,7 @@ def compose_rcs_runner(
             {
                 *_volume_relative,
                 *config_engine.global_bind_volumes,
+                *CONFIG.local_bind_volumes,
             }
         )
     }
@@ -1609,6 +1615,7 @@ def compose_rcs_runner(
                 },
                 "environment": {
                     **config_engine.global_environment_variables,
+                    **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
                 **copy.deepcopy(ports_dict),
@@ -1743,6 +1750,7 @@ def compose_pulse_runner(
             {
                 *_volume_relative,
                 *config_engine.global_bind_volumes,
+                *CONFIG.local_bind_volumes,
             }
         )
     }
@@ -1790,6 +1798,7 @@ def compose_pulse_runner(
                     },
                     "environment": {
                         **config_engine.global_environment_variables,
+                        **CONFIG.local_environment_variables,
                     },
                     **copy.deepcopy(network_dict),
                     **copy.deepcopy(volumes_dict),
@@ -1944,6 +1953,7 @@ def compose_worker_runner(
                     },
                     "environment": {
                         **config_engine.global_environment_variables,
+                        **CONFIG.local_environment_variables,
                     },
                     **copy.deepcopy(network_dict),
                     **copy.deepcopy(volumes_dict),
@@ -2088,6 +2098,7 @@ def compose_webservice_runner(
             {
                 *_volume_relative,
                 *config_engine.global_bind_volumes,
+                *CONFIG.local_bind_volumes,
             }
         )
     }
@@ -2140,6 +2151,7 @@ def compose_webservice_runner(
                 },
                 "environment": {
                     **config_engine.global_environment_variables,
+                    **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
                 "command": deadline_command_compose_webservice_runner_10_2,
