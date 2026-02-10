@@ -3,6 +3,16 @@ import textwrap
 import snakemd
 
 
+# Todo
+#  - [ ] expose RCS to web
+#        - Pangolin Rule?
+#          - What would be the the path to exclude? (i.e. /api/v3/*)
+#        - Use SSL Certificate and fully disable Pangolin Protection?
+#          - Resources:
+#            - https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/remote-connection-server.html#remote-connection-server-ref-label
+#            - https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/proxy-sslgen.html#ssl-cert-gen-ref-label
+
+
 def readme_feature(
     doc: snakemd.Document,
     main_header: str,
