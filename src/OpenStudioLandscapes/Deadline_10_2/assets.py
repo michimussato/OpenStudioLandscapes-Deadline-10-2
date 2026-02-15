@@ -733,7 +733,7 @@ def compose_repository(
                     build["image_tags"][0],
                 ),
                 "environment": {
-                    "TZ": CONFIG.tz,
+                    "TZ": config_engine.tz,
                     **config_engine.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
@@ -1118,7 +1118,7 @@ def compose_mongo_express(
                 "domainname": config_engine.openstudiolandscapes__domain_lan,
                 "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 "environment": {
-                    "TZ": CONFIG.tz,
+                    "TZ": config_engine.tz,
                     "ME_CONFIG_BASICAUTH_USERNAME": CONFIG.deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME,
                     "ME_CONFIG_BASICAUTH_PASSWORD": CONFIG.deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD,
                     "ME_CONFIG_OPTIONS_EDITORTHEME": CONFIG.deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME,
@@ -1422,7 +1422,7 @@ def compose_mongodb(
                     "disabled",
                 ],
                 "environment": {
-                    "TZ": CONFIG.tz,
+                    "TZ": config_engine.tz,
                     **config_engine.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
@@ -1617,7 +1617,7 @@ def compose_rcs_runner(
                     "retries": "3",
                 },
                 "environment": {
-                    "TZ": CONFIG.tz,
+                    "TZ": config_engine.tz,
                     **config_engine.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
@@ -1801,7 +1801,7 @@ def compose_pulse_runner(
                         },
                     },
                     "environment": {
-                        "TZ": CONFIG.tz,
+                        "TZ": config_engine.tz,
                         **config_engine.global_environment_variables,
                         **CONFIG.local_environment_variables,
                     },
@@ -1957,7 +1957,7 @@ def compose_worker_runner(
                         },
                     },
                     "environment": {
-                        "TZ": CONFIG.tz,
+                        "TZ": config_engine.tz,
                         **config_engine.global_environment_variables,
                         **CONFIG.local_environment_variables,
                     },
@@ -2156,7 +2156,7 @@ def compose_webservice_runner(
                     "retries": "3",
                 },
                 "environment": {
-                    "TZ": CONFIG.tz,
+                    "TZ": config_engine.tz,
                     **config_engine.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
