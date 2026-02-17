@@ -44,7 +44,7 @@ Clone this repository into `OpenStudioLandscapes/.features` (assuming the curren
 ```shell
 # cd OpenStudioLandscapes
 source .venv/bin/activate
-openstudiolandscapes install-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
+openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
 # Check the resulting console output for installation instructions
 
 ```
@@ -902,4 +902,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-01-27 20:30:32 UTC**
+Last changed: **2026-02-17 11:15:30 UTC**
