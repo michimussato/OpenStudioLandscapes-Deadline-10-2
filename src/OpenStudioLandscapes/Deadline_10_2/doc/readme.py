@@ -2,7 +2,6 @@ import textwrap
 
 import snakemd
 
-
 # Todo
 #  - [ ] expose RCS to web
 #        - Pangolin Rule?

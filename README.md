@@ -4,7 +4,8 @@
 
 1. [Feature: OpenStudioLandscapes-Deadline-10-2](#feature-openstudiolandscapes-deadline-10-2)
    1. [Brief](#brief)
-   2. [Install](#install)
+   2. [Clone](#clone)
+      1. [Clone and Install](#clone-and-install)
    3. [Configure](#configure)
       1. [Default Configuration](#default-configuration)
 2. [External Resources](#external-resources)
@@ -37,7 +38,7 @@ This is an extension to the OpenStudioLandscapes ecosystem. The full documentati
 > You feel like writing your own Feature? Go and check out the 
 > [OpenStudioLandscapes-Template](https://github.com/michimussato/OpenStudioLandscapes-Template).
 
-## Install
+## Clone
 
 Clone this repository into `OpenStudioLandscapes/.features` (assuming the current working directory to be the Git repository root `./OpenStudioLandscapes`):
 
@@ -45,7 +46,19 @@ Clone this repository into `OpenStudioLandscapes/.features` (assuming the curren
 # cd OpenStudioLandscapes
 source .venv/bin/activate
 openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
+deactivate
 # Check the resulting console output for installation instructions
+
+```
+
+### Clone and Install
+
+```shell
+# cd OpenStudioLandscapes
+source .venv/bin/activate
+openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git \
+    && pip install --editable ./.features/OpenStudioLandscapes-Deadline-10-2
+deactivate
 
 ```
 
@@ -902,4 +915,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-02-17 11:15:30 UTC**
+Last changed: **2026-02-18 00:17:34 UTC**
