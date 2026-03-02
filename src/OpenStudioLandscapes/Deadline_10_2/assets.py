@@ -69,13 +69,6 @@ yaml.SafeDumper.add_multi_representer(
 
 cmd: AssetsDefinition = get_feature__cmd(
     ASSET_HEADER=ASSET_HEADER,
-    # cmd_append={
-    #     "cmd": [],
-    #     "exclude_from_quote": [
-    #         "$(which docker)",
-    #     ],
-    # },
-    # cmd_extend=[],
 )
 
 CONFIG: AssetsDefinition = get_feature__CONFIG(
