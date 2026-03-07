@@ -1014,6 +1014,13 @@ def build_docker_image_client(
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(image_data),
             "docker_file": MetadataValue.md(f"```yaml\n{docker_file_content}\n```"),
+            "docker_image": MetadataValue.path(f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"),
+            "docker_cmd": MetadataValue.path(
+                get_docker_run_cmd(
+                    context=context,
+                    image_data=image_data,
+                )
+            ),
             "logs": MetadataValue.json(logs),
         },
     )
