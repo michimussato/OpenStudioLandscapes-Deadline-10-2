@@ -676,7 +676,9 @@ def build_docker_image_repository(
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(image_data),
             "env": MetadataValue.json(env),
-            "docker_image": MetadataValue.path(f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"),
+            "docker_image": MetadataValue.path(
+                f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"
+            ),
             "docker_cmd": MetadataValue.path(
                 get_docker_run_cmd(
                     context=context,
@@ -1142,7 +1144,9 @@ def build_docker_image_client(
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(image_data),
             "env": MetadataValue.json(env),
-            "docker_image": MetadataValue.path(f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"),
+            "docker_image": MetadataValue.path(
+                f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"
+            ),
             "docker_cmd": MetadataValue.path(
                 get_docker_run_cmd(
                     context=context,
