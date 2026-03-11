@@ -379,6 +379,9 @@ def deadline_script_install_repository(
 
     install_repository = dict()
 
+    # Todo:
+    #  - [ ] textwrap.dedent script str
+
     install_repository["exe"] = shutil.which("bash")
     install_repository["script"] = str()
 
@@ -456,21 +459,16 @@ def deadline_script_install_repository(
             ),
         ),
     },
-    retry_policy=build_docker_image_retry_policy,
 )
-def build_docker_image_repository(
+def write_dockerfile_repository(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
+) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
 
     env: Dict = CONFIG.env
-
-    docker_config_json: pathlib.Path = (
-        feature_in.openstudiolandscapes_base.docker_config_json
-    )
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
@@ -507,6 +505,9 @@ def build_docker_image_repository(
 
     #################################################
 
+    payload = docker_file.parent / "payload"
+    payload.mkdir(parents=True, exist_ok=True)
+
     # @formatter:off
     files_10_2 = {
         # "AWSPortalLink.run": CONFIG.deadline_10_2_installer_aws_portal_link_expanded,
@@ -515,14 +516,24 @@ def build_docker_image_repository(
     }
     # @formatter:on
 
+    # Copy Deadline Installer(s) to build context
+    for key, value in files_10_2.items():
+        if not value.exists():
+            context.log.error(f"File {value.as_posix()} does not exist")
+        context.log.debug(f"{value = }")
+        context.log.debug(f"{payload / key = }")
+        shutil.copyfile(
+            src=value,
+            dst=payload / key,
+        )
+
+    #################################################
+
     apt_install_str_deadline_10_2: str = get_apt_install_str(
         apt_install_packages=CONFIG.apt_packages,
     )
 
     pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
-
-    payload = docker_file.parent / "payload"
-    payload.mkdir(parents=True, exist_ok=True)
 
     copy_str: str = get_copy_str(
         temp_dir=payload,
@@ -582,16 +593,68 @@ def build_docker_image_repository(
     with open(docker_file, "r") as fr:
         docker_file_content = fr.read()
 
-    # Copy Deadline Installer(s) to build context
-    for key, value in files_10_2.items():
-        if not value.exists():
-            context.log.error(f"File {value.as_posix()} does not exist")
-        context.log.debug(f"{value = }")
-        context.log.debug(f"{payload / key = }")
-        shutil.copyfile(
-            src=value,
-            dst=payload / key,
-        )
+    yield Output(docker_file)
+
+    yield AssetMaterialization(
+        asset_key=context.asset_key,
+        metadata={
+            "__".join(context.asset_key.path): MetadataValue.path(docker_file),
+            docker_file.name: MetadataValue.md(f"```shell\n{docker_file_content}\n```"),
+            "env": MetadataValue.json(env),
+        },
+    )
+
+
+@asset(
+    **ASSET_HEADER,
+    ins={
+        "feature_in": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
+        ),
+        "CONFIG": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
+        ),
+        "write_dockerfile_repository": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "write_dockerfile_repository"])
+        ),
+    },
+    retry_policy=build_docker_image_retry_policy,
+)
+def build_docker_image_repository(
+    context: AssetExecutionContext,
+    feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
+    CONFIG: Config,  # pylint: disable=redefined-outer-name
+    write_dockerfile_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
+    """ """
+
+    env: Dict = CONFIG.env
+
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
+
+    config_engine: ConfigEngine = CONFIG.config_engine
+
+    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+
+    docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
+
+    #################################################
+
+    (
+        image_name,
+        image_prefixes,
+        tags,
+        build_base_parent_image_prefix,
+        build_base_parent_image_name,
+        build_base_parent_image_tags,
+    ) = get_image_metadata(
+        context=context,
+        docker_image=docker_image,
+        docker_config=docker_config,
+        env=env,
+    )
 
     #################################################
 
@@ -603,7 +666,7 @@ def build_docker_image_repository(
         docker_image=docker_image,
         docker_config=docker_config,
         docker_config_json=docker_config_json,
-        docker_file=docker_file,
+        docker_file=write_dockerfile_repository,
     )
 
     yield Output(image_data)
@@ -612,7 +675,14 @@ def build_docker_image_repository(
         asset_key=context.asset_key,
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(image_data),
-            "docker_file": MetadataValue.md(f"```yaml\n{docker_file_content}\n```"),
+            "env": MetadataValue.json(env),
+            "docker_image": MetadataValue.path(f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"),
+            "docker_cmd": MetadataValue.path(
+                get_docker_run_cmd(
+                    context=context,
+                    image_data=image_data,
+                )
+            ),
             "logs": MetadataValue.json(logs),
         },
     )
@@ -847,21 +917,16 @@ def deadline_command_build_docker_image_client(
             ),
         ),
     },
-    retry_policy=build_docker_image_retry_policy,
 )
-def build_docker_image_client(
+def write_dockerfile_client(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
+) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
 
     env: Dict = CONFIG.env
-
-    docker_config_json: pathlib.Path = (
-        feature_in.openstudiolandscapes_base.docker_config_json
-    )
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
@@ -898,12 +963,26 @@ def build_docker_image_client(
 
     #################################################
 
+    payload = docker_file.parent / "payload"
+    payload.mkdir(parents=True, exist_ok=True)
+
     # @formatter:off
     files_10_2 = {
         # "AWSPortalLink.run": CONFIG.deadline_10_2_installer_aws_portal_link_expanded,
         "DeadlineClient.run": CONFIG.deadline_10_2_installer_deadline_client_expanded,
         # "DeadlineRepository.run": CONFIG.deadline_10_2_installer_deadline_repository_expanded,
     }
+
+    # Copy Deadline Installer(s) to build context
+    for key, value in files_10_2.items():
+        if not value.exists():
+            context.log.error(f"File {value.as_posix()} does not exist")
+        context.log.debug(f"{value = }")
+        context.log.debug(f"{payload / key = }")
+        shutil.copyfile(
+            src=value,
+            dst=payload / key,
+        )
     # @formatter:on
 
     apt_install_str_deadline_10_2: str = get_apt_install_str(
@@ -911,9 +990,6 @@ def build_docker_image_client(
     )
 
     pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
-
-    payload = docker_file.parent / "payload"
-    payload.mkdir(parents=True, exist_ok=True)
 
     copy_str: str = get_copy_str(
         temp_dir=payload,
@@ -983,16 +1059,68 @@ def build_docker_image_client(
     with open(docker_file, "r") as fr:
         docker_file_content = fr.read()
 
-    # Copy Deadline Installer(s) to build context
-    for key, value in files_10_2.items():
-        if not value.exists():
-            context.log.error(f"File {value.as_posix()} does not exist")
-        context.log.debug(f"{value = }")
-        context.log.debug(f"{payload / key = }")
-        shutil.copyfile(
-            src=value,
-            dst=payload / key,
-        )
+    yield Output(docker_file)
+
+    yield AssetMaterialization(
+        asset_key=context.asset_key,
+        metadata={
+            "__".join(context.asset_key.path): MetadataValue.path(docker_file),
+            docker_file.name: MetadataValue.md(f"```shell\n{docker_file_content}\n```"),
+            "env": MetadataValue.json(env),
+        },
+    )
+
+
+@asset(
+    **ASSET_HEADER,
+    ins={
+        "feature_in": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
+        ),
+        "CONFIG": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
+        ),
+        "write_dockerfile_client": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "write_dockerfile_client"])
+        ),
+    },
+    retry_policy=build_docker_image_retry_policy,
+)
+def build_docker_image_client(
+    context: AssetExecutionContext,
+    feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
+    CONFIG: Config,  # pylint: disable=redefined-outer-name
+    write_dockerfile_client: pathlib.Path,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
+    """ """
+
+    env: Dict = CONFIG.env
+
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
+
+    config_engine: ConfigEngine = CONFIG.config_engine
+
+    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+
+    docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
+
+    #################################################
+
+    (
+        image_name,
+        image_prefixes,
+        tags,
+        build_base_parent_image_prefix,
+        build_base_parent_image_name,
+        build_base_parent_image_tags,
+    ) = get_image_metadata(
+        context=context,
+        docker_image=docker_image,
+        docker_config=docker_config,
+        env=env,
+    )
 
     #################################################
 
@@ -1004,7 +1132,7 @@ def build_docker_image_client(
         docker_image=docker_image,
         docker_config=docker_config,
         docker_config_json=docker_config_json,
-        docker_file=docker_file,
+        docker_file=write_dockerfile_client,
     )
 
     yield Output(image_data)
@@ -1013,7 +1141,7 @@ def build_docker_image_client(
         asset_key=context.asset_key,
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(image_data),
-            "docker_file": MetadataValue.md(f"```yaml\n{docker_file_content}\n```"),
+            "env": MetadataValue.json(env),
             "docker_image": MetadataValue.path(f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"),
             "docker_cmd": MetadataValue.path(
                 get_docker_run_cmd(
