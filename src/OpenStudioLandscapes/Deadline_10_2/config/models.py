@@ -218,6 +218,8 @@ class Config(FeatureBaseModel):
             # Todo:
             #  - [ ] (LOW) OpenStudioLandscapes SSL authentication
             # "git+https://github.com/michimussato/SSLGeneration.git@packaging",
+            # https://pypi.org/project/gazu/
+            "gazu[cli]",
         ],
         frozen=True,
     )
