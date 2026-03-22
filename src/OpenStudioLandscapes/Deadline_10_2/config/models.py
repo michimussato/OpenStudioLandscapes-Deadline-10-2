@@ -318,6 +318,7 @@ class Config(FeatureBaseModel):
         )
         return ret
 
+    @property
     def deadline_10_2_repository_work_dir_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
         if self.env is None:
