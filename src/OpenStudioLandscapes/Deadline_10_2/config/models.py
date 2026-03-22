@@ -52,6 +52,17 @@ class Config(FeatureBaseModel):
         default=pathlib.Path(
             "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"
         ),
+        description="For an OverlayFS, this is the lowest (read-only) lowerdir.",
+    )
+
+    deadline_10_2_repository_work_dir: pathlib.Path = Field(
+        default=pathlib.Path(
+            "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10"
+        ),
+        description="If not using OverlayFS, this is usually the same value "
+                    "as deadline_10_2_repository_install_destination. If "
+                    "the repository resides on an OverlayFS, this is the "
+                    "resulting mount point of the overlay."
     )
 
     deadline_10_2_database_install_destination: pathlib.Path = Field(
@@ -297,6 +308,26 @@ class Config(FeatureBaseModel):
         )
         ret = pathlib.Path(
             self.deadline_10_2_repository_install_destination.expanduser()  # pylint: disable=E1101
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
+
+    def deadline_10_2_repository_work_dir_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+
+        LOGGER.debug(
+            f"Expanding {self.deadline_10_2_repository_work_dir}..."
+        )
+        ret = pathlib.Path(
+            self.deadline_10_2_repository_work_dir.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{

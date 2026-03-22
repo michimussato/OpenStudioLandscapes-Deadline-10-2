@@ -58,6 +58,7 @@ from OpenStudioLandscapes.Deadline_10_2.constants import *
 # Todo:
 #  - [ ] consolidate build_docker_image* assets into 1
 #  - [ ] don't include the installers inside the images
+#  - [ ] [Investigate Rez in Deadline](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/event-rez.html)
 
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
@@ -1675,7 +1676,7 @@ def compose_rcs_runner(
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{CONFIG.deadline_10_2_repository_install_destination_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
+            f"{CONFIG.deadline_10_2_repository_work_dir_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -1865,7 +1866,7 @@ def compose_pulse_runner(
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{CONFIG.deadline_10_2_repository_install_destination_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
+            f"{CONFIG.deadline_10_2_repository_work_dir_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -2050,7 +2051,7 @@ def compose_worker_runner(
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{CONFIG.deadline_10_2_repository_install_destination_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
+            f"{CONFIG.deadline_10_2_repository_work_dir_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
@@ -2215,7 +2216,7 @@ def compose_webservice_runner(
         "volumes": [
             f"{deadline_ini_10_2.as_posix()}:/var/lib/Thinkbox/Deadline10/deadline.ini:ro",
             f"{connection_ini_10_2.as_posix()}:/opt/Thinkbox/DeadlineRepository10/settings/connection.ini:ro",
-            f"{CONFIG.deadline_10_2_repository_install_destination_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
+            f"{CONFIG.deadline_10_2_repository_work_dir_expanded.as_posix()}:/opt/Thinkbox/DeadlineRepository10",
         ]
     }
 
