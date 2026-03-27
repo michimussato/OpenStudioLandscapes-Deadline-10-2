@@ -366,12 +366,26 @@ deadline_10_2_installer_deadline_repository: <NOT_SET__CHANGE_ME>
 #
 # Type: <class 'pathlib.Path'>
 # Description:
-#     None
+#     For an OverlayFS, this is the lowest (read-only) lowerdir.
 # Required:
 #     False
 # Examples:
 #     None
 deadline_10_2_repository_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
+
+
+# =================================
+# deadline_10_2_repository_work_dir
+# ---------------------------------
+#
+# Type: <class 'pathlib.Path'>
+# Description:
+#     If not using OverlayFS, this is usually the same value as deadline_10_2_repository_install_destination. If the repository resides on an OverlayFS, this is the resulting mount point of the overlay.
+# Required:
+#     False
+# Examples:
+#     None
+deadline_10_2_repository_work_dir: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
 
 
 # ==========================================
@@ -916,4 +930,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-03-17 14:37:06 UTC**
+Last changed: **2026-03-27 00:05:28 UTC**
