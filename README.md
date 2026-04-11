@@ -8,6 +8,7 @@
       1. [Clone and Install](#clone-and-install)
    3. [Configure](#configure)
       1. [Default Configuration](#default-configuration)
+   4. [Local Development](#local-development)
 2. [External Resources](#external-resources)
    1. [Get Deadline](#get-deadline)
       1. [Get Deadline 10.2](#get-deadline-102)
@@ -48,7 +49,6 @@ source .venv/bin/activate
 openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git
 deactivate
 # Check the resulting console output for installation instructions
-
 ```
 
 ### Clone and Install
@@ -59,7 +59,6 @@ source .venv/bin/activate
 openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2.git \
     && pip install --editable ./.features/OpenStudioLandscapes-Deadline-10-2
 deactivate
-
 ```
 
 For more info on `pip` see [VCS Support of `pip`](https://pip.pypa.io/en/stable/topics/vcs-support/).
@@ -86,7 +85,6 @@ A local config store location will be created if it doesn't exist, together with
 The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and are based on [`OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py`](https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2/tree/main/OpenStudioLandscapes/Deadline_10_2/config/models.py).
 
 ### Default Configuration
-
 
 <details open>
 <summary><code>config.yml</code></summary>
@@ -796,9 +794,19 @@ pip_packages:
 - gazu[cli]
 ```
 
-
 </details>
 
+
+## Local Development
+
+```shell
+cd ./.features/OpenStudioLandscapes-Deadline-10-2
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip setuptools setuptools_scm wheel
+pip install --editable .[dev]
+dagster dev --workspace workspace.yaml
+```
 
 ***
 
@@ -930,4 +938,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-04-03 02:42:20 UTC**
+Last changed: **2026-04-11 01:51:43 UTC**
