@@ -2,5 +2,5 @@
 
 load_from:
   - python_module:
-      module_name: "OpenStudioLandscapes.Deadline_10_2.definitions"
+      module_name: "OpenStudioLandscapes.Deadline_10_2._definitions_with_upstream_specs"
       location_name: "OpenStudioLandscapes-Deadline-10-2"

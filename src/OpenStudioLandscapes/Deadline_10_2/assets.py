@@ -15,6 +15,8 @@ import yaml
 from dagster import (
     AssetExecutionContext,
     AssetIn,
+    AssetOut,
+    AssetSpec,
     AssetKey,
     AssetMaterialization,
     AssetsDefinition,
@@ -22,6 +24,7 @@ from dagster import (
     MetadataValue,
     Output,
     asset,
+    multi_asset,
 )
 from docker_compose_graph.utils import *
 from OpenStudioLandscapes.engine.common_assets.cmd import get_feature__cmd
@@ -1074,8 +1077,26 @@ def write_dockerfile_client(
     )
 
 
-@asset(
-    **ASSET_HEADER,
+build_docker_image_client_spec = AssetSpec(
+    key=AssetKey(
+        [
+            *ASSET_HEADER["key_prefix"],
+            "build_docker_image_client",
+        ]
+    ),
+    group_name=ASSET_HEADER["group_name"],
+    description=textwrap.dedent(
+        """
+        Todo
+        """
+    ),
+)
+@multi_asset(
+    outs={
+        "build_docker_image_client": AssetOut.from_spec(
+            build_docker_image_client_spec
+        ),
+    },
     ins={
         "feature_in": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
@@ -1138,12 +1159,17 @@ def build_docker_image_client(
         docker_file=write_dockerfile_client,
     )
 
-    yield Output(image_data)
+    output_name = "build_docker_image_client"
+
+    yield Output(
+        output_name=output_name,
+        value=image_data,
+    )
 
     yield AssetMaterialization(
-        asset_key=context.asset_key,
+        asset_key=context.asset_key_for_output(output_name),
         metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(image_data),
+            "__".join(context.asset_key_for_output(output_name).path): MetadataValue.json(image_data),
             "env": MetadataValue.json(env),
             "docker_image": MetadataValue.path(
                 f"{image_data['image_prefixes']}{image_data['image_name']}:{image_data['image_tags'][0]}"
@@ -1781,16 +1807,32 @@ def compose_rcs_runner(
     )
 
 
-@asset(
-    **ASSET_HEADER,
+deadline_command_compose_pulse_runner_spec = AssetSpec(
+    key=AssetKey(
+        [
+            *ASSET_HEADER["key_prefix"],
+            "deadline_command_compose_pulse_runner",
+        ]
+    ),
+    group_name=ASSET_HEADER["group_name"],
+    description=textwrap.dedent(
+        """
+        This executes the OpenStudioLandscapes Repository Installer. Needs to be done only once.
+        """
+    ),
+)
+@multi_asset(
+    # **ASSET_HEADER,
+    outs={
+        "deadline_command_compose_pulse_runner": AssetOut.from_spec(
+            deadline_command_compose_pulse_runner_spec
+        ),
+    },
     ins={},
-    description="This executes the OpenStudioLandscapes Repository Installer. "
-    "Needs to be done only once.",
 )
 def deadline_command_compose_pulse_runner(
     context: AssetExecutionContext,
 ) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
-    """ """
 
     deadline_command = [
         "/opt/Thinkbox/Deadline10/bin/deadlinepulse",
@@ -1798,12 +1840,17 @@ def deadline_command_compose_pulse_runner(
         "-nosplash",
     ]
 
-    yield Output(deadline_command)
+    output_name = "deadline_command_compose_pulse_runner"
+
+    yield Output(
+        output_name=output_name,
+        value=deadline_command,
+    )
 
     yield AssetMaterialization(
-        asset_key=context.asset_key,
+        asset_key=context.asset_key_for_output(output_name),
         metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(deadline_command),
+            "__".join(context.asset_key_for_output(output_name).path): MetadataValue.json(deadline_command),
             "deadline_command": MetadataValue.path(
                 " ".join(shlex.quote(s) for s in deadline_command)
             ),
@@ -1811,8 +1858,26 @@ def deadline_command_compose_pulse_runner(
     )
 
 
-@asset(
-    **ASSET_HEADER,
+compose_pulse_runner_spec = AssetSpec(
+    key=AssetKey(
+        [
+            *ASSET_HEADER["key_prefix"],
+            "compose_pulse_runner",
+        ]
+    ),
+    group_name=ASSET_HEADER["group_name"],
+    description=textwrap.dedent(
+        """
+        Todo
+        """
+    ),
+)
+@multi_asset(
+    outs={
+        "compose_pulse_runner": AssetOut.from_spec(
+            compose_pulse_runner_spec
+        ),
+    },
     ins={
         "CONFIG": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
@@ -1955,27 +2020,47 @@ def compose_pulse_runner(
 
     docker_yaml = yaml.dump(docker_dict)
 
-    yield Output(docker_dict)
+    output_name = "compose_pulse_runner"
+
+    yield Output(
+        output_name=output_name,
+        value=docker_dict,
+    )
 
     yield AssetMaterialization(
-        asset_key=context.asset_key,
+        asset_key=context.asset_key_for_output(output_name),
         metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(docker_dict),
+            "__".join(context.asset_key_for_output(output_name).path): MetadataValue.json(docker_dict),
             "docker_yaml": MetadataValue.md(f"```yaml\n{docker_yaml}\n```"),
         },
     )
 
 
-@asset(
-    **ASSET_HEADER,
+deadline_command_compose_worker_runner_spec = AssetSpec(
+    key=AssetKey(
+        [
+            *ASSET_HEADER["key_prefix"],
+            "deadline_command_compose_worker_runner",
+        ]
+    ),
+    group_name=ASSET_HEADER["group_name"],
+    description=textwrap.dedent(
+        """
+        This executes the OpenStudioLandscapes Repository Installer. Needs to be done only once.
+        """
+    ),
+)
+@multi_asset(
+    outs={
+        "deadline_command_compose_worker_runner": AssetOut.from_spec(
+            deadline_command_compose_worker_runner_spec
+        ),
+    },
     ins={},
-    description="This executes the OpenStudioLandscapes Repository Installer. "
-    "Needs to be done only once.",
 )
 def deadline_command_compose_worker_runner(
     context: AssetExecutionContext,
 ) -> Generator[Output[List[str]] | AssetMaterialization, None, None]:
-    """ """
 
     deadline_command = [
         "/opt/Thinkbox/Deadline10/bin/deadlineworker",
@@ -1983,12 +2068,17 @@ def deadline_command_compose_worker_runner(
         "-nosplash",
     ]
 
-    yield Output(deadline_command)
+    output_name = "deadline_command_compose_worker_runner"
+
+    yield Output(
+        output_name=output_name,
+        value=deadline_command,
+    )
 
     yield AssetMaterialization(
-        asset_key=context.asset_key,
+        asset_key=context.asset_key_for_output(output_name),
         metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(deadline_command),
+            "__".join(context.asset_key_for_output(output_name).path): MetadataValue.json(deadline_command),
             "deadline_command": MetadataValue.path(
                 " ".join(shlex.quote(s) for s in deadline_command)
             ),
