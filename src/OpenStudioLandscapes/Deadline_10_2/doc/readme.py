@@ -38,9 +38,7 @@ def readme_feature(
         ).__str__()
     )
 
-    doc.add_quote(
-        text=textwrap.dedent(
-            """\
+    doc.add_quote(text=textwrap.dedent("""\
             [!IMPORTANT]
             
             Disclaimer:
@@ -51,9 +49,7 @@ def readme_feature(
             closed source) applications and migrate as many post-steps to
             free/open dependencies as possible (or dependencies I own - like
             [OpenStudioLandscapes-DagsterCodeLocation-ShotProcessor](https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-ShotProcessor)).
-            """
-        )
-    )
+            """))
 
     doc.add_heading(
         text="Get Deadline",

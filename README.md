@@ -820,7 +820,7 @@ dagster dev --workspace workspace.yaml
 > 
 > Disclaimer:
 > 
-> Deadline is in [*Maintenance Mode*](https://docs.thinkboxsoftware.com/products/deadline/10.4/1_User%20Manual/manual/maintenance-mode-faq.html)
+> Deadline is in [**Maintenance Mode**](https://docs.thinkboxsoftware.com/products/deadline/10.4/1_User%20Manual/manual/maintenance-mode-faq.html).
 > I try to avoid Deadline customization wherever possible (custom plugins and events for example).
 > Instead, I want to lower the dependency to external (especially
 > closed source) applications and migrate as many post-steps to
@@ -951,4 +951,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-04-13 11:27:26 UTC**
+Last changed: **2026-04-13 18:02:18 UTC**
