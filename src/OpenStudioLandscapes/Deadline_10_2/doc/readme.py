@@ -45,7 +45,7 @@ def readme_feature(
             
             Disclaimer:
             
-            Deadline is in [**Maintenance Mode**](https://docs.thinkboxsoftware.com/products/deadline/10.4/1_User%20Manual/manual/maintenance-mode-faq.html)
+            Deadline is in [**Maintenance Mode**](https://docs.thinkboxsoftware.com/products/deadline/10.4/1_User%20Manual/manual/maintenance-mode-faq.html).
             I try to avoid Deadline customization wherever possible (custom plugins and events for example).
             Instead, I want to lower the dependency to external (especially
             closed source) applications and migrate as many post-steps to
