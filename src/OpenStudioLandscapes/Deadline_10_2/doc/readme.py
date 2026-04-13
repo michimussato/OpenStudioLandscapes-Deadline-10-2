@@ -38,6 +38,23 @@ def readme_feature(
         ).__str__()
     )
 
+    doc.add_quote(
+        text=textwrap.dedent(
+            """\
+            [!IMPORTANT]
+            
+            Disclaimer:
+            
+            Deadline is in [*Maintenance Mode*](https://docs.thinkboxsoftware.com/products/deadline/10.4/1_User%20Manual/manual/maintenance-mode-faq.html)
+            I try to avoid Deadline customization wherever possible (custom plugins and events for example).
+            Instead, I want to lower the dependency to external (especially
+            closed source) applications and migrate as many post-steps to
+            free/open dependencies as possible (or dependencies I own - like
+            [OpenStudioLandscapes-DagsterCodeLocation-ShotProcessor](https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-ShotProcessor)).
+            """
+        )
+    )
+
     doc.add_heading(
         text="Get Deadline",
         level=2,
