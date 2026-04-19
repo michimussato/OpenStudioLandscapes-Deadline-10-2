@@ -12,6 +12,49 @@ import snakemd
 #            - https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/proxy-sslgen.html#ssl-cert-gen-ref-label
 
 
+# REST API with examples
+#
+#
+# [!TIP]
+#
+# If a documented query requires a JSON object that you do not
+# know how to properly construct, it is often possible to do
+# a GET query for the same object type and receive the JSON
+# format that the query expects.
+#
+#
+# - https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/rest-overview.html#
+# - https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/index-rest-api.html
+#   - https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/rest-jobs.html#get-all-the-jobs
+#     - http://miniboss:8899/api/jobs
+#   - https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/rest-jobs.html#get-job
+#     - http://miniboss:8899/api/jobs?JobID=69de803adf6074790a6ca389
+#   - https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/rest-jobs.html#submit-job
+#     - Todo
+# curl
+# - https://stackoverflow.com/a/36778045/2207196
+# - https://stackoverflow.com/a/35095248/2207196
+# - https://stackoverflow.com/a/69761368/2207196
+# - https://stackoverflow.com/a/7173011/2207196
+#   - curl --header "Content-Type: application/json" \
+#     --request POST \
+#     --data '{"username":"xyz","password":"xyz"}' \
+#     http://localhost:3000/api/login
+#   - curl --header "Content-Type: application/json" \
+#     --request POST \
+#     --data \
+#       '{"JobInfo":"",\
+#         "PluginInfo":"",
+#         "AuxFiles":"",
+#         "IdOnly":"",
+#         }' \
+#     http://miniboss:8899/api/jobs
+#  curl --header "Content-Type: application/json" --request GET http://miniboss:8899/api/jobs | jq > /home/michael/git/repos/OpenStudioLandscapes/.features/OpenStudioLandscapes-Deadline-10-2/src/OpenStudioLandscapes/Deadline_10_2/doc/object.json
+
+
+# curl --header "Content-Type: application/json" --request POST --data "{\"JobInfo\": \"{\\n  \\\"Plugin\\\": \\\"CommandLine\\\",\\n  \\\"Frames\\\": \\\"1197-1254x16,1197-1254x8,1197-1254x4,1197-1254x2,1197-1254x1\\\",\\n  \\\"Name\\\": \\\"Test Production - SH030 - 4_1201-1250_4 - Rendering - sh030_001.blend - 080 - blender\\\",\\n  \\\"Comment\\\": \\\"This is a new Bender job comment\\\",\\n  \\\"Department\\\": \\\"\\\",\\n  \\\"BatchName\\\": \\\"Batch: Test Production - SH030 - 4_1201-1250_4 - Rendering - sh030_001.blend - 080 - blender\\\",\\n  \\\"UserName\\\": \\\"root\\\",\\n  \\\"Pool\\\": null,\\n  \\\"SecondaryPool\\\": null,\\n  \\\"Group\\\": null,\\n  \\\"Priority\\\": 50,\\n  \\\"ChunkSize\\\": 1,\\n  \\\"ConcurrentTasks\\\": 1,\\n  \\\"LimitConcurrentTasksToNumberOfCpus\\\": true,\\n  \\\"OnJobComplete\\\": \\\"Nothing\\\",\\n  \\\"SynchronizeAllAuxiliaryFiles\\\": false,\\n  \\\"ForceReloadPlugin\\\": true,\\n  \\\"Sequential\\\": false,\\n  \\\"SuppressEvents\\\": false,\\n  \\\"Protected\\\": false,\\n  \\\"InitialStatus\\\": \\\"Active\\\",\\n  \\\"JobDependencies\\\": [],\\n  \\\"JobDependencyPercentage\\\": -1,\\n  \\\"IsFrameDependent\\\": false,\\n  \\\"FrameDependencyOffsetStart\\\": 0,\\n  \\\"FrameDependencyOffsetEnd\\\": 0,\\n  \\\"ResumeOnCompleteDependencies\\\": true,\\n  \\\"ResumeOnDeletedDependencies\\\": false,\\n  \\\"ResumeOnFailedDependencies\\\": false,\\n  \\\"RequiredAssets\\\": [],\\n  \\\"ScriptDependencies\\\": []\\n}\", \"PluginInfo\": \"{\\n  \\\"Executable\\\": \\\"/data/share/rez-packages/packages/blender/4.1.1/blender\\\",\\n  \\\"Arguments\\\": \\\"\\\\\\\"--enable-autoexec --background <QUOTE>\\\\\\\"/data/share/AWSPortalRoot1/fixtures/blender/sh030_001.blend\\\\\\\"<QUOTE> --render-output <QUOTE>\\\\\\\"/data/share/AWSPortalRoot1/out/Test Production/Shot/SH030/Rendering/080/raw/sh030_001.####.exr\\\\\\\"<QUOTE> --render-format EXR --engine CYCLES --frame-start <STARTFRAME> --frame-end <ENDFRAME> --threads 0 --render-anim -- --cycles-print-stats\\\\\\\"\\\"\\n}\", \"IdOnly\": false, \"AuxFiles\": []}" http://miniboss:8899/api/jobs
+
+
 def readme_feature(
     doc: snakemd.Document,
     main_header: str,
