@@ -992,7 +992,10 @@ def write_dockerfile_client(
         apt_install_packages=CONFIG.apt_packages,
     )
 
-    pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
+    pip_install_str: str = get_pip_install_str(
+        pip_install_packages=CONFIG.pip_packages,
+        bust_cache=True,
+    )
 
     copy_str: str = get_copy_str(
         temp_dir=payload,
