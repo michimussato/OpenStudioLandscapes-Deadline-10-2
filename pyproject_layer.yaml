@@ -1,4 +1,6 @@
 project:
+  dependencies:
+    - OpenStudioLandscapes-DagsterCodeLocation-JobProcessor @ git+https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git@main
   description: Deadline 10.2 Feature for OpenStudioLandscapes
   name: OpenStudioLandscapes-Deadline-10-2
   optional-dependencies:
