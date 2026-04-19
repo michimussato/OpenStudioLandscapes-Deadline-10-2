@@ -62,7 +62,11 @@ from OpenStudioLandscapes.Deadline_10_2.constants import *
 #  - [ ] consolidate build_docker_image* assets into 1
 #  - [ ] don't include the installers inside the images
 #  - [ ] [Investigate Rez in Deadline](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/event-rez.html)
+#  - [x] Use REST API instead of `deadlinecommand`
 
+# - [Arbitrary Command Line Jobs](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/manual-submission.html#arbitrary-command-line-jobs)
+# - [Maintenance Jobs](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/manual-submission.html#maintenance-jobs)
+# - [Creating Job Submission Files](https://docs.thinkboxsoftware.com/products/deadline/10.2/1_User%20Manual/manual/manual-submission.html#creating-job-submission-files)
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
 yaml.SafeDumper.add_multi_representer(
@@ -537,7 +541,10 @@ def write_dockerfile_repository(
         apt_install_packages=CONFIG.apt_packages,
     )
 
-    pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
+    pip_install_str: str = get_pip_install_str(
+        pip_install_packages=CONFIG.pip_packages,
+        bust_cache=True,
+    )
 
     copy_str: str = get_copy_str(
         temp_dir=payload,
@@ -995,7 +1002,10 @@ def write_dockerfile_client(
         apt_install_packages=CONFIG.apt_packages,
     )
 
-    pip_install_str: str = get_pip_install_str(pip_install_packages=CONFIG.pip_packages)
+    pip_install_str: str = get_pip_install_str(
+        pip_install_packages=CONFIG.pip_packages,
+        bust_cache=True,
+    )
 
     copy_str: str = get_copy_str(
         temp_dir=payload,
