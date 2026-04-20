@@ -8,6 +8,7 @@ flowchart TD
     arrow["arrow<br/>1.4.0"]
     attrs["attrs<br/>26.1.0"]
     backoff["backoff<br/>2.2.1"]
+    bidict["bidict<br/>0.23.1"]
     boolean-py["boolean.py<br/>5.0"]
     certifi["certifi<br/>2026.2.25"]
     chardet["chardet<br/>5.2.0"]
@@ -27,11 +28,12 @@ flowchart TD
     distlib["distlib<br/>0.4.0"]
     dnspython["dnspython<br/>2.8.0"]
     docker-compose-graph["docker-compose-graph<br/>1.0.0.post1.dev5+ga91125bef"]
-    docstring-parser["docstring_parser<br/>0.17.0"]
+    docstring-parser["docstring_parser<br/>0.18.0"]
     email-validator["email-validator<br/>2.3.0"]
-    filelock["filelock<br/>3.25.2"]
+    filelock["filelock<br/>3.29.0"]
     fqdn["fqdn<br/>1.5.1"]
     fsspec["fsspec<br/>2026.3.0"]
+    gazu["gazu<br/>1.1.6"]
     gitdb["gitdb<br/>4.0.12"]
     gitpython["GitPython<br/>3.1.46"]
     gql["gql<br/>3.5.3"]
@@ -55,18 +57,19 @@ flowchart TD
     jsonschema["jsonschema<br/>4.26.0"]
     lark["lark<br/>1.3.1"]
     license-expression["license-expression<br/>30.4.4"]
-    lxml["lxml<br/>6.0.4"]
-    mako["Mako<br/>1.3.10"]
+    lxml["lxml<br/>6.1.0"]
+    mako["Mako<br/>1.3.11"]
     markdown-it-py["markdown-it-py<br/>4.0.0"]
     markupsafe["MarkupSafe<br/>3.0.3"]
     mdurl["mdurl<br/>0.1.2"]
     multidict["multidict<br/>6.7.1"]
     nox["nox<br/>2026.4.10"]
+    openstudiolandscapes-dagstercodelocation-jobprocessor["OpenStudioLandscapes-DagsterCodeLocation-JobProcessor<br/>0.0.0"]
     openstudiolandscapes-dagstercodelocation-streamingprocess["OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess<br/>0.0.0"]
     openstudiolandscapes-deadline-10-2["OpenStudioLandscapes-Deadline-10-2<br/>0.0.0"]
     openstudiolandscapes["OpenStudioLandscapes<br/>0.0.0"]
     packageurl-python["packageurl-python<br/>0.17.6"]
-    packaging["packaging<br/>26.0"]
+    packaging["packaging<br/>26.1"]
     pathlib-abc["pathlib_abc<br/>0.5.2"]
     pip-requirements-parser["pip-requirements-parser<br/>32.0.1"]
     pip["pip<br/>26.0.1"]
@@ -76,14 +79,16 @@ flowchart TD
     protobuf["protobuf<br/>5.29.6"]
     psycopg2-binary["psycopg2-binary<br/>2.9.11"]
     py-serializable["py-serializable<br/>2.1.0"]
-    pydantic-core["pydantic_core<br/>2.46.0"]
-    pydantic["pydantic<br/>2.13.0"]
+    pydantic-core["pydantic_core<br/>2.46.2"]
+    pydantic["pydantic<br/>2.13.2"]
     pydot["pydot<br/>4.0.1"]
     pygments["Pygments<br/>2.20.0"]
     pyparsing["pyparsing<br/>3.3.2"]
     python-dateutil["python-dateutil<br/>2.9.0.post0"]
     python-discovery["python-discovery<br/>1.2.2"]
     python-dotenv["python-dotenv<br/>1.2.2"]
+    python-engineio["python-engineio<br/>4.13.1"]
+    python-socketio["python-socketio<br/>5.16.1"]
     pytz["pytz<br/>2026.1.post1"]
     pyyaml["PyYAML<br/>6.0.3"]
     referencing["referencing<br/>0.37.0"]
@@ -95,6 +100,7 @@ flowchart TD
     rich["rich<br/>15.0.0"]
     rpds-py["rpds-py<br/>0.30.0"]
     setuptools["setuptools<br/>82.0.1"]
+    simple-websocket["simple-websocket<br/>1.1.0"]
     six["six<br/>1.17.0"]
     smmap["smmap<br/>5.0.3"]
     snakemd["SnakeMD<br/>2.4.0"]
@@ -114,12 +120,14 @@ flowchart TD
     urllib3["urllib3<br/>2.6.3"]
     uvicorn["uvicorn<br/>0.44.0"]
     uvloop["uvloop<br/>0.22.1"]
-    virtualenv["virtualenv<br/>21.2.1"]
+    virtualenv["virtualenv<br/>21.2.4"]
     watchdog["watchdog<br/>5.0.3"]
     watchfiles["watchfiles<br/>1.1.1"]
     webcolors["webcolors<br/>25.10.0"]
+    websocket-client["websocket-client<br/>1.9.0"]
     websockets["websockets<br/>16.0"]
     wheel["wheel<br/>0.46.3"]
+    wsproto["wsproto<br/>1.3.2"]
     yarl["yarl<br/>1.23.0"]
     alembic -- ">=1.4.23" --> sqlalchemy
     alembic -- ">=4.12" --> typing-extensions
@@ -188,6 +196,9 @@ flowchart TD
     docker-compose-graph -- "any" --> pyyaml
     email-validator -- ">=2.0.0" --> dnspython
     email-validator -- ">=2.0.0" --> idna
+    gazu -- ">=2.25.1" --> requests
+    gazu -- ">=4" --> typing-extensions
+    gazu -- ">=5.11.0,<6" --> python-socketio
     gitdb -- ">=3.0.1,<6" --> smmap
     gitpython -- ">=4.0.1,<5" --> gitdb
     gql -- ">=1.11.1,<3.0" --> backoff
@@ -231,11 +242,15 @@ flowchart TD
     openstudiolandscapes -- "any" --> pydot
     openstudiolandscapes -- "any" --> pyyaml
     openstudiolandscapes -- "any" --> snakemd
+    openstudiolandscapes-dagstercodelocation-jobprocessor -- "==1.9.11" --> dagster
+    openstudiolandscapes-dagstercodelocation-jobprocessor -- "any" --> gazu
+    openstudiolandscapes-dagstercodelocation-jobprocessor -- "any" --> openstudiolandscapes-dagstercodelocation-streamingprocess
     openstudiolandscapes-dagstercodelocation-streamingprocess -- "==1.9.11" --> dagster
     openstudiolandscapes-deadline-10-2 -- "==1.9.11" --> dagster
     openstudiolandscapes-deadline-10-2 -- "any" --> docker-compose-graph
     openstudiolandscapes-deadline-10-2 -- "any" --> email-validator
     openstudiolandscapes-deadline-10-2 -- "any" --> gitpython
+    openstudiolandscapes-deadline-10-2 -- "any" --> openstudiolandscapes-dagstercodelocation-jobprocessor
     openstudiolandscapes-deadline-10-2 -- "any" --> openstudiolandscapes-dagstercodelocation-streamingprocess
     openstudiolandscapes-deadline-10-2 -- "any" --> pyyaml
     openstudiolandscapes-deadline-10-2 -- "any" --> snakemd
@@ -243,7 +258,7 @@ flowchart TD
     pip-requirements-parser -- "any" --> pyparsing
     pipdeptree -- ">=26" --> packaging
     py-serializable -- ">=0.7.1,<0.8.0" --> defusedxml
-    pydantic -- "==2.46.0" --> pydantic-core
+    pydantic -- "==2.46.2" --> pydantic-core
     pydantic -- ">=0.4.2" --> typing-inspection
     pydantic -- ">=0.6.0" --> annotated-types
     pydantic -- ">=4.14.1" --> typing-extensions
@@ -252,6 +267,9 @@ flowchart TD
     python-dateutil -- ">=1.5" --> six
     python-discovery -- ">=3.15.4" --> filelock
     python-discovery -- ">=4.3.6,<5" --> platformdirs
+    python-engineio -- ">=0.10.0" --> simple-websocket
+    python-socketio -- ">=0.21.0" --> bidict
+    python-socketio -- ">=4.11.0" --> python-engineio
     referencing -- ">=0.7.0" --> rpds-py
     referencing -- ">=22.2.0" --> attrs
     referencing -- ">=4.4.0" --> typing-extensions
@@ -264,6 +282,7 @@ flowchart TD
     rfc3987-syntax -- ">=1.2.2" --> lark
     rich -- ">=2.13.0,<3.0.0" --> pygments
     rich -- ">=2.2.0" --> markdown-it-py
+    simple-websocket -- "any" --> wsproto
     sqlalchemy -- ">=1" --> greenlet
     sqlalchemy -- ">=4.6.0" --> typing-extensions
     starlette -- ">=3.6.2,<5" --> anyio
@@ -274,11 +293,12 @@ flowchart TD
     uvicorn -- ">=0.8" --> h11
     uvicorn -- ">=7.0" --> click_0
     virtualenv -- ">=0.3.7,<1" --> distlib
-    virtualenv -- ">=1" --> python-discovery
+    virtualenv -- ">=1.2.2" --> python-discovery
     virtualenv -- ">=3.24.2,<4" --> filelock
     virtualenv -- ">=3.9.1,<5" --> platformdirs
     watchfiles -- ">=3.0.0" --> anyio
     wheel -- ">=24.0" --> packaging
+    wsproto -- ">=0.16.0,<1" --> h11
     yarl -- ">=0.2.1" --> propcache
     yarl -- ">=2.0" --> idna
     yarl -- ">=4.0" --> multidict
