@@ -1044,6 +1044,11 @@ def write_dockerfile_client(
         FROM base AS {image_name}
         
         COPY --from=builder "/opt/Thinkbox" "/opt/Thinkbox"
+        
+        # https://www.sidefx.com/faq/question/what-are-other-methods-to-tell-the-client-to-look-to-the-license-server/
+        # Todo:
+        #  - [ ] find a dynamic approach
+        RUN echo "serverhost={SESI_LICENSE_SERVER}" > /root/.sesi_licenses.pref
 
         WORKDIR /opt/Thinkbox
 
@@ -1065,6 +1070,7 @@ def write_dockerfile_client(
         deadline_command=" ".join(
             shlex.quote(s) for s in deadline_command_build_client_image_10_2
         ),
+        SESI_LICENSE_SERVER="10.1.2.15:1715",
         **env,
     )
     # @formatter:on
