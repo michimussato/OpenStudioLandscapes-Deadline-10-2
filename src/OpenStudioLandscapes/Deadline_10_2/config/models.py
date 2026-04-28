@@ -5,7 +5,6 @@ from dagster import get_dagster_logger
 from pydantic import (
     Field,
     PositiveInt,
-    # computed_field,
 )
 
 LOGGER = get_dagster_logger(__name__)
@@ -241,7 +240,6 @@ class Config(FeatureBaseModel):
     # )
 
     # EXPANDABLE PATHS
-    # @computed_field
     @property
     def deadline_10_2_installer_aws_portal_link_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -261,7 +259,6 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # @computed_field
     @property
     def deadline_10_2_installer_deadline_client_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -281,7 +278,6 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # @computed_field
     @property
     def deadline_10_2_installer_deadline_repository_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -301,7 +297,6 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # @computed_field
     @property
     def deadline_10_2_repository_install_destination_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -323,7 +318,6 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # @computed_field
     @property
     def deadline_10_2_repository_work_dir_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -343,7 +337,6 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # @computed_field
     @property
     def deadline_10_2_database_install_destination_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
