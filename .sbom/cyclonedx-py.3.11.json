@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "bom-ref": "GitPython==3.1.47",
+      "bom-ref": "GitPython==3.1.48",
       "description": "GitPython is a Python library used to interact with Git repositories",
       "externalReferences": [
         {
@@ -19,9 +19,9 @@
         }
       ],
       "name": "GitPython",
-      "purl": "pkg:pypi/gitpython@3.1.47",
+      "purl": "pkg:pypi/gitpython@3.1.48",
       "type": "library",
-      "version": "3.1.47"
+      "version": "3.1.48"
     },
     {
       "bom-ref": "Jinja2==3.1.6",
@@ -175,7 +175,7 @@
         {
           "comment": "PackageSource: VCS 'git'",
           "type": "vcs",
-          "url": "https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git#48c1790c96453439e23d225b7bd9ca0e58e2b553"
+          "url": "https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git#e8585ad7125a517a7bce3c9ce1ea53ee8a0e90c3"
         },
         {
           "comment": "from packaging metadata Project-URL: Homepage",
@@ -187,14 +187,14 @@
       "properties": [
         {
           "name": "cdx:python:package:source:vcs:commit_id",
-          "value": "48c1790c96453439e23d225b7bd9ca0e58e2b553"
+          "value": "e8585ad7125a517a7bce3c9ce1ea53ee8a0e90c3"
         },
         {
           "name": "cdx:python:package:source:vcs:requested_revision",
           "value": "main"
         }
       ],
-      "purl": "pkg:pypi/openstudiolandscapes-dagstercodelocation-jobprocessor@0.0.0?vcs_url=git%2Bhttps://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git%4048c1790c96453439e23d225b7bd9ca0e58e2b553",
+      "purl": "pkg:pypi/openstudiolandscapes-dagstercodelocation-jobprocessor@0.0.0?vcs_url=git%2Bhttps://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git%40e8585ad7125a517a7bce3c9ce1ea53ee8a0e90c3",
       "type": "library",
       "version": "0.0.0"
     },
@@ -1817,7 +1817,7 @@
       "version": "0.21"
     },
     {
-      "bom-ref": "greenlet==3.4.0",
+      "bom-ref": "greenlet==3.5.0",
       "description": "Lightweight in-process concurrent programming",
       "externalReferences": [
         {
@@ -1853,9 +1853,9 @@
         }
       ],
       "name": "greenlet",
-      "purl": "pkg:pypi/greenlet@3.4.0",
+      "purl": "pkg:pypi/greenlet@3.5.0",
       "type": "library",
-      "version": "3.4.0"
+      "version": "3.5.0"
     },
     {
       "bom-ref": "grpcio==1.80.0",
@@ -2570,7 +2570,7 @@
       "version": "0.5.2"
     },
     {
-      "bom-ref": "pip==26.0.1",
+      "bom-ref": "pip==26.1",
       "description": "The PyPA recommended tool for installing Python packages.",
       "externalReferences": [
         {
@@ -2603,9 +2603,9 @@
         }
       ],
       "name": "pip",
-      "purl": "pkg:pypi/pip@26.0.1",
+      "purl": "pkg:pypi/pip@26.1",
       "type": "library",
-      "version": "26.0.1"
+      "version": "26.1"
     },
     {
       "bom-ref": "pip-requirements-parser==32.0.1",
@@ -4156,7 +4156,7 @@
       "version": "0.22.1"
     },
     {
-      "bom-ref": "virtualenv==21.2.4",
+      "bom-ref": "virtualenv==21.3.0",
       "description": "Virtual Python Environment builder",
       "externalReferences": [
         {
@@ -4189,9 +4189,9 @@
         }
       ],
       "name": "virtualenv",
-      "purl": "pkg:pypi/virtualenv@21.2.4",
+      "purl": "pkg:pypi/virtualenv@21.3.0",
       "type": "library",
-      "version": "21.2.4"
+      "version": "21.3.0"
     },
     {
       "bom-ref": "watchdog==5.0.3",
@@ -4552,7 +4552,7 @@
         "gitdb==4.0.12",
         "typing_extensions==4.15.0"
       ],
-      "ref": "GitPython==3.1.47"
+      "ref": "GitPython==3.1.48"
     },
     {
       "dependsOn": [
@@ -4587,7 +4587,7 @@
     },
     {
       "dependsOn": [
-        "GitPython==3.1.47",
+        "GitPython==3.1.48",
         "OpenStudioLandscapes-DagsterCodeLocation-JobProcessor==0.0.0",
         "OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess==0.0.0",
         "OpenStudioLandscapes==0.0.0",
@@ -4605,7 +4605,7 @@
     },
     {
       "dependsOn": [
-        "GitPython==3.1.47",
+        "GitPython==3.1.48",
         "OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess==0.0.0",
         "PyYAML==6.0.3",
         "SnakeMD==2.4.0",
@@ -4631,7 +4631,7 @@
     },
     {
       "dependsOn": [
-        "greenlet==3.4.0",
+        "greenlet==3.5.0",
         "psycopg2-binary==2.9.12",
         "typing_extensions==4.15.0"
       ],
@@ -4920,7 +4920,7 @@
       "dependsOn": [
         "setuptools==82.0.1"
       ],
-      "ref": "greenlet==3.4.0"
+      "ref": "greenlet==3.5.0"
     },
     {
       "dependsOn": [
@@ -5025,7 +5025,7 @@
         "humanize==4.15.0",
         "packaging==26.2",
         "tomli==2.4.1",
-        "virtualenv==21.2.4"
+        "virtualenv==21.3.0"
       ],
       "ref": "nox==2026.4.10"
     },
@@ -5051,14 +5051,14 @@
       "ref": "pip-requirements-parser==32.0.1"
     },
     {
-      "ref": "pip==26.0.1"
+      "ref": "pip==26.1"
     },
     {
       "dependsOn": [
         "graphviz==0.21",
         "packaging==26.2",
         "rich==15.0.0",
-        "virtualenv==21.2.4"
+        "virtualenv==21.3.0"
       ],
       "ref": "pipdeptree==2.35.1"
     },
@@ -5203,9 +5203,9 @@
       "dependsOn": [
         "filelock==3.29.0",
         "packaging==26.2",
-        "pip==26.0.1",
+        "pip==26.1",
         "tomli==2.4.1",
-        "virtualenv==21.2.4",
+        "virtualenv==21.3.0",
         "wheel==0.47.0"
       ],
       "ref": "setuptools==82.0.1"
@@ -5311,7 +5311,7 @@
         "python-discovery==1.2.2",
         "typing_extensions==4.15.0"
       ],
-      "ref": "virtualenv==21.2.4"
+      "ref": "virtualenv==21.3.0"
     },
     {
       "dependsOn": [
@@ -5359,7 +5359,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-04-25T10:37:16.816139+00:00",
+    "timestamp": "2026-04-28T13:59:50.923889+00:00",
     "tools": {
       "components": [
         {
@@ -5463,7 +5463,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:81fd27a6-e79d-4bd9-85ab-4bdb7e0abde8",
+  "serialNumber": "urn:uuid:1ccc5b2f-c6f2-4b84-96d2-7fda089bdafe",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
