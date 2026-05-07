@@ -1,22 +1,16 @@
 project:
   dependencies:
+    # is this still necessary? Should be handled by OpenStudioLandscapes-Dagster
     - OpenStudioLandscapes-DagsterCodeLocation-JobProcessor @ git+https://github.com/michimussato/OpenStudioLandscapes-DagsterCodeLocation-JobProcessor.git@main
   description: Deadline 10.2 Feature for OpenStudioLandscapes
   name: OpenStudioLandscapes-Deadline-10-2
   optional-dependencies:
-    optional-base:
-    - OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git
     dev:
     - OpenStudioLandscapes-Deadline-10-2[lint]
     - OpenStudioLandscapes-Deadline-10-2[sbom]
     - OpenStudioLandscapes-Deadline-10-2[readme]
-    lint:
-    - OpenStudioLandscapes-Deadline-10-2[optional-base]
-    readme:
-    - OpenStudioLandscapes-Deadline-10-2[optional-base]
     sbom:
     - OpenStudioLandscapes-Deadline-10-2[graphviz]
-    - OpenStudioLandscapes-Deadline-10-2[optional-base]
   urls:
     Homepage: https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2
 tool:
