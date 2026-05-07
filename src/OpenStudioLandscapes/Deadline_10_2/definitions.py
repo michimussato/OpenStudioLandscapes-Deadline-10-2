@@ -4,7 +4,9 @@ from dagster import (
 )
 
 import OpenStudioLandscapes.Deadline_10_2.assets
-import OpenStudioLandscapes.Deadline_10_2.constants
+from OpenStudioLandscapes.Deadline_10_2 import *
+
+LOGGER.info(f"Loading {dist.name} assets...")
 
 assets_base = load_assets_from_modules(
     modules=[OpenStudioLandscapes.Deadline_10_2.assets],
