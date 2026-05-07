@@ -91,707 +91,236 @@ The following settings are available in `OpenStudioLandscapes-Deadline-10-2` and
 
 
 ```yaml
-# ===
-# env
-# ---
-#
-# Type: typing.Dict
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         None
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
+properties:
+  apt_packages:
+    default:
+    - bzip2
+    items: {}
+    title: Apt Packages
+    type: array
+  compose_scope:
+    default: default
+    examples:
+    - default
+    - license_server
+    - worker
+    title: Compose Scope
+    type: string
+  deadline_10_2_APPLICATION_STARTUP_PORT:
+    default: 17006
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Application Startup Port
+    type: integer
+  deadline_10_2_AUTO_CONFIGURATION_PORT:
+    default: 17001
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Auto Configuration Port
+    type: integer
+  deadline_10_2_DEFAULT_DBPATH_CONTAINER:
+    default: /data/db
+    format: path
+    title: Deadline 10 2 Default Dbpath Container
+    type: string
+  deadline_10_2_DISABLE_LOCAL_PULSE:
+    default: false
+    title: Deadline 10 2 Disable Local Pulse
+    type: boolean
+  deadline_10_2_DISABLE_LOCAL_WORKER:
+    default: true
+    title: Deadline 10 2 Disable Local Worker
+    type: boolean
+  deadline_10_2_LAUNCHER_LISTENING_PORT:
+    default: 17000
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Launcher Listening Port
+    type: integer
+  deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT:
+    default: 17003
+    exclusiveMinimum: 0
+    title: Deadline 10 2 License Forwarder Listening Port
+    type: integer
+  deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD:
+    default: web
+    title: Deadline 10 2 Me Config Basicauth Password
+    type: string
+  deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME:
+    default: web
+    title: Deadline 10 2 Me Config Basicauth Username
+    type: string
+  deadline_10_2_ME_CONFIG_MONGODB_PORT:
+    default: 21017
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Me Config Mongodb Port
+    type: integer
+  deadline_10_2_ME_CONFIG_MONGODB_SERVER:
+    default: mongodb-10-2
+    title: Deadline 10 2 Me Config Mongodb Server
+    type: string
+  deadline_10_2_ME_CONFIG_MONGODB_URL:
+    default: mongodb://admin:pass@localhost:21017/db?ssl=false
+    title: Deadline 10 2 Me Config Mongodb Url
+    type: string
+  deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME:
+    default: darcula
+    title: Deadline 10 2 Me Config Options Editortheme
+    type: string
+  deadline_10_2_MONGODB_INSIDE_CONTAINER:
+    default: false
+    title: Deadline 10 2 Mongodb Inside Container
+    type: boolean
+  deadline_10_2_MONGO_DB_HOST:
+    default: mongodb-10-2
+    title: Deadline 10 2 Mongo Db Host
+    type: string
+  deadline_10_2_MONGO_DB_NAME:
+    default: deadline10db
+    title: Deadline 10 2 Mongo Db Name
+    type: string
+  deadline_10_2_MONGO_DB_PORT_CONTAINER:
+    default: 21017
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Mongo Db Port Container
+    type: integer
+  deadline_10_2_MONGO_DB_PORT_HOST:
+    default: 21017
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Mongo Db Port Host
+    type: integer
+  deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER:
+    default: 8081
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Mongo Express Port Container
+    type: integer
+  deadline_10_2_MONGO_EXPRESS_PORT_HOST:
+    default: 8181
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Mongo Express Port Host
+    type: integer
+  deadline_10_2_RCS_HTTP_PORT_CONTAINER:
+    default: 8888
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Rcs Http Port Container
+    type: integer
+  deadline_10_2_RCS_HTTP_PORT_HOST:
+    default: 8888
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Rcs Http Port Host
+    type: integer
+  deadline_10_2_SLAVE_STARTUP_PORT:
+    default: 17003
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Slave Startup Port
+    type: integer
+  deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER:
+    default: 8899
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Webservice Http Port Container
+    type: integer
+  deadline_10_2_WEBSERVICE_HTTP_PORT_HOST:
+    default: 8899
+    exclusiveMinimum: 0
+    title: Deadline 10 2 Webservice Http Port Host
+    type: integer
+  deadline_10_2_database_install_destination:
+    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10'
+    format: path
+    title: Deadline 10 2 Database Install Destination
+    type: string
+  deadline_10_2_installer_aws_portal_link:
+    default: <NOT_SET__CHANGE_ME>
+    description: The full path to the downloaded `AWSPortalLink-1.2.x.x-linux-x64-installer.run`
+      file. The installer itself is not part of this Feature. For more information,
+      see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
+    format: path
+    title: Deadline 10 2 Installer Aws Portal Link
+    type: string
+  deadline_10_2_installer_deadline_client:
+    default: <NOT_SET__CHANGE_ME>
+    description: The full path to the downloaded `DeadlineClient-10.2.x.x-linux-x64-installer.run`
+      file. The installer itself is not part of this Feature. For more information,
+      see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
+    format: path
+    title: Deadline 10 2 Installer Deadline Client
+    type: string
+  deadline_10_2_installer_deadline_repository:
+    default: <NOT_SET__CHANGE_ME>
+    description: The full path to the downloaded `DeadlineRepository-10.2.x.x-linux-x64-installer.run`
+      file. The installer itself is not part of this Feature. For more information,
+      see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
+    format: path
+    title: Deadline 10 2 Installer Deadline Repository
+    type: string
+  deadline_10_2_mongodb_docker_image:
+    default: docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004
+    title: Deadline 10 2 Mongodb Docker Image
+    type: string
+  deadline_10_2_repository_install_destination:
+    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
+    description: For an OverlayFS, this is the lowest (read-only) lowerdir.
+    format: path
+    title: Deadline 10 2 Repository Install Destination
+    type: string
+  deadline_10_2_repository_work_dir:
+    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
+    description: If not using OverlayFS, this is usually the same value as deadline_10_2_repository_install_destination.
+      If the repository resides on an OverlayFS, this is the resulting mount point
+      of the overlay.
+    format: path
+    title: Deadline 10 2 Repository Work Dir
+    type: string
+  docker_compose:
+    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml'
+    description: The path to the `docker-compose.yml` file.
+    format: path
+    title: Docker Compose
+    type: string
+  enabled:
+    default: false
+    description: Not enabled by default because this Feature has some basic requirements,
+      such as the installers.
+    title: Enabled
+    type: boolean
+  env:
+    additionalProperties: true
+    title: Env
+    type: object
+  feature_name:
+    default: OpenStudioLandscapes-Deadline-10-2
+    title: Feature Name
+    type: string
+  group_name:
+    default: OpenStudioLandscapes_Deadline_10_2
+    title: Group Name
+    type: string
+  key_prefixes:
+    default:
+    - OpenStudioLandscapes_Deadline_10_2
+    items:
+      type: string
+    title: Key Prefixes
+    type: array
+  local_bind_volumes:
+    description: Here you can define Feature specific, arbitrary, absolute bind volume
+      mappings.
+    items:
+      type: string
+    title: Local Bind Volumes
+    type: array
+  local_environment_variables:
+    additionalProperties:
+      type: string
+    description: Here you can define Feature specific, arbitrary environment variables.
+    title: Local Environment Variables
+    type: object
+  pip_packages:
+    default:
+    - gazu[cli]
+    items: {}
+    title: Pip Packages
+    type: array
+title: Config
+type: object
 
-
-# ==================
-# local_bind_volumes
-# ------------------
-#
-# Type: typing.List[str]
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         Here you can define Feature specific, arbitrary, absolute bind volume mappings.
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     Here you can define Feature specific, arbitrary, absolute bind volume mappings.
-# Required:
-#     False
-# Examples:
-#     None
-
-
-# ===========================
-# local_environment_variables
-# ---------------------------
-#
-# Type: typing.Dict[str, str]
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         Here you can define Feature specific, arbitrary environment variables.
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     Here you can define Feature specific, arbitrary environment variables.
-# Required:
-#     False
-# Examples:
-#     None
-
-
-# =============
-# config_engine
-# -------------
-#
-# Type: <class 'OpenStudioLandscapes.engine.config.models.ConfigEngine'>
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         None
-#     Default value:
-#         None
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-
-
-# ============
-# distribution
-# ------------
-#
-# Type: <class 'importlib.metadata.Distribution'>
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         None
-#     Default value:
-#         None
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-
-
-# ==========
-# group_name
-# ----------
-#
-# Type: <class 'str'>
-# Base Class Info:
-#     Required:
-#         True
-#     Description:
-#         Dagster Group name. This will represent the group node name. See https://docs.dagster.io/api/dagster/assets for more information
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-group_name: OpenStudioLandscapes_Deadline_10_2
-
-
-# ============
-# key_prefixes
-# ------------
-#
-# Type: typing.List[str]
-# Base Class Info:
-#     Required:
-#         True
-#     Description:
-#         Dagster Asset key prefixes. This will be reflected in the nesting (directory structure) of the Asset. See https://docs.dagster.io/api/dagster/assets for more information
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-key_prefixes:
-- OpenStudioLandscapes_Deadline_10_2
-
-
-# =======
-# enabled
-# -------
-#
-# Type: <class 'bool'>
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         Whether the Feature is enabled or not.
-#     Default value:
-#         True
-# Description:
-#     Not enabled by default because this Feature has some basic requirements, such as the installers.
-# Required:
-#     False
-# Examples:
-#     None
-enabled: false
-
-
-# =============
-# compose_scope
-# -------------
-#
-# Type: <class 'str'>
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         None
-#     Default value:
-#         default
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     ['default', 'license_server', 'worker']
-
-
-# ============
-# feature_name
-# ------------
-#
-# Type: <class 'str'>
-# Base Class Info:
-#     Required:
-#         True
-#     Description:
-#         The name of the feature. It is derived from the `OpenStudioLandscapes.<Feature>.dist` attribute.
-#     Default value:
-#         PydanticUndefined
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-feature_name: OpenStudioLandscapes-Deadline-10-2
-
-
-# ==============
-# docker_compose
-# --------------
-#
-# Type: <class 'pathlib.Path'>
-# Base Class Info:
-#     Required:
-#         False
-#     Description:
-#         The path to the `docker-compose.yml` file.
-#     Default value:
-#         {DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml
-# Description:
-#     The path to the `docker-compose.yml` file.
-# Required:
-#     False
-# Examples:
-#     None
-
-
-# =======================================
-# deadline_10_2_installer_aws_portal_link
-# ---------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     The full path to the downloaded `AWSPortalLink-1.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_installer_aws_portal_link: <NOT_SET__CHANGE_ME>
-
-
-# =======================================
-# deadline_10_2_installer_deadline_client
-# ---------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     The full path to the downloaded `DeadlineClient-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_installer_deadline_client: <NOT_SET__CHANGE_ME>
-
-
-# ===========================================
-# deadline_10_2_installer_deadline_repository
-# -------------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     The full path to the downloaded `DeadlineRepository-10.2.x.x-linux-x64-installer.run` file. The installer itself is not part of this Feature. For more information, see https://github.com/michimussato/OpenStudioLandscapes-Deadline-10-2?tab=readme-ov-file#get-deadline
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_installer_deadline_repository: <NOT_SET__CHANGE_ME>
-
-
-# ============================================
-# deadline_10_2_repository_install_destination
-# --------------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     For an OverlayFS, this is the lowest (read-only) lowerdir.
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_repository_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
-
-
-# =================================
-# deadline_10_2_repository_work_dir
-# ---------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     If not using OverlayFS, this is usually the same value as deadline_10_2_repository_install_destination. If the repository resides on an OverlayFS, this is the resulting mount point of the overlay.
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_repository_work_dir: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineRepository10'
-
-
-# ==========================================
-# deadline_10_2_database_install_destination
-# ------------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_database_install_destination: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/data/opt/Thinkbox/DeadlineDatabase10'
-
-
-# ================================
-# deadline_10_2_RCS_HTTP_PORT_HOST
-# --------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_RCS_HTTP_PORT_HOST: 8888
-
-
-# =====================================
-# deadline_10_2_RCS_HTTP_PORT_CONTAINER
-# -------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_RCS_HTTP_PORT_CONTAINER: 8888
-
-
-# =======================================
-# deadline_10_2_WEBSERVICE_HTTP_PORT_HOST
-# ---------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_WEBSERVICE_HTTP_PORT_HOST: 8899
-
-
-# ============================================
-# deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER
-# --------------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER: 8899
-
-
-# =====================================
-# deadline_10_2_LAUNCHER_LISTENING_PORT
-# -------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_LAUNCHER_LISTENING_PORT: 17000
-
-
-# =====================================
-# deadline_10_2_AUTO_CONFIGURATION_PORT
-# -------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_AUTO_CONFIGURATION_PORT: 17001
-
-
-# ================================
-# deadline_10_2_SLAVE_STARTUP_PORT
-# --------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_SLAVE_STARTUP_PORT: 17003
-
-
-# ==============================================
-# deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT
-# ----------------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_LICENSE_FORWARDER_LISTENING_PORT: 17003
-
-
-# ======================================
-# deadline_10_2_APPLICATION_STARTUP_PORT
-# --------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_APPLICATION_STARTUP_PORT: 17006
-
-
-# =================================
-# deadline_10_2_DISABLE_LOCAL_PULSE
-# ---------------------------------
-#
-# Type: <class 'bool'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_DISABLE_LOCAL_PULSE: false
-
-
-# ==================================
-# deadline_10_2_DISABLE_LOCAL_WORKER
-# ----------------------------------
-#
-# Type: <class 'bool'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_DISABLE_LOCAL_WORKER: true
-
-
-# ==================================
-# deadline_10_2_mongodb_docker_image
-# ----------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_mongodb_docker_image: docker.io/mongodb/mongodb-community-server:4.4-ubuntu2004
-
-
-# ======================================
-# deadline_10_2_MONGODB_INSIDE_CONTAINER
-# --------------------------------------
-#
-# Type: <class 'bool'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGODB_INSIDE_CONTAINER: false
-
-
-# ===========================
-# deadline_10_2_MONGO_DB_HOST
-# ---------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_DB_HOST: mongodb-10-2
-
-
-# ===========================
-# deadline_10_2_MONGO_DB_NAME
-# ---------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_DB_NAME: deadline10db
-
-
-# ======================================
-# deadline_10_2_DEFAULT_DBPATH_CONTAINER
-# --------------------------------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_DEFAULT_DBPATH_CONTAINER: /data/db
-
-
-# =====================================
-# deadline_10_2_MONGO_EXPRESS_PORT_HOST
-# -------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_EXPRESS_PORT_HOST: 8181
-
-
-# ==========================================
-# deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER
-# ------------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_EXPRESS_PORT_CONTAINER: 8081
-
-
-# ================================
-# deadline_10_2_MONGO_DB_PORT_HOST
-# --------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_DB_PORT_HOST: 21017
-
-
-# =====================================
-# deadline_10_2_MONGO_DB_PORT_CONTAINER
-# -------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_MONGO_DB_PORT_CONTAINER: 21017
-
-
-# ==========================================
-# deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME
-# ------------------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME: web
-
-
-# ==========================================
-# deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD
-# ------------------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD: web
-
-
-# ===========================================
-# deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME
-# -------------------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME: darcula
-
-
-# ======================================
-# deadline_10_2_ME_CONFIG_MONGODB_SERVER
-# --------------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_MONGODB_SERVER: mongodb-10-2
-
-
-# ===================================
-# deadline_10_2_ME_CONFIG_MONGODB_URL
-# -----------------------------------
-#
-# Type: <class 'str'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_MONGODB_URL: mongodb://admin:pass@localhost:21017/db?ssl=false
-
-
-# ====================================
-# deadline_10_2_ME_CONFIG_MONGODB_PORT
-# ------------------------------------
-#
-# Type: <class 'int'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-deadline_10_2_ME_CONFIG_MONGODB_PORT: 21017
-
-
-# ============
-# apt_packages
-# ------------
-#
-# Type: typing.List
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-apt_packages:
-- bzip2
-
-
-# ============
-# pip_packages
-# ------------
-#
-# Type: typing.List
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-pip_packages:
-- gazu[cli]
 ```
 
 </details>
@@ -951,4 +480,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-04-28 14:32:49 UTC**
+Last changed: **2026-05-07 19:19:02 UTC**
