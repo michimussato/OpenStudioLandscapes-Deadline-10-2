@@ -1,3 +1,4 @@
+# pylint: disable=line-too-long,invalid-name
 import copy
 import enum
 import os
@@ -26,23 +27,51 @@ from dagster import (
     asset,
     multi_asset,
 )
-from docker_compose_graph.utils import *
-
-from OpenStudioLandscapes.engine.common_assets import *
-
+from docker_compose_graph.utils import (
+    deep_merge,
+)
+from OpenStudioLandscapes.engine.common_assets import (
+    cmd,
+    compose,
+    docker_compose_graph,
+    feature,
+    feature_out,
+    group_in,
+    group_out,
+)
 from OpenStudioLandscapes.engine.config.models import (
     ConfigEngine,
     DockerConfigModel,
     SudoMethod,
 )
-from OpenStudioLandscapes.engine.constants import *
-from OpenStudioLandscapes.engine.enums import *
+from OpenStudioLandscapes.engine.constants import (
+    ASSET_HEADER_BASE,
+    ConfigParent,
+)
+from OpenStudioLandscapes.engine.enums import (
+    DockerComposePolicies,
+)
 from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
 from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_policy
-from OpenStudioLandscapes.engine.utils import *
-from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
+from OpenStudioLandscapes.engine.utils import (
+    create_image,
+    get_apt_install_str,
+    get_copy_str,
+    get_docker_compose_names,
+    get_docker_run_cmd,
+    get_image_metadata,
+    get_pip_install_str,
+    get_relative_path_via_common_root,
+)
+from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
+    get_network_dicts,
+)
 
-from OpenStudioLandscapes.Deadline_10_2 import *
+from OpenStudioLandscapes.Deadline_10_2 import (
+    config,
+    constants,
+    dist,
+)
 
 # Todo:
 #  - [ ] consolidate build_docker_image* assets into 1
@@ -357,7 +386,10 @@ def deadline_command_install_repository(
         ),
         "deadline_command_install_repository": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "deadline_command_install_repository"]
+                [
+                    *constants.ASSET_HEADER["key_prefix"],
+                    "deadline_command_install_repository",
+                ]
             ),
         ),
     },
@@ -449,7 +481,10 @@ def deadline_script_install_repository(
         ),
         "deadline_script_install_repository": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "deadline_script_install_repository"]
+                [
+                    *constants.ASSET_HEADER["key_prefix"],
+                    "deadline_script_install_repository",
+                ]
             ),
         ),
     },
@@ -612,7 +647,9 @@ def write_dockerfile_repository(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "write_dockerfile_repository": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "write_dockerfile_repository"])
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "write_dockerfile_repository"]
+            )
         ),
     },
     retry_policy=build_docker_image_retry_policy,
@@ -697,7 +734,9 @@ def build_docker_image_repository(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "build_docker_image_repository"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_repository"]
+            ),
         ),
         "compose_mongodb_10_2": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_mongodb"]),
@@ -1650,7 +1689,9 @@ def deadline_command_compose_rcs_runner(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+            ),
         ),
         "connection_ini_10_2": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "connection_ini"]),
@@ -1660,7 +1701,10 @@ def deadline_command_compose_rcs_runner(
         ),
         "deadline_command_compose_rcs_runner_10_2": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "deadline_command_compose_rcs_runner"]
+                [
+                    *constants.ASSET_HEADER["key_prefix"],
+                    "deadline_command_compose_rcs_runner",
+                ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
@@ -1884,7 +1928,9 @@ compose_pulse_runner_spec = AssetSpec(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+            ),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -1894,7 +1940,10 @@ compose_pulse_runner_spec = AssetSpec(
         ),
         "deadline_command_compose_pulse_runner_10_2": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "deadline_command_compose_pulse_runner"]
+                [
+                    *constants.ASSET_HEADER["key_prefix"],
+                    "deadline_command_compose_pulse_runner",
+                ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
@@ -2098,7 +2147,9 @@ def deadline_command_compose_worker_runner(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+            ),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -2108,7 +2159,10 @@ def deadline_command_compose_worker_runner(
         ),
         "deadline_command_compose_worker_runner_10_2": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "deadline_command_compose_worker_runner"]
+                [
+                    *constants.ASSET_HEADER["key_prefix"],
+                    "deadline_command_compose_worker_runner",
+                ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
@@ -2252,7 +2306,9 @@ def deadline_command_compose_webservice_runner(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+            ),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -2420,7 +2476,9 @@ def compose_webservice_runner(
     **constants.ASSET_HEADER,
     ins={
         "compose_webservice_runner": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_webservice_runner"]),
+            AssetKey(
+                [*constants.ASSET_HEADER["key_prefix"], "compose_webservice_runner"]
+            ),
         ),
         "compose_worker_runner": AssetIn(
             AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_worker_runner"]),
