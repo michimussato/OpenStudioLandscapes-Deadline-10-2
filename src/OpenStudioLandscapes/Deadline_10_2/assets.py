@@ -69,8 +69,8 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
 
 from OpenStudioLandscapes.Deadline_10_2 import (
     config,
-    constants,
     dist,
+    ASSET_HEADER,
 )
 
 # Todo:
@@ -91,38 +91,38 @@ yaml.SafeDumper.add_multi_representer(
 
 
 cmd: AssetsDefinition = cmd.get_feature__cmd(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 CONFIG: AssetsDefinition = feature.get_feature__CONFIG(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     CONFIG_STR=config.models.CONFIG_STR,
     search_model_of_type=config.models.Config,
 )
 
 feature_in: AssetsDefinition = group_in.get_feature_in(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     ASSET_HEADER_BASE=ASSET_HEADER_BASE,
     ASSET_HEADER_FEATURE_IN={},
 )
 
 group_out: AssetsDefinition = group_out.get_group_out(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 docker_compose_graph: AssetsDefinition = docker_compose_graph.get_docker_compose_graph(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 compose: AssetsDefinition = compose.get_compose(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 feature_out_v2: AssetsDefinition = feature_out.get_feature_out_v2(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
@@ -131,16 +131,16 @@ feature_out_v2: AssetsDefinition = feature_out.get_feature_out_v2(
 # - CONFIG_PARENT
 # if ConfigParent is or type FeatureBaseModel
 feature_in_parent: Union[AssetsDefinition, None] = group_in.get_feature_in_parent(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     config_parent=ConfigParent,
 )
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
 )
@@ -212,10 +212,10 @@ def connection_ini(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
 )
@@ -319,10 +319,10 @@ def deadline_ini(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
     description="This executes the OpenStudioLandscapes Repository Installer. "
@@ -379,15 +379,15 @@ def deadline_command_install_repository(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "deadline_command_install_repository": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_install_repository",
                 ]
             ),
@@ -471,18 +471,18 @@ def deadline_script_install_repository(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "feature_in": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "feature_in"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
         ),
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "deadline_script_install_repository": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_script_install_repository",
                 ]
             ),
@@ -638,17 +638,17 @@ def write_dockerfile_repository(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "feature_in": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "feature_in"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
         ),
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "write_dockerfile_repository": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "write_dockerfile_repository"]
+                [*ASSET_HEADER["key_prefix"], "write_dockerfile_repository"]
             )
         ),
     },
@@ -725,21 +725,21 @@ def build_docker_image_repository(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_repository"]
+                [*ASSET_HEADER["key_prefix"], "build_docker_image_repository"]
             ),
         ),
         "compose_mongodb_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_mongodb"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_mongodb"]),
         ),
     },
     description="This executes the OpenStudioLandscapes Repository Installer. "
@@ -877,10 +877,10 @@ def compose_repository(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
     description="",
@@ -938,18 +938,18 @@ def deadline_command_build_docker_image_client(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "feature_in": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "feature_in"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
         ),
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "deadline_command_build_client_image_10_2": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_build_docker_image_client",
                 ]
             ),
@@ -1121,11 +1121,11 @@ def write_dockerfile_client(
 build_docker_image_client_spec = AssetSpec(
     key=AssetKey(
         [
-            *constants.ASSET_HEADER["key_prefix"],
+            *ASSET_HEADER["key_prefix"],
             "build_docker_image_client",
         ]
     ),
-    group_name=constants.ASSET_HEADER["group_name"],
+    group_name=ASSET_HEADER["group_name"],
     description=textwrap.dedent("""
         Todo
         """),
@@ -1138,13 +1138,13 @@ build_docker_image_client_spec = AssetSpec(
     },
     ins={
         "feature_in": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "feature_in"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
         ),
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "write_dockerfile_client": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "write_dockerfile_client"])
+            AssetKey([*ASSET_HEADER["key_prefix"], "write_dockerfile_client"])
         ),
     },
     retry_policy=build_docker_image_retry_policy,
@@ -1227,10 +1227,10 @@ def build_docker_image_client(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
 )
@@ -1265,13 +1265,13 @@ def compose_networks(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -1376,10 +1376,10 @@ def compose_mongo_express(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
 )
@@ -1443,16 +1443,16 @@ def script_chown_mongodb(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "script_chown_mongodb_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "script_chown_mongodb"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "script_chown_mongodb"]),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -1655,7 +1655,7 @@ def compose_mongodb(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={},
     description="This executes the OpenStudioLandscapes Repository Installer. "
     "Needs to be done only once.",
@@ -1683,32 +1683,32 @@ def deadline_command_compose_rcs_runner(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
             ),
         ),
         "connection_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "connection_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
         ),
         "deadline_command_compose_rcs_runner_10_2": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_compose_rcs_runner",
                 ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -1856,11 +1856,11 @@ def compose_rcs_runner(
 deadline_command_compose_pulse_runner_spec = AssetSpec(
     key=AssetKey(
         [
-            *constants.ASSET_HEADER["key_prefix"],
+            *ASSET_HEADER["key_prefix"],
             "deadline_command_compose_pulse_runner",
         ]
     ),
-    group_name=constants.ASSET_HEADER["group_name"],
+    group_name=ASSET_HEADER["group_name"],
     description=textwrap.dedent("""
         This executes the OpenStudioLandscapes Repository Installer. Needs to be done only once.
         """),
@@ -1908,11 +1908,11 @@ def deadline_command_compose_pulse_runner(
 compose_pulse_runner_spec = AssetSpec(
     key=AssetKey(
         [
-            *constants.ASSET_HEADER["key_prefix"],
+            *ASSET_HEADER["key_prefix"],
             "compose_pulse_runner",
         ]
     ),
-    group_name=constants.ASSET_HEADER["group_name"],
+    group_name=ASSET_HEADER["group_name"],
     description=textwrap.dedent("""
         Todo
         """),
@@ -1925,29 +1925,29 @@ compose_pulse_runner_spec = AssetSpec(
     },
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
             ),
         ),
         "deadline_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
         ),
         "connection_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "connection_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_pulse_runner_10_2": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_compose_pulse_runner",
                 ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -2091,11 +2091,11 @@ def compose_pulse_runner(
 deadline_command_compose_worker_runner_spec = AssetSpec(
     key=AssetKey(
         [
-            *constants.ASSET_HEADER["key_prefix"],
+            *ASSET_HEADER["key_prefix"],
             "deadline_command_compose_worker_runner",
         ]
     ),
-    group_name=constants.ASSET_HEADER["group_name"],
+    group_name=ASSET_HEADER["group_name"],
     description=textwrap.dedent("""
         This executes the OpenStudioLandscapes Repository Installer. Needs to be done only once.
         """),
@@ -2141,32 +2141,32 @@ def deadline_command_compose_worker_runner(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
             ),
         ),
         "deadline_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
         ),
         "connection_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "connection_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_worker_runner_10_2": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_compose_worker_runner",
                 ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -2272,7 +2272,7 @@ def compose_worker_runner(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={},
     description="This executes the OpenStudioLandscapes Repository Installer. "
     "Needs to be done only once.",
@@ -2300,32 +2300,32 @@ def deadline_command_compose_webservice_runner(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "build_docker_image_client"]
+                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
             ),
         ),
         "deadline_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "deadline_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
         ),
         "connection_ini_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "connection_ini"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
         ),
         "deadline_command_compose_webservice_runner_10_2": AssetIn(
             AssetKey(
                 [
-                    *constants.ASSET_HEADER["key_prefix"],
+                    *ASSET_HEADER["key_prefix"],
                     "deadline_command_compose_webservice_runner",
                 ]
             ),
         ),
         "compose_networks_10_2": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
     },
 )
@@ -2473,30 +2473,30 @@ def compose_webservice_runner(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "compose_webservice_runner": AssetIn(
             AssetKey(
-                [*constants.ASSET_HEADER["key_prefix"], "compose_webservice_runner"]
+                [*ASSET_HEADER["key_prefix"], "compose_webservice_runner"]
             ),
         ),
         "compose_worker_runner": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_worker_runner"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_worker_runner"]),
         ),
         "compose_pulse_runner": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_pulse_runner"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_pulse_runner"]),
         ),
         "compose_rcs_runner": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_rcs_runner"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_rcs_runner"]),
         ),
         "compose_mongo_express": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_mongo_express"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_mongo_express"]),
         ),
         "compose_mongodb": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_mongodb"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_mongodb"]),
         ),
         "compose_repository": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_repository"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_repository"]),
         ),
     },
 )
