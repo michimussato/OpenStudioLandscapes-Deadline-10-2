@@ -68,9 +68,9 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
 )
 
 from OpenStudioLandscapes.Deadline_10_2 import (
+    ASSET_HEADER,
     config,
     dist,
-    ASSET_HEADER,
 )
 
 # Todo:
@@ -647,9 +647,7 @@ def write_dockerfile_repository(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "write_dockerfile_repository": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "write_dockerfile_repository"]
-            )
+            AssetKey([*ASSET_HEADER["key_prefix"], "write_dockerfile_repository"])
         ),
     },
     retry_policy=build_docker_image_retry_policy,
@@ -734,9 +732,7 @@ def build_docker_image_repository(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "build_docker_image_repository"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image_repository"]),
         ),
         "compose_mongodb_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_mongodb"]),
@@ -1689,9 +1685,7 @@ def deadline_command_compose_rcs_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
         ),
         "connection_ini_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "connection_ini"]),
@@ -1928,9 +1922,7 @@ compose_pulse_runner_spec = AssetSpec(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -2147,9 +2139,7 @@ def deadline_command_compose_worker_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -2306,9 +2296,7 @@ def deadline_command_compose_webservice_runner(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "build": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "build_docker_image_client"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image_client"]),
         ),
         "deadline_ini_10_2": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "deadline_ini"]),
@@ -2476,9 +2464,7 @@ def compose_webservice_runner(
     **ASSET_HEADER,
     ins={
         "compose_webservice_runner": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER["key_prefix"], "compose_webservice_runner"]
-            ),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_webservice_runner"]),
         ),
         "compose_worker_runner": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_worker_runner"]),
