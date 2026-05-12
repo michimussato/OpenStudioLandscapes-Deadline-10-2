@@ -160,5 +160,5 @@ src/OpenStudioLandscapes/Deadline_10_2/doc/readme.py:58:0: C0116: Missing functi
 src/OpenStudioLandscapes/Deadline_10_2/doc/readme.py:71:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.24/10 (previous run: 6.43/10, +0.81)
+Your code has been rated at 7.25/10 (previous run: 6.46/10, +0.79)
 
