@@ -1545,7 +1545,7 @@
       "version": "10.0"
     },
     {
-      "bom-ref": "idna==3.14",
+      "bom-ref": "idna==3.15",
       "description": "Internationalized Domain Names in Applications (IDNA)",
       "externalReferences": [
         {
@@ -1561,7 +1561,7 @@
         {
           "comment": "from packaging metadata Project-URL: Changelog",
           "type": "release-notes",
-          "url": "https://github.com/kjd/idna/blob/master/HISTORY.rst"
+          "url": "https://github.com/kjd/idna/blob/master/HISTORY.md"
         }
       ],
       "licenses": [
@@ -1573,9 +1573,9 @@
         }
       ],
       "name": "idna",
-      "purl": "pkg:pypi/idna@3.14",
+      "purl": "pkg:pypi/idna@3.15",
       "type": "library",
-      "version": "3.14"
+      "version": "3.15"
     },
     {
       "bom-ref": "isoduration==20.11.0",
@@ -3621,7 +3621,7 @@
     },
     {
       "dependsOn": [
-        "idna==3.14",
+        "idna==3.15",
         "wheel==0.47.0"
       ],
       "ref": "dnspython==2.8.0"
@@ -3643,7 +3643,7 @@
     {
       "dependsOn": [
         "dnspython==2.8.0",
-        "idna==3.14"
+        "idna==3.15"
       ],
       "ref": "email-validator==2.3.0"
     },
@@ -3710,7 +3710,7 @@
       "ref": "humanfriendly==10.0"
     },
     {
-      "ref": "idna==3.14"
+      "ref": "idna==3.15"
     },
     {
       "dependsOn": [
@@ -3731,7 +3731,7 @@
       "dependsOn": [
         "attrs==26.1.0",
         "fqdn==1.5.1",
-        "idna==3.14",
+        "idna==3.15",
         "isoduration==20.11.0",
         "jsonpointer==3.1.1",
         "jsonschema-specifications==2025.9.1",
@@ -3884,7 +3884,7 @@
         "certifi==2026.4.22",
         "chardet==5.2.0",
         "charset-normalizer==3.4.7",
-        "idna==3.14",
+        "idna==3.15",
         "urllib3==2.7.0"
       ],
       "ref": "requests==2.34.0"
@@ -4017,7 +4017,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-05-12T11:16:20.774054+00:00",
+    "timestamp": "2026-05-13T12:52:02.432558+00:00",
     "tools": {
       "components": [
         {
@@ -4121,7 +4121,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:39383cd5-0c4c-499a-a34a-ffe5c9eed16f",
+  "serialNumber": "urn:uuid:be37f818-f055-4982-b3bc-65fe1ec9ff26",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
