@@ -41,10 +41,10 @@ from OpenStudioLandscapes.engine.common_assets import (
 )
 from OpenStudioLandscapes.engine.config.models import (
     ConfigEngine,
-    DockerConfigModel,
     SudoMethod,
 )
 from OpenStudioLandscapes.engine.base.configurable_resources.docker_registry_resource import DockerRegistryConfigurableResource
+from OpenStudioLandscapes.engine.base.configurable_resources.docker_resource import DockerConfigurableResource
 from OpenStudioLandscapes.engine.constants import (
     ASSET_HEADER_BASE,
     ConfigParent,
@@ -493,6 +493,7 @@ def deadline_script_install_repository(
 def write_dockerfile_repository(
     context: AssetExecutionContext,
     config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -503,7 +504,7 @@ def write_dockerfile_repository(
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+    docker_config: DockerConfigurableResource = config_DockerConfigurableResource
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -658,6 +659,7 @@ def write_dockerfile_repository(
 def build_docker_image_repository(
     context: AssetExecutionContext,
     config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -672,7 +674,7 @@ def build_docker_image_repository(
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+    docker_config: DockerConfigurableResource = config_DockerConfigurableResource
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -961,6 +963,7 @@ def deadline_command_build_docker_image_client(
 def write_dockerfile_client(
     context: AssetExecutionContext,
     config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
@@ -971,7 +974,7 @@ def write_dockerfile_client(
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+    docker_config: DockerConfigurableResource = config_DockerConfigurableResource
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -1156,6 +1159,7 @@ build_docker_image_client_spec = AssetSpec(
 def build_docker_image_client(
     context: AssetExecutionContext,
     config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_client: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1170,7 +1174,7 @@ def build_docker_image_client(
 
     config_engine: ConfigEngine = CONFIG.config_engine
 
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+    docker_config: DockerConfigurableResource = config_DockerConfigurableResource
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
