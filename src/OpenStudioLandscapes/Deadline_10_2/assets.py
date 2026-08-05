@@ -44,6 +44,7 @@ from OpenStudioLandscapes.engine.config.models import (
     DockerConfigModel,
     SudoMethod,
 )
+from OpenStudioLandscapes.engine.base.configurable_resources.docker_registry_resource import DockerRegistryConfigurableResource
 from OpenStudioLandscapes.engine.constants import (
     ASSET_HEADER_BASE,
     ConfigParent,
@@ -491,6 +492,7 @@ def deadline_script_install_repository(
 )
 def write_dockerfile_repository(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -529,6 +531,7 @@ def write_dockerfile_repository(
         context=context,
         docker_image=docker_image,
         docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -654,6 +657,7 @@ def write_dockerfile_repository(
 )
 def build_docker_image_repository(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -685,6 +689,7 @@ def build_docker_image_repository(
         context=context,
         docker_image=docker_image,
         docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -697,6 +702,7 @@ def build_docker_image_repository(
         tags=tags,
         docker_image=docker_image,
         docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_repository,
     )
@@ -954,6 +960,7 @@ def deadline_command_build_docker_image_client(
 )
 def write_dockerfile_client(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
@@ -992,6 +999,7 @@ def write_dockerfile_client(
         context=context,
         docker_image=docker_image,
         docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -1147,6 +1155,7 @@ build_docker_image_client_spec = AssetSpec(
 )
 def build_docker_image_client(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_client: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1178,6 +1187,7 @@ def build_docker_image_client(
         context=context,
         docker_image=docker_image,
         docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -1189,6 +1199,7 @@ def build_docker_image_client(
         image_prefixes=image_prefixes,
         tags=tags,
         docker_image=docker_image,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         docker_config=docker_config,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_client,
