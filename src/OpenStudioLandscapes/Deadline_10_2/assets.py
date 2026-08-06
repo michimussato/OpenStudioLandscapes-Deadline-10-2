@@ -694,7 +694,7 @@ def build_docker_image_repository(
         image_prefixes=image_prefixes,
         tags=tags,
         docker_image=docker_image,
-        docker_config=config_DockerConfigurableResource,
+        config_DockerConfigurableResource=config_DockerConfigurableResource,
         config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_repository,
@@ -1186,7 +1186,7 @@ def build_docker_image_client(
         tags=tags,
         docker_image=docker_image,
         config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
-        docker_config=config_DockerConfigurableResource,
+        config_DockerConfigurableResource=config_DockerConfigurableResource,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_client,
     )
