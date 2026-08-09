@@ -39,11 +39,12 @@ from OpenStudioLandscapes.engine.common_assets import (
     group_in,
     group_out,
 )
+from OpenStudioLandscapes.engine.env.configurable_resources.config_engine import ConfigEngineConfigurableResource
 from OpenStudioLandscapes.engine.config.models import (
-    ConfigEngine,
-    DockerConfigModel,
     SudoMethod,
 )
+from OpenStudioLandscapes.engine.base.configurable_resources.docker_registry_resource import DockerRegistryConfigurableResource
+from OpenStudioLandscapes.engine.base.configurable_resources.docker_resource import DockerConfigurableResource
 from OpenStudioLandscapes.engine.constants import (
     ASSET_HEADER_BASE,
     ConfigParent,
@@ -221,13 +222,12 @@ def connection_ini(
 )
 def deadline_ini(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     # @formatter:off
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     deadline_ini = textwrap.dedent("""\
         # {auto_generated}
@@ -287,7 +287,7 @@ def deadline_ini(
             f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
             safe=":/%",
         ),
-        OPENSTUDIOLANDSCAPES__DOMAIN_LAN=config_engine.openstudiolandscapes__domain_lan,
+        OPENSTUDIOLANDSCAPES__DOMAIN_LAN=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
         WEBSERVICE_HTTP_PORT_CONTAINER=CONFIG.deadline_10_2_WEBSERVICE_HTTP_PORT_CONTAINER,
         RCS_HTTP_PORT_CONTAINER=CONFIG.deadline_10_2_RCS_HTTP_PORT_CONTAINER,
     )
@@ -491,6 +491,8 @@ def deadline_script_install_repository(
 )
 def write_dockerfile_repository(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -498,10 +500,6 @@ def write_dockerfile_repository(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
-
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -528,7 +526,8 @@ def write_dockerfile_repository(
     ) = get_image_metadata(
         context=context,
         docker_image=docker_image,
-        docker_config=docker_config,
+        docker_config=config_DockerConfigurableResource,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -654,6 +653,8 @@ def write_dockerfile_repository(
 )
 def build_docker_image_repository(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -665,10 +666,6 @@ def build_docker_image_repository(
     docker_config_json: pathlib.Path = (
         feature_in.openstudiolandscapes_base.docker_config_json
     )
-
-    config_engine: ConfigEngine = CONFIG.config_engine
-
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -684,7 +681,8 @@ def build_docker_image_repository(
     ) = get_image_metadata(
         context=context,
         docker_image=docker_image,
-        docker_config=docker_config,
+        docker_config=config_DockerConfigurableResource,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -696,7 +694,8 @@ def build_docker_image_repository(
         image_prefixes=image_prefixes,
         tags=tags,
         docker_image=docker_image,
-        docker_config=docker_config,
+        config_DockerConfigurableResource=config_DockerConfigurableResource,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_repository,
     )
@@ -743,6 +742,7 @@ def build_docker_image_repository(
 )
 def compose_repository(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
@@ -753,8 +753,6 @@ def compose_repository(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -796,7 +794,7 @@ def compose_repository(
         "volumes": list(
             {
                 *_volume_relative,
-                *config_engine.global_bind_volumes,
+                *config_ConfigEngineConfigurableResource.global_bind_volumes,
                 *CONFIG.local_bind_volumes,
             }
         )
@@ -807,7 +805,7 @@ def compose_repository(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -822,7 +820,7 @@ def compose_repository(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": config_engine.openstudiolandscapes__domain_lan,
+                "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                 **copy.deepcopy(network_dict),
                 **copy.deepcopy(volumes_dict),
                 **copy.deepcopy(ports_dict),
@@ -837,8 +835,8 @@ def compose_repository(
                     build["image_tags"][0],
                 ),
                 "environment": {
-                    "TZ": config_engine.tz,
-                    **config_engine.global_environment_variables,
+                    "TZ": config_ConfigEngineConfigurableResource.tz,
+                    **config_ConfigEngineConfigurableResource.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
                 "command": ["/ENTRYPOINT/install_repository.sh"],
@@ -954,6 +952,8 @@ def deadline_command_build_docker_image_client(
 )
 def write_dockerfile_client(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
@@ -961,10 +961,6 @@ def write_dockerfile_client(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
-
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -991,7 +987,8 @@ def write_dockerfile_client(
     ) = get_image_metadata(
         context=context,
         docker_image=docker_image,
-        docker_config=docker_config,
+        docker_config=config_DockerConfigurableResource,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -1147,6 +1144,8 @@ build_docker_image_client_spec = AssetSpec(
 )
 def build_docker_image_client(
     context: AssetExecutionContext,
+    config_DockerRegistryConfigurableResource: DockerRegistryConfigurableResource,
+    config_DockerConfigurableResource: DockerConfigurableResource,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_client: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1158,10 +1157,6 @@ def build_docker_image_client(
     docker_config_json: pathlib.Path = (
         feature_in.openstudiolandscapes_base.docker_config_json
     )
-
-    config_engine: ConfigEngine = CONFIG.config_engine
-
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
 
     docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
 
@@ -1177,7 +1172,8 @@ def build_docker_image_client(
     ) = get_image_metadata(
         context=context,
         docker_image=docker_image,
-        docker_config=docker_config,
+        docker_config=config_DockerConfigurableResource,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
         env=env,
     )
 
@@ -1189,7 +1185,8 @@ def build_docker_image_client(
         image_prefixes=image_prefixes,
         tags=tags,
         docker_image=docker_image,
-        docker_config=docker_config,
+        config_DockerRegistryConfigurableResource=config_DockerRegistryConfigurableResource,
+        config_DockerConfigurableResource=config_DockerConfigurableResource,
         docker_config_json=docker_config_json,
         docker_file=write_dockerfile_client,
     )
@@ -1273,13 +1270,12 @@ def compose_networks(
 )
 def compose_mongo_express(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -1301,7 +1297,7 @@ def compose_mongo_express(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -1318,10 +1314,10 @@ def compose_mongo_express(
                 "image": "docker.io/mongo-express",
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": config_engine.openstudiolandscapes__domain_lan,
+                "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                 "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 "environment": {
-                    "TZ": config_engine.tz,
+                    "TZ": config_ConfigEngineConfigurableResource.tz,
                     "ME_CONFIG_BASICAUTH_USERNAME": CONFIG.deadline_10_2_ME_CONFIG_BASICAUTH_USERNAME,
                     "ME_CONFIG_BASICAUTH_PASSWORD": CONFIG.deadline_10_2_ME_CONFIG_BASICAUTH_PASSWORD,
                     "ME_CONFIG_OPTIONS_EDITORTHEME": CONFIG.deadline_10_2_ME_CONFIG_OPTIONS_EDITORTHEME,
@@ -1338,7 +1334,7 @@ def compose_mongo_express(
                     ).format(
                         MONGO_DB_PORT_CONTAINER=CONFIG.deadline_10_2_MONGO_DB_PORT_CONTAINER
                     ),
-                    **config_engine.global_environment_variables,
+                    **config_ConfigEngineConfigurableResource.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
                 "depends_on": [
@@ -1381,10 +1377,9 @@ def compose_mongo_express(
 )
 def script_chown_mongodb(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, str]] | AssetMaterialization, None, None]:
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     ret = dict()
 
@@ -1405,7 +1400,7 @@ def script_chown_mongodb(
     ret["script"] += "\n"
     # ret["script"] += f"{shutil.which('sshpass')} -eSSH_PASS ssh {env_10_2['SSH_USER']}@{env_10_2['SSH_HOST']} \"echo $SSH_PASS | sudo -S chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()}\"\n"
 
-    match config_engine.sudo_method:
+    match config_ConfigEngineConfigurableResource.sudo_method:
         # Todo:
         #  - [ ] implement `su` command variance
         #  - [ ] askpass: alternative to "echo SUDO_PASS | sudo --stdin"
@@ -1416,11 +1411,11 @@ def script_chown_mongodb(
         case SudoMethod.SUDO:
             ret[
                 "script"
-            ] += f"echo ${{SUDO_PASS}} | {config_engine.sudo_method.value} --stdin --reset-timestamp /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+            ] += f"echo ${{SUDO_PASS}} | {config_ConfigEngineConfigurableResource.sudo_method.value} --stdin --reset-timestamp /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
         case SudoMethod.PKEXEC:
             ret[
                 "script"
-            ] += f"{config_engine.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
+            ] += f"{config_ConfigEngineConfigurableResource.sudo_method.value} /usr/bin/chown {mongo_uid}:{mongo_gid} {mongo_db_dir_host.as_posix()};\n"
 
     ret["script"] += "\n"
     ret["script"] += "echo Success;\n"
@@ -1454,14 +1449,13 @@ def script_chown_mongodb(
 )
 def compose_mongodb(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     script_chown_mongodb_10_2: Dict[str, str],  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -1506,7 +1500,7 @@ def compose_mongodb(
 
             context.log.info(f"Setting ownership of {mongo_db_dir_host.as_posix()}...")
 
-            if config_engine.sudo_method == SudoMethod.SUDO:
+            if config_ConfigEngineConfigurableResource.sudo_method == SudoMethod.SUDO:
                 # Todo
                 #  - [ ] Choose EnvVar or os.environ for SUDO_PASS
                 sudo_pass = EnvVar("SUDO_PASS").get_value() or os.environ.get(
@@ -1515,7 +1509,7 @@ def compose_mongodb(
                 if sudo_pass is None:
                     raise ValueError(
                         "Environment variable `SUDO_PASS` is not set but required "
-                        f"with `sudo_method` = {config_engine.sudo_method}"
+                        f"with `sudo_method` = {config_ConfigEngineConfigurableResource.sudo_method}"
                     )
                 env_proc = {
                     "SUDO_PASS": sudo_pass,
@@ -1583,7 +1577,7 @@ def compose_mongodb(
         "volumes": list(
             {
                 *_volume_relative,
-                *config_engine.global_bind_volumes,
+                *config_ConfigEngineConfigurableResource.global_bind_volumes,
                 *CONFIG.local_bind_volumes,
             }
         )
@@ -1594,7 +1588,7 @@ def compose_mongodb(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -1610,7 +1604,7 @@ def compose_mongodb(
                 "image": CONFIG.deadline_10_2_mongodb_docker_image,
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": config_engine.openstudiolandscapes__domain_lan,
+                "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                 "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 "command": [
                     "--port",
@@ -1625,8 +1619,8 @@ def compose_mongodb(
                     "disabled",
                 ],
                 "environment": {
-                    "TZ": config_engine.tz,
-                    **config_engine.global_environment_variables,
+                    "TZ": config_ConfigEngineConfigurableResource.tz,
+                    **config_ConfigEngineConfigurableResource.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
@@ -1708,6 +1702,7 @@ def deadline_command_compose_rcs_runner(
 )
 def compose_rcs_runner(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1718,8 +1713,6 @@ def compose_rcs_runner(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -1769,7 +1762,7 @@ def compose_rcs_runner(
         "volumes": list(
             {
                 *_volume_relative,
-                *config_engine.global_bind_volumes,
+                *config_ConfigEngineConfigurableResource.global_bind_volumes,
                 *CONFIG.local_bind_volumes,
             }
         )
@@ -1780,7 +1773,7 @@ def compose_rcs_runner(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -1795,7 +1788,7 @@ def compose_rcs_runner(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": config_engine.openstudiolandscapes__domain_lan,
+                "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                 "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
@@ -1823,8 +1816,8 @@ def compose_rcs_runner(
                     "retries": "3",
                 },
                 "environment": {
-                    "TZ": config_engine.tz,
-                    **config_engine.global_environment_variables,
+                    "TZ": config_ConfigEngineConfigurableResource.tz,
+                    **config_ConfigEngineConfigurableResource.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
@@ -1945,6 +1938,7 @@ compose_pulse_runner_spec = AssetSpec(
 )
 def compose_pulse_runner(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1955,8 +1949,6 @@ def compose_pulse_runner(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -2000,7 +1992,7 @@ def compose_pulse_runner(
         "volumes": list(
             {
                 *_volume_relative,
-                *config_engine.global_bind_volumes,
+                *config_ConfigEngineConfigurableResource.global_bind_volumes,
                 *CONFIG.local_bind_volumes,
             }
         )
@@ -2011,7 +2003,7 @@ def compose_pulse_runner(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -2032,7 +2024,7 @@ def compose_pulse_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": config_engine.openstudiolandscapes__domain_lan,
+                    "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                     "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
@@ -2048,8 +2040,8 @@ def compose_pulse_runner(
                         },
                     },
                     "environment": {
-                        "TZ": config_engine.tz,
-                        **config_engine.global_environment_variables,
+                        "TZ": config_ConfigEngineConfigurableResource.tz,
+                        **config_ConfigEngineConfigurableResource.global_environment_variables,
                         **CONFIG.local_environment_variables,
                     },
                     **copy.deepcopy(network_dict),
@@ -2162,6 +2154,7 @@ def deadline_command_compose_worker_runner(
 )
 def compose_worker_runner(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -2172,8 +2165,6 @@ def compose_worker_runner(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     network_dict = {}
     ports_dict = {}
@@ -2199,7 +2190,7 @@ def compose_worker_runner(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -2220,7 +2211,7 @@ def compose_worker_runner(
                 service_name: {
                     "container_name": container_name,
                     "hostname": host_name,
-                    "domainname": config_engine.openstudiolandscapes__domain_lan,
+                    "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                     "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                     # % (build["image_name"], build["image_tags"][0]),
@@ -2236,8 +2227,8 @@ def compose_worker_runner(
                         },
                     },
                     "environment": {
-                        "TZ": config_engine.tz,
-                        **config_engine.global_environment_variables,
+                        "TZ": config_ConfigEngineConfigurableResource.tz,
+                        **config_ConfigEngineConfigurableResource.global_environment_variables,
                         **CONFIG.local_environment_variables,
                     },
                     **copy.deepcopy(network_dict),
@@ -2319,6 +2310,7 @@ def deadline_command_compose_webservice_runner(
 )
 def compose_webservice_runner(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -2329,8 +2321,6 @@ def compose_webservice_runner(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     # network_dict = {}
     # ports_dict = {}
@@ -2382,7 +2372,7 @@ def compose_webservice_runner(
         "volumes": list(
             {
                 *_volume_relative,
-                *config_engine.global_bind_volumes,
+                *config_ConfigEngineConfigurableResource.global_bind_volumes,
                 *CONFIG.local_bind_volumes,
             }
         )
@@ -2393,7 +2383,7 @@ def compose_webservice_runner(
         context=context,
         service_name=service_name,
         landscape_id=env.get("LANDSCAPE", "default"),
-        domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
     )
     # container_name = "--".join([service_name, env.get("LANDSCAPE", "default")])
     # host_name = ".".join(
@@ -2408,7 +2398,7 @@ def compose_webservice_runner(
             service_name: {
                 "container_name": container_name,
                 "hostname": host_name,
-                "domainname": config_engine.openstudiolandscapes__domain_lan,
+                "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                 "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                 # "image": "${DOT_OVERRIDES_REGISTRY_NAMESPACE:-docker.io/openstudiolandscapes}/%s:%s"
                 # % (build["image_name"], build["image_tags"][0]),
@@ -2435,8 +2425,8 @@ def compose_webservice_runner(
                     "retries": "3",
                 },
                 "environment": {
-                    "TZ": config_engine.tz,
-                    **config_engine.global_environment_variables,
+                    "TZ": config_ConfigEngineConfigurableResource.tz,
+                    **config_ConfigEngineConfigurableResource.global_environment_variables,
                     **CONFIG.local_environment_variables,
                 },
                 **copy.deepcopy(network_dict),
