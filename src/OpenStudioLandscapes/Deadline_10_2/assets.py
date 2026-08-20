@@ -67,11 +67,11 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
     get_network_dicts,
 )
 
-from OpenStudioLandscapes.Deadline_10_2 import (
+from OpenStudioLandscapes.Deadline_10_2.constants import (
     ASSET_HEADER,
-    config,
     dist,
 )
+from OpenStudioLandscapes.Deadline_10_2.config import models
 
 # Todo:
 #  - [ ] consolidate build_docker_image* assets into 1
@@ -96,8 +96,8 @@ cmd: AssetsDefinition = cmd.get_feature__cmd(
 
 CONFIG: AssetsDefinition = feature.get_feature__CONFIG(
     ASSET_HEADER=ASSET_HEADER,
-    CONFIG_STR=config.models.CONFIG_STR,
-    search_model_of_type=config.models.Config,
+    CONFIG_STR=models.CONFIG_STR,
+    search_model_of_type=models.Config,
 )
 
 feature_in: AssetsDefinition = group_in.get_feature_in(
@@ -146,7 +146,7 @@ feature_in_parent: Union[AssetsDefinition, None] = group_in.get_feature_in_paren
 )
 def connection_ini(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
 
     env: Dict = CONFIG.env
@@ -221,7 +221,7 @@ def connection_ini(
 )
 def deadline_ini(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     # @formatter:off
 
@@ -330,7 +330,7 @@ def deadline_ini(
 )
 def deadline_command_install_repository(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[List] | AssetMaterialization, None, None]:
     """ """
 
@@ -396,7 +396,7 @@ def deadline_command_install_repository(
 )
 def deadline_script_install_repository(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     deadline_command_install_repository: List,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
@@ -492,7 +492,7 @@ def deadline_script_install_repository(
 def write_dockerfile_repository(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     deadline_script_install_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
@@ -655,7 +655,7 @@ def write_dockerfile_repository(
 def build_docker_image_repository(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
@@ -743,7 +743,7 @@ def build_docker_image_repository(
 )
 def compose_repository(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     compose_mongodb_10_2: Dict,  # pylint: disable=redefined-outer-name
@@ -883,7 +883,7 @@ def compose_repository(
 )
 def deadline_command_build_docker_image_client(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[List] | AssetMaterialization, None, None]:
     """ """
 
@@ -955,7 +955,7 @@ def deadline_command_build_docker_image_client(
 def write_dockerfile_client(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     deadline_command_build_client_image_10_2: List,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[pathlib.Path] | AssetMaterialization, None, None]:
     """ """
@@ -1148,7 +1148,7 @@ build_docker_image_client_spec = AssetSpec(
 def build_docker_image_client(
     context: AssetExecutionContext,
     feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     write_dockerfile_client: pathlib.Path,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
@@ -1232,7 +1232,7 @@ def build_docker_image_client(
 )
 def compose_networks(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[
     Output[Dict[str, Dict[str, Dict[str, str]]]] | AssetMaterialization, None, None
 ]:
@@ -1273,7 +1273,7 @@ def compose_networks(
 )
 def compose_mongo_express(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
 
@@ -1381,7 +1381,7 @@ def compose_mongo_express(
 )
 def script_chown_mongodb(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, str]] | AssetMaterialization, None, None]:
 
     config_engine: ConfigEngine = CONFIG.config_engine
@@ -1454,7 +1454,7 @@ def script_chown_mongodb(
 )
 def compose_mongodb(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     script_chown_mongodb_10_2: Dict[str, str],  # pylint: disable=redefined-outer-name
     compose_networks_10_2: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict[str, Dict[str, Dict]]] | AssetMaterialization, None, None]:
@@ -1708,7 +1708,7 @@ def deadline_command_compose_rcs_runner(
 )
 def compose_rcs_runner(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -1945,7 +1945,7 @@ compose_pulse_runner_spec = AssetSpec(
 )
 def compose_pulse_runner(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -2162,7 +2162,7 @@ def deadline_command_compose_worker_runner(
 )
 def compose_worker_runner(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
@@ -2319,7 +2319,7 @@ def deadline_command_compose_webservice_runner(
 )
 def compose_webservice_runner(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
     deadline_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
     connection_ini_10_2: pathlib.Path,  # pylint: disable=redefined-outer-name
