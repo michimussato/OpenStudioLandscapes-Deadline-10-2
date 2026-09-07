@@ -67,11 +67,11 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
     get_network_dicts,
 )
 
+from OpenStudioLandscapes.Deadline_10_2.config import models
 from OpenStudioLandscapes.Deadline_10_2.constants import (
     ASSET_HEADER,
     dist,
 )
-from OpenStudioLandscapes.Deadline_10_2.config import models
 
 # Todo:
 #  - [ ] consolidate build_docker_image* assets into 1
